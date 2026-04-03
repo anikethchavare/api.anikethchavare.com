@@ -1,4 +1,4 @@
-# api.anikethchavare.com - schema.py
+# api.anikethchavare.com - app/__init__.py
 
 """
 Copyright 2026 Aniketh Chavare (anikethchavare@zohomail.in)
@@ -15,22 +15,3 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 """
-
-# Imports
-from typing import Any, Dict
-from pydantic import BaseModel
-
-# Constants
-API_VERSION = "0.3.0"
-
-# Class 1 - API Response
-class APIResponse(BaseModel):
-    success: bool
-    message: str
-    data: Dict[str, Any] = {}
-    meta: Dict[str, Any] = {}
-    api_version: str
-    timestamp: str
-    request_id: str
-    response_time_ms: float
-    status_code: int

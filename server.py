@@ -17,15 +17,11 @@ limitations under the License.
 """
 
 # Imports
-from schema import API_VERSION, APIResponse
+from app import utils
 
 import time
-import uuid
-from typing import Any, Dict, Optional
-from datetime import datetime, timezone
 
 from fastapi import FastAPI, Request
-from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 
 from slowapi import Limiter
@@ -74,69 +70,10 @@ async def add_timer(request: Request, call_next):
 
     return response
 
-# Function 1: Send Response
-def send_response(
-    request: Request,
-    status_code: int,
-    success: bool,
-    message: str,
-    data: Optional[Dict[str, Any]] = None,
-    meta: Optional[Dict[str, Any]] = None
-):
-    """
-    Constructs and returns a standardized API response.
-
-    This helper function ensures all API endpoints follow the unified response
-    contract defined in the APIResponse schema. It automatically injects
-    metadata such as unique request IDs, UTC timestamps, and the execution
-    time measured by the middleware.
-
-    Args:
-        request: The incoming FastAPI request object used to retrieve state
-            information like processing time.
-        status_code: The HTTP status code to return.
-        success: A boolean indicating if the operation was successful.
-        message: A human-readable summary of the response or error.
-        data: The primary payload. If None, an empty dict is initialized.
-        meta: Additional context. If None, an empty dict is initialized.
-
-    Returns:
-        A FastAPI JSONResponse object containing the serialized APIResponse
-        model and the specified HTTP status code.
-    """
-
-    # Initialize Base Meta
-    base_meta = {"rate_limit": "60 requests per minute."}
-
-    # Initialize Fresh Dictionaries for "data" and "meta" if None
-    if data is None:
-        data = {}
-    if meta is None:
-        meta = {}
-
-    # Merge Additional Meta Info
-    if meta:
-        base_meta.update(meta)
-
-    # Creating the APIResponse Model
-    response = APIResponse(
-        success=success,
-        message=message,
-        data=data,
-        meta=base_meta,
-        api_version=API_VERSION,
-        timestamp=datetime.now(timezone.utc).isoformat(),
-        request_id=f"req_{uuid.uuid4()}",
-        response_time_ms=getattr(request.state, "process_time", 0),
-        status_code=status_code
-    )
-
-    return JSONResponse(content=response.model_dump())
-
-# Exception Handler 1: Customer Rate Limit Handler
+# Exception Handler 1: Custom Rate Limit Handler
 @app.exception_handler(RateLimitExceeded)
 async def custom_rate_limit_handler(request: Request, exc: RateLimitExceeded):
-    return send_response(
+    return utils.send_response(
         request=request,
         status_code=429,
         success=False,
@@ -147,12 +84,12 @@ async def custom_rate_limit_handler(request: Request, exc: RateLimitExceeded):
 @app.get("/")
 @limiter.limit("60/minute")
 async def app_main(request: Request):
-    return send_response(
+    return utils.send_response(
         request=request,
         status_code=200,
         success=True,
         message="A public API powered by FastAPI and Python, deployed to Vercel."
     )
 
-# Adding Rate Limiting Exception Handling
+# Adding Rate Limiting Exception Handler
 app.add_exception_handler(RateLimitExceeded, custom_rate_limit_handler)
