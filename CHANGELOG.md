@@ -8,6 +8,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- Planned: Rate limiting middleware for public endpoints (60 RPM).
+
+## [0.2.0] - 2026-04-03
+
+### Added
+- Implemented a centralized `send_response` helper function for unified JSON output.
+- Integrated HTTP middleware to automatically calculate `response_time_ms`.
+- Added ISO 8601 UTC timestamps and full UUID-based `request_id` to all responses.
+- Expanded `APIResponse` schema to include precision metadata and status codes.
+
 ## [0.1.0] - 2026-04-03
 
 ### Added
@@ -21,4 +32,5 @@ ensure frontend stability.
 - Established `requirements.txt` with core dependencies (FastAPI, Pydantic).
 
 ---
+[0.2.0]: https://github.com/anikethchavare/api.anikethchavare.com/releases/tag/v0.2.0
 [0.1.0]: https://github.com/anikethchavare/api.anikethchavare.com/releases/tag/v0.1.0
