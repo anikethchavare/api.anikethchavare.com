@@ -1,0 +1,47 @@
+# api.anikethchavare.com - server.py
+
+"""
+Copyright 2026 Aniketh Chavare (anikethchavare@zohomail.in)
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+"""
+
+# Imports
+from fastapi import FastAPI
+
+# Constants
+API_VERSION = "0.1.0"
+
+"""
+Response Structure for api.anikethchavare.com
+
+All API responses should follow this order:
+
+1. success - Boolean, true if the request succeeded, false otherwise.
+2. message - Human-readable message for success, or structured error object for failures.
+3. data - Payload of the response (if any).
+4. meta - Contextual metadata including rate limit thresholds, remaining quota, and reset timestamps.
+5. api_version - API version string.
+6. timestamp - UTC timestamp of the response.
+7. request_id - Unique identifier (prefix req_) for trace logging and server-side debugging.
+8. response_time_ms - Server-side execution latency measured in milliseconds.
+9. status_code - HTTP status code for the response.
+"""
+
+# Initializing the "app" FastAPI Server
+app = FastAPI(docs_url=None, redoc_url=None)
+
+# Route 1 - main (app)
+@app.get("/")
+async def app_main():
+    return "A public API powered by FastAPI and Python, deployed to Vercel."
