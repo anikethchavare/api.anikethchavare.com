@@ -22,10 +22,15 @@ from schema import API_VERSION, APIResponse
 import time
 import uuid
 from typing import Any, Dict, Optional
-from fastapi import FastAPI, Request
 from datetime import datetime, timezone
+
+from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
+
+from slowapi import Limiter
+from slowapi.util import get_remote_address
+from slowapi.errors import RateLimitExceeded
 
 """
 Response Structure: All API responses must follow this order:
@@ -43,6 +48,10 @@ Response Structure: All API responses must follow this order:
 
 # Initializing the "app" FastAPI Server
 app = FastAPI(docs_url=None, redoc_url=None)
+
+# Initializing the Rate Limiter
+limiter = Limiter(key_func=get_remote_address, default_limits=["60/minute"])
+app.state.limiter = limiter
 
 # Configure CORS for Secure Public Access
 app.add_middleware(
@@ -96,18 +105,25 @@ def send_response(
         model and the specified HTTP status code.
     """
 
+    # Initialize Base Meta
+    base_meta = {"rate_limit": "60 requests per minute."}
+
     # Initialize Fresh Dictionaries for "data" and "meta" if None
     if data is None:
         data = {}
     if meta is None:
         meta = {}
 
+    # Merge Additional Meta Info
+    if meta:
+        base_meta.update(meta)
+
     # Creating the APIResponse Model
     response = APIResponse(
         success=success,
         message=message,
         data=data,
-        meta=meta,
+        meta=base_meta,
         api_version=API_VERSION,
         timestamp=datetime.now(timezone.utc).isoformat(),
         request_id=f"req_{uuid.uuid4()}",
@@ -117,8 +133,19 @@ def send_response(
 
     return JSONResponse(content=response.model_dump())
 
+# Exception Handler 1: Customer Rate Limit Handler
+@app.exception_handler(RateLimitExceeded)
+async def custom_rate_limit_handler(request: Request, exc: RateLimitExceeded):
+    return send_response(
+        request=request,
+        status_code=429,
+        success=False,
+        message="Rate limit exceeded. Please try again later."
+    )
+
 # Route 1: main (app)
 @app.get("/")
+@limiter.limit("60/minute")
 async def app_main(request: Request):
     return send_response(
         request=request,
@@ -126,3 +153,6 @@ async def app_main(request: Request):
         success=True,
         message="A public API powered by FastAPI and Python, deployed to Vercel."
     )
+
+# Adding Rate Limiting Exception Handling
+app.add_exception_handler(RateLimitExceeded, custom_rate_limit_handler)
