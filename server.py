@@ -25,6 +25,7 @@ from typing import Any, Dict, Optional
 from fastapi import FastAPI, Request
 from datetime import datetime, timezone
 from fastapi.responses import JSONResponse
+from fastapi.middleware.cors import CORSMiddleware
 
 """
 Response Structure: All API responses must follow this order:
@@ -42,6 +43,15 @@ Response Structure: All API responses must follow this order:
 
 # Initializing the "app" FastAPI Server
 app = FastAPI(docs_url=None, redoc_url=None)
+
+# Configure CORS for Secure Public Access
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=False,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # Middleware 1: Timer for "response_time_ms"
 @app.middleware("http")
