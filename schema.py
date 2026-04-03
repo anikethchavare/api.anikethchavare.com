@@ -20,6 +20,9 @@ limitations under the License.
 from typing import Any, Dict
 from pydantic import BaseModel
 
+# Constants
+API_VERSION = "0.1.0"
+
 # Class 1 - API Response
 class APIResponse(BaseModel):
     success: bool
@@ -29,5 +32,5 @@ class APIResponse(BaseModel):
     api_version: str
     timestamp: str
     request_id: str
-    response_time_ms: int
+    response_time_ms: float
     status_code: int
