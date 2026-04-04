@@ -21,6 +21,7 @@ from app import schemas
 from app import database
 
 import uuid
+import threading
 from typing import Any, Dict, Optional
 from datetime import datetime, timezone
 
@@ -86,6 +87,12 @@ def send_response(
     response = schemas.APIResponse(**response_args)
 
     # Logging the Request
-    database.log_request(**response_args)
+    request_log_thread = threading.Thread(
+        target=database.log_request,
+        kwargs=response_args,
+        daemon=True
+    )
+
+    request_log_thread.start()
 
     return JSONResponse(content=response.model_dump())

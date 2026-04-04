@@ -6,10 +6,15 @@ this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Changed
+- Updated core database identifiers and local environment configurations.
+
 ## [0.5.0] - 2026-04-04
 
 ### Added
-- Implemented request logging for API requests using Neon (Vercel).
+- Implemented request logging for API requests.
 - New `/health` endpoint for performing health checks.
 - Implemented universal exception handling with detailed error logging.
 
