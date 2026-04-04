@@ -6,6 +6,22 @@ this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.4.0] - 2026-04-04
+
+### Added
+- Implemented global middleware to inject security headers into every API response.
+- Added a dedicated exception handler for `404 Not Found` errors.
+- Integrated static file handling for `favicon.ico` to improve browser branding and eliminate 404 noise in server logs.
+- Created `CREDITS.md` to acknowledge open-source libraries and external service providers.
+
+### Changed
+- Moved `utils.py` and `schemas.py` (models) into the `/app` directory for a better structure.
+- Renamed the rate limiting exception handler for better code readability.
+
+### Removed
+- Removed `response_time_ms` from the `APIResponse` model.
+- Updated `.gitignore` to ensure `venv/` is excluded from version control.
+
 ## [0.3.0] - 2026-04-03
 
 ### Added
@@ -41,6 +57,7 @@ ensure frontend stability.
 - Established `requirements.txt` with core dependencies (FastAPI, Pydantic).
 
 ---
+[0.4.0]: https://github.com/anikethchavare/api.anikethchavare.com/releases/tag/v0.4.0
 [0.3.0]: https://github.com/anikethchavare/api.anikethchavare.com/releases/tag/v0.3.0
 [0.2.0]: https://github.com/anikethchavare/api.anikethchavare.com/releases/tag/v0.2.0
 [0.1.0]: https://github.com/anikethchavare/api.anikethchavare.com/releases/tag/v0.1.0
