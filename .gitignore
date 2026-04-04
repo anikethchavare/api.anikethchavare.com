@@ -1,6 +1,5 @@
 # Python and IDE Environment
 *.pyc
-venv/
 .idea/
 __pycache__/
 
