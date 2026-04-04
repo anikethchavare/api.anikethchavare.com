@@ -19,8 +19,6 @@ limitations under the License.
 # Imports
 from app import utils
 
-import time
-
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -38,8 +36,7 @@ Response Structure: All API responses must follow this order:
 5. api_version - API version string.
 6. timestamp - UTC timestamp of the response.
 7. request_id - Unique identifier (prefix req_) for trace logging and server-side debugging.
-8. response_time_ms - Server-side execution latency measured in milliseconds.
-9. status_code - HTTP status code for the response.
+8. status_code - HTTP status code for the response.
 """
 
 # Initializing the "app" FastAPI Server
@@ -57,18 +54,6 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
-# Middleware 1: Timer for "response_time_ms"
-@app.middleware("http")
-async def add_timer(request: Request, call_next):
-    start_time = time.perf_counter()
-
-    response = await call_next(request)
-
-    process_time = round((time.perf_counter() - start_time) * 1000, 2)
-    request.state.process_time = process_time
-
-    return response
 
 # Exception Handler 1: Custom Rate Limit Handler
 @app.exception_handler(RateLimitExceeded)

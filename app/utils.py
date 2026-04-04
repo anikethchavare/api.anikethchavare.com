@@ -40,8 +40,7 @@ def send_response(
 
     This helper function ensures all API endpoints follow the unified response
     contract defined in the APIResponse schema. It automatically injects
-    metadata such as unique request IDs, UTC timestamps, and the execution
-    time measured by the middleware.
+    metadata such as unique request IDs and UTC timestamps.
 
     Args:
         request: The incoming FastAPI request object used to retrieve state
@@ -79,7 +78,6 @@ def send_response(
         api_version=schemas.API_VERSION,
         timestamp=datetime.now(timezone.utc).isoformat(),
         request_id=f"req_{uuid.uuid4()}",
-        response_time_ms=getattr(request.state, "process_time", 0),
         status_code=status_code
     )
 

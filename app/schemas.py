@@ -32,5 +32,4 @@ class APIResponse(BaseModel):
     api_version: str
     timestamp: str
     request_id: str
-    response_time_ms: float
     status_code: int
