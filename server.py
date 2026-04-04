@@ -21,6 +21,8 @@ from app import utils
 from app import schemas
 
 import os
+import logging
+import traceback
 
 from fastapi.responses import FileResponse
 from fastapi.middleware.cors import CORSMiddleware
@@ -50,6 +52,9 @@ app = FastAPI(docs_url=None, redoc_url=None)
 limiter = Limiter(key_func=get_remote_address, default_limits=["60/minute"])
 app.state.limiter = limiter
 
+# Initializing the Logger (Errors)
+logger = logging.getLogger("uvicorn.error")
+
 # Configure CORS for Secure Public Access
 app.add_middleware(
     CORSMiddleware,
@@ -75,16 +80,6 @@ async def middleware_security_headers(request: Request, call_next):
 
     return response
 
-# Exception Handler 1: Rate Limiting
-@app.exception_handler(RateLimitExceeded)
-async def exception_handler_rate_limiting(request: Request, exc: RateLimitExceeded):
-    return utils.send_response(
-        request=request,
-        status_code=429,
-        success=False,
-        message="Rate limit exceeded. Please try again later."
-    )
-
 # Route 1: main (app)
 @app.get("/")
 @limiter.limit("60/minute")
@@ -105,6 +100,16 @@ async def app_favicon(request: Request):
         status_code=200
     )
 
+# Exception Handler 1: Rate Limiting
+@app.exception_handler(RateLimitExceeded)
+async def exception_handler_rate_limiting(request: Request, exc: RateLimitExceeded):
+    return utils.send_response(
+        request=request,
+        status_code=429,
+        success=False,
+        message="Rate limit exceeded. Please try again later."
+    )
+
 # Exception Handler 2: Error 404
 @app.exception_handler(404)
 async def exception_handler_error_404(request: Request, exec: HTTPException):
@@ -115,5 +120,24 @@ async def exception_handler_error_404(request: Request, exec: HTTPException):
         message="The requested route does not exist."
     )
 
-# Adding Exception Handler for Rate Limiting
+# Exception Handler 3: Universal
+@app.exception_handler(Exception)
+async def exception_handler_universal(request: Request, exc: Exception):
+    error_details = "".join(traceback.format_exception(type(exc), exc, exc.__traceback__))
+    logger.error(f"INTERNAL SERVER ERROR on {request.url.path}:\n{error_details}")
+
+    return utils.send_response(
+        request=request,
+        status_code=500,
+        success=False,
+        message="An internal server error occurred.",
+        meta={
+            "error_type": type(exc).__name__,
+            "path": request.url.path,
+            "report_issue": "https://github.com/anikethchavare/api.anikethchavare.com/issues",
+            "help": "If this persists, please open an issue with the error_type, request_id, and timestamp."
+        }
+    )
+
+# Adding Exception Handler 1
 app.add_exception_handler(RateLimitExceeded, exception_handler_rate_limiting)
