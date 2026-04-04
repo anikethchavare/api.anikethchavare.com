@@ -74,7 +74,7 @@ async def middleware_security_headers(request: Request, call_next):
 
 # Exception Handler 1: Custom Rate Limit Handler
 @app.exception_handler(RateLimitExceeded)
-async def custom_rate_limit_handler(request: Request, exc: RateLimitExceeded):
+async def exception_handler_rate_limiting(request: Request, exc: RateLimitExceeded):
     return utils.send_response(
         request=request,
         status_code=429,
@@ -93,5 +93,5 @@ async def app_main(request: Request):
         message="A public API powered by FastAPI and Python, deployed to Vercel."
     )
 
-# Adding Rate Limiting Exception Handler
-app.add_exception_handler(RateLimitExceeded, custom_rate_limit_handler)
+# Adding Exception Handler for Rate Limiting
+app.add_exception_handler(RateLimitExceeded, exception_handler_rate_limiting)
