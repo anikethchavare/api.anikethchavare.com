@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 - Updated core database identifiers and local environment configurations.
+- Optimized request logging by migrating to an asynchronous threading model, significantly reducing end-to-end response latency.
 
 ## [0.5.0] - 2026-04-04
 

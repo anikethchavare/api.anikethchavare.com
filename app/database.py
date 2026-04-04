@@ -19,13 +19,28 @@ limitations under the License.
 # Imports
 import os
 import json
+import logging
 import psycopg2
+from psycopg2 import pool
 from dotenv import load_dotenv
+
+# Initializing the Logger (Errors)
+logger = logging.getLogger("uvicorn.error")
 
 # Loading Environment Variables
 load_dotenv()
 
 DATABASE_URL = os.getenv("DATABASE_URL")
+
+# Initializing the Connection Pool
+try:
+    connection_pool = psycopg2.pool.SimpleConnectionPool(
+        1,
+        10,
+        dsn=DATABASE_URL
+    )
+except Exception as connection_pool_exception:
+    logger.error(f"DATABASE ERROR:\n{connection_pool_exception}")
 
 # Function 1: Log Request
 def log_request(
@@ -58,45 +73,51 @@ def log_request(
         psycopg2.Error: If the database connection fails or the query is invalid.
     """
 
-    # Initializing the "request_logs" Database
-    connection = psycopg2.connect(os.getenv("DATABASE_URL"))
-    cursor = connection.cursor()
+    connection = None
 
-    connection.autocommit = True
+    try:
+        # Connecting to the Database
+        connection = connection_pool.getconn()
+        connection.autocommit = True
+        cursor = connection.cursor()
 
-    # Create Table if Not Exists
-    cursor.execute("""
-        CREATE TABLE IF NOT EXISTS request_logs (
-            request_id TEXT PRIMARY KEY,
-            success BOOLEAN,
-            message TEXT,
-            data JSONB,
-            meta JSONB,
-            api_version TEXT,
-            timestamp TIMESTAMP WITH TIME ZONE,
-            status_code INTEGER
-        );
-    """)
+        # Create Table if Not Exists
+        cursor.execute("""
+            CREATE TABLE IF NOT EXISTS request_logs (
+                request_id TEXT PRIMARY KEY,
+                success BOOLEAN,
+                message TEXT,
+                data JSONB,
+                meta JSONB,
+                api_version TEXT,
+                timestamp TIMESTAMP WITH TIME ZONE,
+                status_code INTEGER
+            );
+        """)
 
-    # Insert Data into the "request_logs" Database
-    query = """
-        INSERT INTO request_logs (
-            request_id, success, message, data, meta,
-            api_version, timestamp, status_code
-        ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s);
-    """
+        # Insert Data into the "request_logs" Table
+        query = """
+            INSERT INTO request_logs (
+                request_id, success, message, data, meta,
+                api_version, timestamp, status_code
+            ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s);
+        """
 
-    cursor.execute(query, (
-        request_id,
-        success,
-        message,
-        json.dumps(data),
-        json.dumps(meta),
-        api_version,
-        timestamp,
-        status_code
-    ))
+        cursor.execute(query, (
+            request_id,
+            success,
+            message,
+            json.dumps(data),
+            json.dumps(meta),
+            api_version,
+            timestamp,
+            status_code
+        ))
 
-    # Closing the Connection
-    cursor.close()
-    connection.close()
+        # Closing the Cursor
+        cursor.close()
+    except Exception as log_request_exception:
+        logger.error(f"DATABASE ERROR:\n{log_request_exception}")
+    finally:
+        if connection:
+            connection_pool.putconn(connection)
