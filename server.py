@@ -20,8 +20,8 @@ limitations under the License.
 from app import utils
 from app import schemas
 
-from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi import FastAPI, Request, HTTPException
 
 from slowapi import Limiter
 from slowapi.util import get_remote_address
@@ -72,7 +72,7 @@ async def middleware_security_headers(request: Request, call_next):
 
     return response
 
-# Exception Handler 1: Custom Rate Limit Handler
+# Exception Handler 1: Rate Limiting
 @app.exception_handler(RateLimitExceeded)
 async def exception_handler_rate_limiting(request: Request, exc: RateLimitExceeded):
     return utils.send_response(
@@ -91,6 +91,16 @@ async def app_main(request: Request):
         status_code=200,
         success=True,
         message="A public API powered by FastAPI and Python, deployed to Vercel."
+    )
+
+# Exception Handler 2: Error 404
+@app.exception_handler(404)
+async def exception_handler_error_404(request: Request, exec: HTTPException):
+    return utils.send_response(
+        request=request,
+        status_code=404,
+        success=False,
+        message="The requested route does not exist."
     )
 
 # Adding Exception Handler for Rate Limiting
