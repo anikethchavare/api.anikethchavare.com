@@ -18,6 +18,7 @@ limitations under the License.
 
 # Imports
 from app import schemas
+from app import database
 
 import uuid
 from typing import Any, Dict, Optional
@@ -34,7 +35,7 @@ def send_response(
     message: str,
     data: Optional[Dict[str, Any]] = None,
     meta: Optional[Dict[str, Any]] = None
-):
+) -> JSONResponse:
     """
     Constructs and returns a standardized API response.
 
@@ -69,16 +70,22 @@ def send_response(
     if meta:
         base_meta.update(meta)
 
+    # Defining Response Dictionary
+    response_args = {
+        "success": success,
+        "message": message,
+        "data": data,
+        "meta": base_meta,
+        "api_version": schemas.API_VERSION,
+        "timestamp": datetime.now(timezone.utc).isoformat(),
+        "request_id": f"req_{uuid.uuid4()}",
+        "status_code": status_code
+    }
+
     # Creating the APIResponse Model
-    response = schemas.APIResponse(
-        success=success,
-        message=message,
-        data=data,
-        meta=base_meta,
-        api_version=schemas.API_VERSION,
-        timestamp=datetime.now(timezone.utc).isoformat(),
-        request_id=f"req_{uuid.uuid4()}",
-        status_code=status_code
-    )
+    response = schemas.APIResponse(**response_args)
+
+    # Logging the Request
+    database.log_request(**response_args)
 
     return JSONResponse(content=response.model_dump())
