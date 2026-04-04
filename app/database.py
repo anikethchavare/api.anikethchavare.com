@@ -25,7 +25,7 @@ from dotenv import load_dotenv
 # Loading Environment Variables
 load_dotenv()
 
-REQUEST_LOGS_DATABASE_URL = os.getenv("REQUEST_LOGS_DATABASE_URL")
+DATABASE_URL = os.getenv("DATABASE_URL")
 
 # Function 1: Log Request
 def log_request(
@@ -59,7 +59,7 @@ def log_request(
     """
 
     # Initializing the "request_logs" Database
-    connection = psycopg2.connect(os.getenv("REQUEST_LOGS_DATABASE_URL"))
+    connection = psycopg2.connect(os.getenv("DATABASE_URL"))
     cursor = connection.cursor()
 
     connection.autocommit = True
