@@ -43,16 +43,15 @@ except Exception as connection_pool_exception:
     logger.error(f"DATABASE ERROR:\n{connection_pool_exception}")
 
 # Function 1: Initialize Database
-def init_db() -> None:
+def init_db(retry_count: int = 0) -> None:
     """
     Initializes the core database by ensuring all required tables exist.
 
-    Returns:
-        None
+    Args:
+        retry_count: The number of times to retry the request.
 
-    Raises:
-        psycopg2.Error: If the database connection fails or the initialization
-        SQL commands are invalid.
+    Returns:
+        None (Logs warnings and errors to the logger).
     """
 
     connection = None
@@ -85,6 +84,17 @@ def init_db() -> None:
 
         # Closing the Cursor
         cursor.close()
+    except (psycopg2.OperationalError, psycopg2.InterfaceError) as \
+            init_db_psycopg2_exception:
+        if retry_count < 1:
+            logger.warning(f"DATABASE WARNING: Connection lost. Retrying... (Error: {init_db_psycopg2_exception})")
+
+            if connection:
+                connection_pool.putconn(connection, close=True)
+
+            return init_db(retry_count=1)
+        else:
+            logger.error("DATABASE ERROR: Retry failed. Dropping database initialization.")
     except Exception as init_db_exception:
         logger.error(f"DATABASE ERROR:\n{init_db_exception}")
     finally:
@@ -106,7 +116,8 @@ def log_request(
         origin: str,
         path: str,
         vercel_execution_id: str,
-        http_version: str
+        http_version: str,
+        retry_count: int = 0
 ) -> None:
     """
     Logs an API request to the "request_logs" database table in Neon (Vercel).
@@ -126,12 +137,10 @@ def log_request(
         path: The specific endpoint path being accessed.
         vercel_execution_id: The unique execution trace ID injected by Vercel.
         http_version: The HTTP protocol version used for the request.
+        retry_count: The number of times to retry the request.
 
     Returns:
-        This function performs an asynchronous-style write and returns nothing.
-
-    Raises:
-        psycopg2.Error: If the database connection fails or the query is invalid.
+        None (Logs warnings and errors to the logger).
     """
 
     connection = None
@@ -170,6 +179,21 @@ def log_request(
 
         # Closing the Cursor
         cursor.close()
+    except (psycopg2.OperationalError, psycopg2.InterfaceError) as \
+            log_request_psycopg2_exception:
+        if retry_count < 1:
+            logger.warning(f"DATABASE WARNING: Connection lost. Retrying... (Error: {log_request_psycopg2_exception})")
+
+            if connection:
+                connection_pool.putconn(connection, close=True)
+
+            return log_request(
+                request_id, success, message, data, meta, api_version,
+                timestamp, status_code, ip_address, user_agent,
+                origin, path, vercel_execution_id, http_version, retry_count=1
+            )
+        else:
+            logger.error("DATABASE ERROR: Retry failed. Dropping request log entry.")
     except Exception as log_request_exception:
         logger.error(f"DATABASE ERROR:\n{log_request_exception}")
     finally:
