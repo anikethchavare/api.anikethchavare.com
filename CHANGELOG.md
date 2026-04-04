@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Added a centralized database initialization sequence to manage table creation
 at application startup, improving request-time performance.
+- Enhanced API telemetry by implementing detailed request logging, capturing client metadata (IP, User-Agent, Origin, Path) and infrastructure diagnostics (Vercel Execution ID, HTTP Version).
 
 ### Changed
 - Updated core database identifiers and local environment configurations.

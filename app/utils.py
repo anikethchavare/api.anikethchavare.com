@@ -80,7 +80,13 @@ def send_response(
         "api_version": schemas.API_VERSION,
         "timestamp": datetime.now(timezone.utc).isoformat(),
         "request_id": f"req_{uuid.uuid4()}",
-        "status_code": status_code
+        "status_code": status_code,
+        "ip_address": request.client.host,
+        "user_agent": request.headers.get("user-agent"),
+        "origin": request.headers.get("origin") or "direct",
+        "path": request.url.path,
+        "vercel_execution_id": request.headers.get("X-Vercel-Id"),
+        "http_version": request.scope.get("http_version")
     }
 
     # Creating the APIResponse Model

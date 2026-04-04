@@ -73,7 +73,13 @@ def init_db() -> None:
                     meta JSONB,
                     api_version TEXT,
                     timestamp TIMESTAMP WITH TIME ZONE,
-                    status_code INTEGER
+                    status_code INTEGER,
+                    ip_address TEXT,
+                    user_agent TEXT,
+                    origin TEXT,
+                    path TEXT,
+                    vercel_execution_id TEXT,
+                    http_version TEXT
                 );
             """)
 
@@ -94,7 +100,13 @@ def log_request(
         meta: dict,
         api_version: str,
         timestamp: str,
-        status_code: int
+        status_code: int,
+        ip_address: str,
+        user_agent: str,
+        origin: str,
+        path: str,
+        vercel_execution_id: str,
+        http_version: str
 ) -> None:
     """
     Logs an API request to the "request_logs" database table in Neon (Vercel).
@@ -108,6 +120,12 @@ def log_request(
         api_version: The version of the API used.
         timestamp: ISO 8601 formatted UTC timestamp.
         status_code: The HTTP status code to return.
+        ip_address: The IP address of the client making the request.
+        user_agent: The browser or client string identifying the requester.
+        origin: The domain that initiated the request.
+        path: The specific endpoint path being accessed.
+        vercel_execution_id: The unique execution trace ID injected by Vercel.
+        http_version: The HTTP protocol version used for the request.
 
     Returns:
         This function performs an asynchronous-style write and returns nothing.
@@ -128,8 +146,9 @@ def log_request(
         query = """
             INSERT INTO request_logs (
                 request_id, success, message, data, meta,
-                api_version, timestamp, status_code
-            ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s);
+                api_version, timestamp, status_code, ip_address, user_agent,
+                origin, path, vercel_execution_id, http_version
+            ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);
         """
 
         cursor.execute(query, (
@@ -140,7 +159,13 @@ def log_request(
             json.dumps(meta),
             api_version,
             timestamp,
-            status_code
+            status_code,
+            ip_address,
+            user_agent,
+            origin,
+            path,
+            vercel_execution_id,
+            http_version
         ))
 
         # Closing the Cursor
