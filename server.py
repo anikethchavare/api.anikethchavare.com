@@ -92,12 +92,32 @@ async def app_main(request: Request):
     )
 
 # Route 2: favicon.ico (app)
-@app.get("/favicon.ico")
+@app.get("/favicon.ico", include_in_schema=False)
 @limiter.limit("60/minute")
 async def app_favicon(request: Request):
     return FileResponse(
         os.getcwd().replace(os.sep, "/") + "/media/favicon.png",
         status_code=200
+    )
+
+# Route 3: health (app)
+@app.get("/health", include_in_schema=False)
+async def app_health(request: Request):
+    # Health Check on "api"
+    api_working = True if app.router.routes else False
+
+    health_data = {
+        "api": "pass" if api_working else "fail"
+    }
+
+    healthy = all(value == "pass" for value in health_data.values())
+
+    return utils.send_response(
+        request=request,
+        status_code=200 if healthy else 503,
+        success=healthy,
+        message="API is healthy and running." if healthy else "API is unhealthy and non-responsive.",
+        data={"health_checks": health_data}
     )
 
 # Exception Handler 1: Rate Limiting
