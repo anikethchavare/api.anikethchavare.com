@@ -20,6 +20,9 @@ limitations under the License.
 from app import utils
 from app import schemas
 
+import os
+
+from fastapi.responses import FileResponse
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi import FastAPI, Request, HTTPException
 
@@ -91,6 +94,15 @@ async def app_main(request: Request):
         status_code=200,
         success=True,
         message="A public API powered by FastAPI and Python, deployed to Vercel."
+    )
+
+# Route 2: favicon.ico (app)
+@app.get("/favicon.ico")
+@limiter.limit("60/minute")
+async def app_favicon(request: Request):
+    return FileResponse(
+        os.getcwd().replace(os.sep, "/") + "/media/favicon.png",
+        status_code=200
     )
 
 # Exception Handler 2: Error 404
