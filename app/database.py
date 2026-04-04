@@ -42,7 +42,50 @@ try:
 except Exception as connection_pool_exception:
     logger.error(f"DATABASE ERROR:\n{connection_pool_exception}")
 
-# Function 1: Log Request
+# Function 1: Initialize Database
+def init_db() -> None:
+    """
+    Initializes the core database by ensuring all required tables exist.
+
+    Returns:
+        None
+
+    Raises:
+        psycopg2.Error: If the database connection fails or the initialization
+        SQL commands are invalid.
+    """
+
+    connection = None
+
+    try:
+        # Fetching a Connection from the Pool
+        connection = connection_pool.getconn()
+        connection.autocommit = True
+        cursor = connection.cursor()
+
+        # Create Table: request_logs
+        cursor.execute("""
+                CREATE TABLE IF NOT EXISTS request_logs (
+                    request_id TEXT PRIMARY KEY,
+                    success BOOLEAN,
+                    message TEXT,
+                    data JSONB,
+                    meta JSONB,
+                    api_version TEXT,
+                    timestamp TIMESTAMP WITH TIME ZONE,
+                    status_code INTEGER
+                );
+            """)
+
+        # Closing the Cursor
+        cursor.close()
+    except Exception as init_db_exception:
+        logger.error(f"DATABASE ERROR:\n{init_db_exception}")
+    finally:
+        if connection:
+            connection_pool.putconn(connection)
+
+# Function 2: Log Request
 def log_request(
         request_id: str,
         success: bool,
@@ -76,24 +119,10 @@ def log_request(
     connection = None
 
     try:
-        # Connecting to the Database
+        # Fetching a Connection from the Pool
         connection = connection_pool.getconn()
         connection.autocommit = True
         cursor = connection.cursor()
-
-        # Create Table if Not Exists
-        cursor.execute("""
-            CREATE TABLE IF NOT EXISTS request_logs (
-                request_id TEXT PRIMARY KEY,
-                success BOOLEAN,
-                message TEXT,
-                data JSONB,
-                meta JSONB,
-                api_version TEXT,
-                timestamp TIMESTAMP WITH TIME ZONE,
-                status_code INTEGER
-            );
-        """)
 
         # Insert Data into the "request_logs" Table
         query = """

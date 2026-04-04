@@ -19,10 +19,12 @@ limitations under the License.
 # Imports
 from app import utils
 from app import schemas
+from app import database
 
 import os
 import logging
 import traceback
+from contextlib import asynccontextmanager
 
 from fastapi.responses import FileResponse
 from fastapi.middleware.cors import CORSMiddleware
@@ -45,8 +47,15 @@ Response Structure: All API responses must follow this order:
 8. status_code - HTTP status code for the response.
 """
 
+# Async Context Manager: Lifespan
+@asynccontextmanager
+async def async_context_manager_lifespan(app_local: FastAPI):
+    # Startup: Initialize the Database
+    database.init_db()
+    yield
+
 # Initializing the "app" FastAPI Server
-app = FastAPI(docs_url=None, redoc_url=None)
+app = FastAPI(docs_url=None, redoc_url=None, lifespan=async_context_manager_lifespan)
 
 # Initializing the Rate Limiter
 limiter = Limiter(key_func=get_remote_address, default_limits=["60/minute"])

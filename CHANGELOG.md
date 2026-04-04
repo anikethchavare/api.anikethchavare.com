@@ -8,9 +8,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- Added a centralized database initialization sequence to manage table creation
+at application startup, improving request-time performance.
+
 ### Changed
 - Updated core database identifiers and local environment configurations.
 - Optimized request logging by migrating to an asynchronous threading model, significantly reducing end-to-end response latency.
+- Improved API internal efficiency and stability by implementing database connection pooling, preventing connection exhaustion during high traffic.
 
 ## [0.5.0] - 2026-04-04
 
