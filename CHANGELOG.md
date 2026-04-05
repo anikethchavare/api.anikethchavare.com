@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Documentation
 - Refined the project description to better reflect the API's general-purpose utility nature.
+- Populated the `README.md` file with project overview and setup instructions.
 
 ## [0.7.0] - 2026-04-05
 
