@@ -147,7 +147,12 @@ async def exception_handler_error_404(request: Request, exec: HTTPException):
         request=request,
         status_code=404,
         success=False,
-        message="The requested route does not exist."
+        message="The requested route does not exist.",
+        meta={
+            "path": request.url.path,
+            "help": "Check the API documentation for valid endpoints.",
+            "docs": "https://github.com/anikethchavare/api.anikethchavare.com/tree/main/docs"
+        }
     )
 
 # Exception Handler 3: Universal
