@@ -165,6 +165,6 @@ async def exception_handler_universal(request: Request, exc: Exception):
             "error_type": type(exc).__name__,
             "path": request.url.path,
             "report_issue": "https://github.com/anikethchavare/api.anikethchavare.com/issues",
-            "help": "If this persists, please open an issue with the error_type, request_id, and timestamp."
+            "help": "If this persists, please open an issue with the request_id."
         }
     )
