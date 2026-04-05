@@ -6,6 +6,17 @@ this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Changed
+- Migrated the core API architecture to a versioned structure by implementing `APIRouter` with a `/v1` global prefix.
+
+### Refactored
+- Modularized the `SlowAPI` rate-limiting logic into a dedicated `app/rate_limiter.py` module to eliminate circular dependency issues and improve code maintainability.
+
+### Performance
+- Reduced API latency by migrating Vercel functions to the `sin1` (Singapore) region, ensuring physical proximity to the Neon database cluster.
+
 ## [0.6.1] - 2026-04-04
 
 ### Fixed

@@ -20,6 +20,9 @@ limitations under the License.
 from app import utils
 from app import schemas
 from app import database
+from app import rate_limiter
+
+from routers.app_v1 import router_app_v1
 
 import os
 import logging
@@ -30,8 +33,6 @@ from fastapi.responses import FileResponse
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi import FastAPI, Request, HTTPException
 
-from slowapi import Limiter
-from slowapi.util import get_remote_address
 from slowapi.errors import RateLimitExceeded
 
 """
@@ -56,10 +57,7 @@ async def async_context_manager_lifespan(app_local: FastAPI):
 
 # Initializing the "app" FastAPI Server
 app = FastAPI(docs_url=None, redoc_url=None, lifespan=async_context_manager_lifespan)
-
-# Initializing the Rate Limiter
-limiter = Limiter(key_func=get_remote_address, default_limits=["60/minute"])
-app.state.limiter = limiter
+app.state.limiter = rate_limiter.limiter
 
 # Initializing the Logger (Errors)
 logger = logging.getLogger("uvicorn.error")
@@ -89,20 +87,23 @@ async def middleware_security_headers(request: Request, call_next):
 
     return response
 
+# Include the API Routers
+app.include_router(router_app_v1)
+
 # Route 1: main (app)
 @app.get("/")
-@limiter.limit("60/minute")
+@rate_limiter.limiter.limit("60/minute")
 async def app_main(request: Request):
     return utils.send_response(
         request=request,
         status_code=200,
         success=True,
-        message="A public API powered by FastAPI and Python, deployed to Vercel."
+        message="High-performance utility endpoints and features for common development tasks. A general-purpose public REST API powered by FastAPI and Python."
     )
 
 # Route 2: favicon.ico (app)
 @app.get("/favicon.ico", include_in_schema=False)
-@limiter.limit("60/minute")
+@rate_limiter.limiter.limit("60/minute")
 async def app_favicon(request: Request):
     return FileResponse(
         os.getcwd().replace(os.sep, "/") + "/media/favicon.png",
@@ -167,6 +168,3 @@ async def exception_handler_universal(request: Request, exc: Exception):
             "help": "If this persists, please open an issue with the error_type, request_id, and timestamp."
         }
     )
-
-# Adding Exception Handler 1
-app.add_exception_handler(RateLimitExceeded, exception_handler_rate_limiting)
