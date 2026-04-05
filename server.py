@@ -56,7 +56,17 @@ async def async_context_manager_lifespan(app_local: FastAPI):
     yield
 
 # Initializing the "app" FastAPI Server
-app = FastAPI(docs_url=None, redoc_url=None, lifespan=async_context_manager_lifespan)
+app = FastAPI(title="api.anikethchavare.com",
+              description="High-performance utility endpoints and features for common development tasks. A general-purpose public REST API powered by FastAPI and Python.",
+              version=schemas.API_VERSION,
+              license_info={
+                  "name": "Apache 2.0",
+                  "url": "https://www.apache.org/licenses/LICENSE-2.0"
+              },
+              docs_url=None,
+              redoc_url=None,
+              lifespan=async_context_manager_lifespan)
+
 app.state.limiter = rate_limiter.limiter
 
 # Initializing the Logger (Errors)
