@@ -57,7 +57,7 @@ async def async_context_manager_lifespan(app_local: FastAPI):
 
 # Initializing the "app" FastAPI Server
 app = FastAPI(title="api.anikethchavare.com",
-              description="High-performance utility endpoints and features for common development tasks. A general-purpose public REST API powered by FastAPI and Python.",
+              description="A high-performance, general-purpose public REST API powered by FastAPI and Python.",
               version=schemas.API_VERSION,
               license_info={
                   "name": "Apache 2.0",
@@ -108,7 +108,7 @@ async def app_main(request: Request):
         request=request,
         status_code=200,
         success=True,
-        message="High-performance utility endpoints and features for common development tasks. A general-purpose public REST API powered by FastAPI and Python."
+        message="A high-performance, general-purpose public REST API powered by FastAPI and Python."
     )
 
 # Route 2: favicon.ico (app)

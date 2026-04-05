@@ -16,6 +16,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Standardized the 404 error response metadata to include request paths and documentation linked for improved developer experience.
 - Updated API metadata and reconfigured documentation paths.
 
+### Documentation
+- Refined the project description to better reflect the API's general-purpose utility nature.
+
 ## [0.7.0] - 2026-04-05
 
 ### Changed
