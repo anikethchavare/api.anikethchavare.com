@@ -87,14 +87,14 @@ def init_db(retry_count: int = 0) -> None:
     except (psycopg2.OperationalError, psycopg2.InterfaceError) as \
             init_db_psycopg2_exception:
         if retry_count < 1:
-            logger.warning(f"DATABASE WARNING: Connection lost. Retrying... (Error: {init_db_psycopg2_exception})")
+            logger.warning(f"DATABASE WARNING:\nConnection lost. Retrying... (Error: {init_db_psycopg2_exception})")
 
             if connection:
                 connection_pool.putconn(connection, close=True)
 
             return init_db(retry_count=1)
         else:
-            logger.error("DATABASE ERROR: Retry failed. Dropping database initialization.")
+            logger.error("DATABASE ERROR:\nRetry failed. Dropping database initialization.")
     except Exception as init_db_exception:
         logger.error(f"DATABASE ERROR:\n{init_db_exception}")
     finally:
@@ -182,7 +182,7 @@ def log_request(
     except (psycopg2.OperationalError, psycopg2.InterfaceError) as \
             log_request_psycopg2_exception:
         if retry_count < 1:
-            logger.warning(f"DATABASE WARNING: Connection lost. Retrying... (Error: {log_request_psycopg2_exception})")
+            logger.warning(f"DATABASE WARNING:\nConnection lost. Retrying... (Error: {log_request_psycopg2_exception})")
 
             if connection:
                 connection_pool.putconn(connection, close=True)
@@ -193,7 +193,7 @@ def log_request(
                 origin, path, vercel_execution_id, http_version, retry_count=1
             )
         else:
-            logger.error("DATABASE ERROR: Retry failed. Dropping request log entry.")
+            logger.error("DATABASE ERROR:\nRetry failed. Dropping request log entry.")
     except Exception as log_request_exception:
         logger.error(f"DATABASE ERROR:\n{log_request_exception}")
     finally:

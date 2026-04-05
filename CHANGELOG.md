@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 - Migrated the core API architecture to a versioned structure by implementing `APIRouter` with a `/v1` global prefix.
+- Standardized application-wide logging formats for warnings and errors.
 
 ### Refactored
 - Modularized the `SlowAPI` rate-limiting logic into a dedicated `app/rate_limiter.py` module to eliminate circular dependency issues and improve code maintainability.
