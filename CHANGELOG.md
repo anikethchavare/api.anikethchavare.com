@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- Implemented a real-time database connectivity check in the `/health` endpoint to monitor connection pool status.
+
 ### Changed
 - Improved the error response metadata for the universal exception handler in `server.py`.
 - Standardized the 404 error response metadata to include request paths and documentation linked for improved developer experience.

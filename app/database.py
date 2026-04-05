@@ -101,7 +101,53 @@ def init_db(retry_count: int = 0) -> None:
         if connection:
             connection_pool.putconn(connection)
 
-# Function 2: Log Request
+# Function 2: Check Connection
+def check_connection(retry_count: int = 0) -> bool:
+    """
+    Verifies the database health by performing a lightweight ping query.
+
+    Args:
+        retry_count: The number of times to retry the request.
+
+    Returns:
+        True if the database responds successfully, False otherwise.
+    """
+
+    connection = None
+
+    try:
+        # Fetching a Connection from the Pool
+        connection = connection_pool.getconn()
+        connection.autocommit = True
+        cursor = connection.cursor()
+
+        # Executing a Simple Ping Query
+        cursor.execute("SELECT 1;")
+        cursor.fetchone()
+
+        # Closing the Cursor
+        cursor.close()
+        return True
+    except (psycopg2.OperationalError, psycopg2.InterfaceError) as \
+            check_connection_psycopg2_exception:
+        if retry_count < 1:
+            logger.warning(f"DATABASE WARNING:\nConnection lost. Retrying... (Error: {check_connection_psycopg2_exception})")
+
+            if connection:
+                connection_pool.putconn(connection, close=True)
+
+            return check_connection(retry_count=1)
+        else:
+            logger.error("DATABASE ERROR:\nRetry failed. Dropping database initialization.")
+            return False
+    except Exception as check_connection_exception:
+        logger.error(f"DATABASE ERROR:\n{check_connection_exception}")
+        return False
+    finally:
+        if connection:
+            connection_pool.putconn(connection)
+
+# Function 3: Log Request
 def log_request(
         request_id: str,
         success: bool,

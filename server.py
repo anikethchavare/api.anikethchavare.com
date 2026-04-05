@@ -113,11 +113,13 @@ async def app_favicon(request: Request):
 # Route 3: health (app)
 @app.get("/health", include_in_schema=False)
 async def app_health(request: Request):
-    # Health Check on "api"
+    # Performing Health Checks
     api_working = True if app.router.routes else False
+    db_working = database.check_connection()
 
     health_data = {
-        "api": "pass" if api_working else "fail"
+        "api": "pass" if api_working else "fail",
+        "database": "pass" if db_working else "fail"
     }
 
     healthy = all(value == "pass" for value in health_data.values())
@@ -126,7 +128,7 @@ async def app_health(request: Request):
         request=request,
         status_code=200 if healthy else 503,
         success=healthy,
-        message="API is healthy and running." if healthy else "API is unhealthy and non-responsive.",
+        message="API is healthy and running." if healthy else "API is unhealthy and non-responsive. One or more internal services are currently unavailable.",
         data={"health_checks": health_data}
     )
 
