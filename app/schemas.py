@@ -25,6 +25,10 @@ API_VERSION = "0.7.0"
 
 # Class 1 - API Response
 class APIResponse(BaseModel):
+    """
+    Constructs an "APIResponse" Pydantic model for an API response.
+    """
+
     success: bool
     message: str
     data: Dict[str, Any] = {}

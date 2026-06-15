@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Improved the error response metadata for the universal exception handler in `server.py`.
 - Standardized the 404 error response metadata to include request paths and documentation linked for improved developer experience.
 - Updated API metadata and reconfigured documentation paths.
+- Updated dependencies to latest versions.
 
 ### Documentation
 - Refined the project description to better reflect the API's general-purpose utility nature.
