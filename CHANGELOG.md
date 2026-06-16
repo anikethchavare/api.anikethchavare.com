@@ -8,8 +8,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+- Cleaned up and updated dependencies.
+
 ### Refactored
 - Set the security headers as a global dictionary. Response security headers will be set via a loop.
+- Migrated the database connection layer and telemetry pipeline to a non-blocking asynchronous architecture.
 
 ## [0.8.0] - 2026-06-16
 

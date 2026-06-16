@@ -51,9 +51,13 @@ Response Structure: All API responses must follow this order:
 # Async Context Manager: Lifespan
 @asynccontextmanager
 async def async_context_manager_lifespan(app_local: FastAPI):
-    # Startup: Initialize the Database
-    database.init_db()
+    # Startup: Initialize the Async Connection Pool and Database
+    await database.init_pool()
+    await database.init_db()
     yield
+
+    # Shutdown: Close the Async connection pool.
+    await database.close_pool()
 
 # Initializing the "app" FastAPI Server
 app = FastAPI(title="api.anikethchavare.com",
@@ -133,7 +137,7 @@ async def app_favicon(request: Request):
 async def app_health(request: Request, background_tasks: BackgroundTasks):
     # Performing Health Checks
     api_working = True if app.router.routes else False
-    db_working = database.check_connection()
+    db_working = await database.check_connection()
 
     health_data = {
         "api": "pass" if api_working else "fail",

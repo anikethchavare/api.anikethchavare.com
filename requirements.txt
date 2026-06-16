@@ -1,5 +1,6 @@
 slowapi==0.1.10
 fastapi==0.137.1
 pydantic==2.13.4
+psycopg-pool==3.3.1
 python-dotenv==1.2.2
-psycopg2-binary==2.9.12
+psycopg[binary]==3.3.4
