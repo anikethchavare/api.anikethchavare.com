@@ -16,6 +16,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Standardized the 404 error response metadata to include request paths and documentation linked for improved developer experience.
 - Updated API metadata and reconfigured documentation paths.
 - Updated dependencies to latest versions.
+- Optimized asynchronous database request logging by shifting to native ASGI lifecycle background tasks.
+
+### Refactored
+- Improved some logging messages and its code.
 
 ### Documentation
 - Refined the project description to better reflect the API's general-purpose utility nature.

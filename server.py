@@ -70,7 +70,8 @@ app = FastAPI(title="api.anikethchavare.com",
 app.state.limiter = rate_limiter.limiter
 
 # Initializing the Logger (Errors)
-logger = logging.getLogger("uvicorn.error")
+logging.basicConfig(level=logging.WARNING)
+logger = logging.getLogger(__name__)
 
 # Configure CORS for Secure Public Access
 app.add_middleware(
@@ -81,7 +82,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Middleware 1: Security Headers
+# Middleware 1: Security Headers (app)
 @app.middleware("http")
 async def middleware_security_headers(request: Request, call_next):
     response = await call_next(request)
@@ -144,7 +145,7 @@ async def app_health(request: Request, background_tasks: BackgroundTasks):
         data={"health_checks": health_data}
     )
 
-# Exception Handler 1: Rate Limiting
+# Exception Handler 1: Rate Limiting (app)
 @app.exception_handler(RateLimitExceeded)
 async def exception_handler_rate_limiting(request: Request, exc: RateLimitExceeded, background_tasks: BackgroundTasks):
     return utils.send_response(
@@ -155,7 +156,7 @@ async def exception_handler_rate_limiting(request: Request, exc: RateLimitExceed
         background_tasks=background_tasks
     )
 
-# Exception Handler 2: Error 404
+# Exception Handler 2: Error 404 (app)
 @app.exception_handler(404)
 async def exception_handler_error_404(request: Request, exec: HTTPException, background_tasks: BackgroundTasks):
     return utils.send_response(
@@ -171,7 +172,7 @@ async def exception_handler_error_404(request: Request, exec: HTTPException, bac
         }
     )
 
-# Exception Handler 3: Universal
+# Exception Handler 3: Universal (app)
 @app.exception_handler(Exception)
 async def exception_handler_universal(request: Request, exc: Exception, background_tasks: BackgroundTasks):
     error_details = "".join(traceback.format_exception(type(exc), exc, exc.__traceback__))
@@ -181,7 +182,7 @@ async def exception_handler_universal(request: Request, exc: Exception, backgrou
         request=request,
         status_code=500,
         success=False,
-        message="An internal server error occurred.",
+        message="An internal server error occurred. Please try again later.",
         background_tasks=background_tasks,
         meta={
             "error_type": type(exc).__name__,

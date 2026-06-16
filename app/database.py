@@ -24,8 +24,9 @@ import psycopg2
 from psycopg2 import pool
 from dotenv import load_dotenv
 
-# Initializing the Logger (Errors)
-logger = logging.getLogger("uvicorn.error")
+# Initializing the Logger
+logging.basicConfig(level=logging.WARNING)
+logger = logging.getLogger(__name__)
 
 # Loading Environment Variables
 load_dotenv()
@@ -94,7 +95,7 @@ def init_db(retry_count: int = 0) -> None:
 
             return init_db(retry_count=1)
         else:
-            logger.error("DATABASE ERROR:\nRetry failed. Dropping database initialization.")
+            logger.error("DATABASE ERROR:\nConnection retry failed. Dropping database initialization.")
     except Exception as init_db_exception:
         logger.error(f"DATABASE ERROR:\n{init_db_exception}")
     finally:
@@ -138,7 +139,7 @@ def check_connection(retry_count: int = 0) -> bool:
 
             return check_connection(retry_count=1)
         else:
-            logger.error("DATABASE ERROR:\nRetry failed. Dropping database initialization.")
+            logger.error("DATABASE ERROR:\nConnection retry failed. Dropping database initialization.")
             return False
     except Exception as check_connection_exception:
         logger.error(f"DATABASE ERROR:\n{check_connection_exception}")
@@ -239,7 +240,7 @@ def log_request(
                 origin, path, vercel_execution_id, http_version, retry_count=1
             )
         else:
-            logger.error("DATABASE ERROR:\nRetry failed. Dropping request log entry.")
+            logger.error("DATABASE ERROR:\nConnection retry failed. Dropping request log entry.")
     except Exception as log_request_exception:
         logger.error(f"DATABASE ERROR:\n{log_request_exception}")
     finally:
