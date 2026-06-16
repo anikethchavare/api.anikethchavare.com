@@ -20,7 +20,7 @@ limitations under the License.
 from app import utils
 from app import rate_limiter
 
-from fastapi import APIRouter, Request
+from fastapi import APIRouter, Request, BackgroundTasks
 
 # Initializing the "router_app_v1" API Router
 router_app_v1 = APIRouter(prefix="/v1")
@@ -28,10 +28,11 @@ router_app_v1 = APIRouter(prefix="/v1")
 # Route 1: main (router_app_v1)
 @router_app_v1.get("/")
 @rate_limiter.limiter.limit("60/minute")
-async def router_app_v1_main(request: Request):
+async def router_app_v1_main(request: Request, background_tasks: BackgroundTasks):
     return utils.send_response(
         request=request,
         status_code=200,
         success=True,
-        message="Welcome to Version 1 of the API."
+        message="Welcome to Version 1 of the API.",
+        background_tasks=background_tasks
     )

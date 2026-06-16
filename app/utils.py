@@ -21,12 +21,11 @@ from app import schemas
 from app import database
 
 import uuid
-import threading
 from typing import Any, Dict, Optional
 from datetime import datetime, timezone
 
-from fastapi import Request
 from fastapi.responses import JSONResponse
+from fastapi import Request, BackgroundTasks
 
 # Function 1: Send Response
 def send_response(
@@ -34,11 +33,13 @@ def send_response(
     status_code: int,
     success: bool,
     message: str,
+    background_tasks: BackgroundTasks,
     data: Optional[Dict[str, Any]] = None,
     meta: Optional[Dict[str, Any]] = None
 ) -> JSONResponse:
     """
-    Constructs and returns a standardized API response.
+    Constructs and returns a standardized API response. Also, logs the request
+    to the Neon (Vercel) database.
 
     This helper function ensures all API endpoints follow the unified response
     contract defined in the APIResponse schema. It automatically injects
@@ -50,6 +51,7 @@ def send_response(
         status_code: The HTTP status code to return.
         success: A boolean indicating if the operation was successful.
         message: A human-readable summary of the response or error.
+        background_tasks: An instance of FastAPI's "BackgroundTasks".
         data: The primary payload. If None, an empty dict is initialized.
         meta: Additional context. If None, an empty dict is initialized.
 
@@ -93,12 +95,6 @@ def send_response(
     response = schemas.APIResponse(**response_args)
 
     # Logging the Request
-    request_log_thread = threading.Thread(
-        target=database.log_request,
-        kwargs=response_args,
-        daemon=True
-    )
-
-    request_log_thread.start()
+    background_tasks.add_task(database.log_request, **response_args)
 
     return JSONResponse(content=response.model_dump())

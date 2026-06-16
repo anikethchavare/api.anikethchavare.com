@@ -31,7 +31,7 @@ from contextlib import asynccontextmanager
 
 from fastapi.responses import FileResponse
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi import FastAPI, Request, HTTPException
+from fastapi import FastAPI, Request, HTTPException, BackgroundTasks
 
 from slowapi.errors import RateLimitExceeded
 
@@ -103,12 +103,13 @@ app.include_router(router_app_v1)
 # Route 1: main (app)
 @app.get("/")
 @rate_limiter.limiter.limit("60/minute")
-async def app_main(request: Request):
+async def app_main(request: Request, background_tasks: BackgroundTasks):
     return utils.send_response(
         request=request,
         status_code=200,
         success=True,
-        message="A high-performance, general-purpose public REST API powered by FastAPI and Python."
+        message="A high-performance, general-purpose public REST API powered by FastAPI and Python.",
+        background_tasks=background_tasks
     )
 
 # Route 2: favicon.ico (app)
@@ -122,7 +123,7 @@ async def app_favicon(request: Request):
 
 # Route 3: health (app)
 @app.get("/health", include_in_schema=False)
-async def app_health(request: Request):
+async def app_health(request: Request, background_tasks: BackgroundTasks):
     # Performing Health Checks
     api_working = True if app.router.routes else False
     db_working = database.check_connection()
@@ -139,27 +140,30 @@ async def app_health(request: Request):
         status_code=200 if healthy else 503,
         success=healthy,
         message="API is healthy and running." if healthy else "API is unhealthy and non-responsive. One or more internal services are currently unavailable.",
+        background_tasks=background_tasks,
         data={"health_checks": health_data}
     )
 
 # Exception Handler 1: Rate Limiting
 @app.exception_handler(RateLimitExceeded)
-async def exception_handler_rate_limiting(request: Request, exc: RateLimitExceeded):
+async def exception_handler_rate_limiting(request: Request, exc: RateLimitExceeded, background_tasks: BackgroundTasks):
     return utils.send_response(
         request=request,
         status_code=429,
         success=False,
-        message="Rate limit exceeded. Please try again later."
+        message="Rate limit exceeded. Please try again later.",
+        background_tasks=background_tasks
     )
 
 # Exception Handler 2: Error 404
 @app.exception_handler(404)
-async def exception_handler_error_404(request: Request, exec: HTTPException):
+async def exception_handler_error_404(request: Request, exec: HTTPException, background_tasks: BackgroundTasks):
     return utils.send_response(
         request=request,
         status_code=404,
         success=False,
         message="The requested route does not exist.",
+        background_tasks=background_tasks,
         meta={
             "path": request.url.path,
             "help": "Check the API documentation for valid endpoints.",
@@ -169,7 +173,7 @@ async def exception_handler_error_404(request: Request, exec: HTTPException):
 
 # Exception Handler 3: Universal
 @app.exception_handler(Exception)
-async def exception_handler_universal(request: Request, exc: Exception):
+async def exception_handler_universal(request: Request, exc: Exception, background_tasks: BackgroundTasks):
     error_details = "".join(traceback.format_exception(type(exc), exc, exc.__traceback__))
     logger.error(f"INTERNAL SERVER ERROR on {request.url.path}:\n{error_details}")
 
@@ -178,6 +182,7 @@ async def exception_handler_universal(request: Request, exc: Exception):
         status_code=500,
         success=False,
         message="An internal server error occurred.",
+        background_tasks=background_tasks,
         meta={
             "error_type": type(exc).__name__,
             "path": request.url.path,
