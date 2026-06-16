@@ -23,6 +23,7 @@ import logging
 import psycopg2
 from psycopg2 import pool
 from dotenv import load_dotenv
+from typing import Any, Callable
 
 # Initializing the Logger
 logging.basicConfig(level=logging.WARNING)
@@ -42,6 +43,46 @@ try:
     )
 except Exception as connection_pool_exception:
     logger.error(f"DATABASE ERROR:\n{connection_pool_exception}")
+
+# Handler Function 1: Handle DB Exception
+def _handle_db_exception(
+        exception: Exception,
+        connection: Any,
+        retry_func: Callable[..., Any],
+        *args: Any,
+        **kwargs: Any
+) -> Any:
+    """
+    Centralized handler for database exceptions.
+
+    Args:
+        exception: The database exception to handle.
+        connection: The database connection.
+        retry_func: Function to be retried.
+        *args: Arguments to be passed.
+        **kwargs: Keyword arguments to be passed.
+
+    Returns:
+        Any (Object of any data type).
+    """
+
+    retry_count = kwargs.get("retry_count", 0)
+
+    if isinstance(exception, (psycopg2.OperationalError, psycopg2.InterfaceError)):
+        if retry_count < 1:
+            logger.warning(f"DATABASE WARNING:\nConnection lost. Retrying... (Error: {exception})")
+
+            if connection:
+                connection_pool.putconn(connection, close=True)
+
+            kwargs["retry_count"] = retry_count + 1
+            return retry_func(*args, **kwargs)
+        else:
+            logger.error(f"DATABASE ERROR:\nConnection retry failed. Dropping operation: {retry_func.__name__}")
+            return False
+    else:
+        logger.error(f"DATABASE ERROR:\n{exception}")
+        return False
 
 # Function 1: Initialize Database
 def init_db(retry_count: int = 0) -> None:
@@ -85,19 +126,8 @@ def init_db(retry_count: int = 0) -> None:
 
         # Closing the Cursor
         cursor.close()
-    except (psycopg2.OperationalError, psycopg2.InterfaceError) as \
-            init_db_psycopg2_exception:
-        if retry_count < 1:
-            logger.warning(f"DATABASE WARNING:\nConnection lost. Retrying... (Error: {init_db_psycopg2_exception})")
-
-            if connection:
-                connection_pool.putconn(connection, close=True)
-
-            return init_db(retry_count=1)
-        else:
-            logger.error("DATABASE ERROR:\nConnection retry failed. Dropping database initialization.")
-    except Exception as init_db_exception:
-        logger.error(f"DATABASE ERROR:\n{init_db_exception}")
+    except Exception as db_exception:
+        return _handle_db_exception(db_exception, connection, init_db, retry_count=retry_count)
     finally:
         if connection:
             connection_pool.putconn(connection)
@@ -129,21 +159,8 @@ def check_connection(retry_count: int = 0) -> bool:
         # Closing the Cursor
         cursor.close()
         return True
-    except (psycopg2.OperationalError, psycopg2.InterfaceError) as \
-            check_connection_psycopg2_exception:
-        if retry_count < 1:
-            logger.warning(f"DATABASE WARNING:\nConnection lost. Retrying... (Error: {check_connection_psycopg2_exception})")
-
-            if connection:
-                connection_pool.putconn(connection, close=True)
-
-            return check_connection(retry_count=1)
-        else:
-            logger.error("DATABASE ERROR:\nConnection retry failed. Dropping database initialization.")
-            return False
-    except Exception as check_connection_exception:
-        logger.error(f"DATABASE ERROR:\n{check_connection_exception}")
-        return False
+    except Exception as db_exception:
+        return _handle_db_exception(db_exception, connection, check_connection, retry_count=retry_count)
     finally:
         if connection:
             connection_pool.putconn(connection)
@@ -191,6 +208,8 @@ def log_request(
     """
 
     connection = None
+    local_args = locals()
+    del local_args["connection"]
 
     try:
         # Fetching a Connection from the Pool
@@ -226,23 +245,8 @@ def log_request(
 
         # Closing the Cursor
         cursor.close()
-    except (psycopg2.OperationalError, psycopg2.InterfaceError) as \
-            log_request_psycopg2_exception:
-        if retry_count < 1:
-            logger.warning(f"DATABASE WARNING:\nConnection lost. Retrying... (Error: {log_request_psycopg2_exception})")
-
-            if connection:
-                connection_pool.putconn(connection, close=True)
-
-            return log_request(
-                request_id, success, message, data, meta, api_version,
-                timestamp, status_code, ip_address, user_agent,
-                origin, path, vercel_execution_id, http_version, retry_count=1
-            )
-        else:
-            logger.error("DATABASE ERROR:\nConnection retry failed. Dropping request log entry.")
-    except Exception as log_request_exception:
-        logger.error(f"DATABASE ERROR:\n{log_request_exception}")
+    except Exception as db_exception:
+        return _handle_db_exception(db_exception, connection, log_request, **local_args)
     finally:
         if connection:
             connection_pool.putconn(connection)

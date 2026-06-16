@@ -19,7 +19,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Optimized asynchronous database request logging by shifting to native ASGI lifecycle background tasks.
 
 ### Refactored
-- Improved some logging messages and its code.
+- Improved some logging messages.
+- Centralized duplicated database connection exception handling into a single helper function `_handle_db_exception`.
 
 ### Documentation
 - Refined the project description to better reflect the API's general-purpose utility nature.
