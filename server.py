@@ -25,8 +25,10 @@ from app import rate_limiter
 from routers.app_v1 import router_app_v1
 
 import os
+import uuid
 import logging
 import traceback
+from datetime import datetime, timezone
 from contextlib import asynccontextmanager
 
 from fastapi.responses import FileResponse
@@ -108,6 +110,23 @@ async def middleware_security_headers(request: Request, call_next):
 
     return response
 
+# Middleware 2: Telemetry Pre-Calculation (app)
+@app.middleware("http")
+async def middleware_telemetry_pre_calculation(request: Request, call_next):
+    request.state.request_id = f"req_{uuid.uuid4()}"
+    request.state.timestamp = datetime.now(timezone.utc).isoformat()
+
+    request.state.telemetry_data = {
+        "ip_address": request.client.host if request.client else "unknown",
+        "user_agent": request.headers.get("user-agent"),
+        "origin": request.headers.get("origin") or "direct",
+        "path": request.url.path,
+        "vercel_execution_id": request.headers.get("X-Vercel-Id"),
+        "http_version": request.scope.get("http_version")
+    }
+
+    return await call_next(request)
+
 # Include the API Routers
 app.include_router(router_app_v1)
 
@@ -157,24 +176,24 @@ async def app_health(request: Request, background_tasks: BackgroundTasks):
 
 # Exception Handler 1: Rate Limiting (app)
 @app.exception_handler(RateLimitExceeded)
-async def exception_handler_rate_limiting(request: Request, exc: RateLimitExceeded, background_tasks: BackgroundTasks):
+async def exception_handler_rate_limiting(request: Request, exc: RateLimitExceeded):
     return utils.send_response(
         request=request,
         status_code=429,
         success=False,
         message="Rate limit exceeded. Please try again later.",
-        background_tasks=background_tasks
+        background_tasks=BackgroundTasks()
     )
 
 # Exception Handler 2: Error 404 (app)
 @app.exception_handler(404)
-async def exception_handler_error_404(request: Request, exec: HTTPException, background_tasks: BackgroundTasks):
+async def exception_handler_error_404(request: Request, exec: HTTPException):
     return utils.send_response(
         request=request,
         status_code=404,
         success=False,
         message="The requested route does not exist.",
-        background_tasks=background_tasks,
+        background_tasks=BackgroundTasks(),
         meta={
             "path": request.url.path,
             "help": "Check the API documentation for valid endpoints.",
@@ -184,7 +203,7 @@ async def exception_handler_error_404(request: Request, exec: HTTPException, bac
 
 # Exception Handler 3: Universal (app)
 @app.exception_handler(Exception)
-async def exception_handler_universal(request: Request, exc: Exception, background_tasks: BackgroundTasks):
+async def exception_handler_universal(request: Request, exc: Exception):
     error_details = "".join(traceback.format_exception(type(exc), exc, exc.__traceback__))
     logger.error(f"INTERNAL SERVER ERROR on {request.url.path}:\n{error_details}")
 
@@ -193,7 +212,7 @@ async def exception_handler_universal(request: Request, exc: Exception, backgrou
         status_code=500,
         success=False,
         message="An internal server error occurred. Please try again later.",
-        background_tasks=background_tasks,
+        background_tasks=BackgroundTasks(),
         meta={
             "error_type": type(exc).__name__,
             "path": request.url.path,

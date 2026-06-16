@@ -20,9 +20,7 @@ limitations under the License.
 from app import schemas
 from app import database
 
-import uuid
 from typing import Any, Dict, Optional
-from datetime import datetime, timezone
 
 from fastapi.responses import JSONResponse
 from fastapi import Request, BackgroundTasks
@@ -64,14 +62,9 @@ def send_response(
     base_meta = {"rate_limit": "60 requests per minute."}
 
     # Initialize Fresh Dictionaries for "data" and "meta" if None
-    if data is None:
-        data = {}
-    if meta is None:
-        meta = {}
-
-    # Merge Additional Meta Info
-    if meta:
-        base_meta.update(meta)
+    if data is None: data = {}
+    if meta is None: meta = {}
+    if meta: base_meta.update(meta)
 
     # Defining Response Dictionary
     response_args = {
@@ -80,15 +73,10 @@ def send_response(
         "data": data,
         "meta": base_meta,
         "api_version": schemas.API_VERSION,
-        "timestamp": datetime.now(timezone.utc).isoformat(),
-        "request_id": f"req_{uuid.uuid4()}",
+        "timestamp": request.state.timestamp,
+        "request_id": request.state.request_id,
         "status_code": status_code,
-        "ip_address": request.client.host,
-        "user_agent": request.headers.get("user-agent"),
-        "origin": request.headers.get("origin") or "direct",
-        "path": request.url.path,
-        "vercel_execution_id": request.headers.get("X-Vercel-Id"),
-        "http_version": request.scope.get("http_version")
+        **request.state.telemetry_data
     }
 
     # Creating the APIResponse Model
