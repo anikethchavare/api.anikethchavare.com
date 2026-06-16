@@ -21,7 +21,7 @@ from typing import Any, Dict
 from pydantic import BaseModel
 
 # Constants
-API_VERSION = "0.7.0"
+API_VERSION = "0.8.0"
 
 # Class 1 - API Response
 class APIResponse(BaseModel):
