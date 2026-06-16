@@ -82,19 +82,25 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# Global Security Headers
+SECURITY_HEADERS = {
+    "X-XSS-Protection": "0",
+    "X-Frame-Options": "DENY",
+    "Referrer-Policy": "no-referrer",
+    "X-Content-Type-Options": "nosniff",
+    "X-API-VERSION": schemas.API_VERSION,
+    "Permissions-Policy": "geolocation=(), camera=(), microphone=()",
+    "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+    "Content-Security-Policy": "default-src 'none'; frame-ancestors 'none'; sandbox"
+}
+
 # Middleware 1: Security Headers (app)
 @app.middleware("http")
 async def middleware_security_headers(request: Request, call_next):
     response = await call_next(request)
 
-    response.headers["X-XSS-Protection"] = "0"
-    response.headers["X-Frame-Options"] = "DENY"
-    response.headers["Referrer-Policy"] = "no-referrer"
-    response.headers["X-Content-Type-Options"] = "nosniff"
-    response.headers["X-API-VERSION"] = schemas.API_VERSION
-    response.headers["Permissions-Policy"] = "geolocation=(), camera=(), microphone=()"
-    response.headers["Strict-Transport-Security"] = "max-age=31536000; includeSubDomains"
-    response.headers["Content-Security-Policy"] = "default-src 'none'; frame-ancestors 'none'; sandbox"
+    for name, value in SECURITY_HEADERS.items():
+        response.headers[name] = value
 
     return response
 
