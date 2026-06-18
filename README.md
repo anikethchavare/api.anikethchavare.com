@@ -1,20 +1,20 @@
-<div style="text-align: center;"><h1>anikethchavare // api.anikethchavare.com</h1></div>
-<div style="text-align: center;"><strong>A high-performance, general-purpose public REST API <br> powered by FastAPI and Python.</strong></div>
+<div align="center"><h1>anikethchavare // api.anikethchavare.com</h1></div>
+<div align="center"><strong>A high-performance, general-purpose public REST API <br> powered by FastAPI and Python.</strong></div>
 
 <br>
 
-<div style="text-align: center;"><img width="575" alt="Main Image for README (Code Snippet)" src="https://github.com/user-attachments/assets/f565f99b-a88f-447c-ad6c-b022d106f223"></div>
+<div align="center"><img width="575" alt="Main Image for README (Code Snippet)" src="https://github.com/user-attachments/assets/f565f99b-a88f-447c-ad6c-b022d106f223"></div>
 
 <br>
 
-<div style="text-align: center;">
+<div align="center">
     🚀 <a href="https://api.anikethchavare.com">Access the API</a>&nbsp;&nbsp;•
     ⚠️ <a href="https://github.com/anikethchavare/api.anikethchavare.com/issues">Report an Issue</a>
 </div>
 
 <br>
 
-<div style="text-align: center;">
+<div align="center">
     <img src="https://img.shields.io/badge/FastAPI-005863?style=for-the-badge&logo=fastapi&logoColor=white" alt="FastAPI">&nbsp;&nbsp;
     <img src="https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54" alt="Python">&nbsp;&nbsp;
     <img src="https://img.shields.io/badge/vercel-%23000000.svg?style=for-the-badge&logo=vercel&logoColor=white" alt="Vercel">&nbsp;&nbsp;
