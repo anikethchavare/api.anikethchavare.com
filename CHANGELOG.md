@@ -6,15 +6,29 @@ this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+The format will be:
+- Added
+- Changed
+- Fixed
+- Removed
+- Security
+- Refactored
+- Performance
+- Documentation
+
 ## [Unreleased]
 
 ### Changed
-- Cleaned up and updated dependencies.
+- Cleaned up and updated dependencies to latest versions.
 
 ### Refactored
 - Set the security headers as a global dictionary. Response security headers will be set via a loop.
 - Migrated the database connection layer and telemetry pipeline to a non-blocking asynchronous architecture.
 - Implemented a telemetry pre-calculation middleware to parse incoming requests.
+
+### Documentation
+- Finalized `README.md` structure with numbered sections and updated content. 
+- Updated `CREDITS.md` to cleanly document all 6 primary core backend dependencies.
 
 ## [0.8.0] - 2026-06-16
 
