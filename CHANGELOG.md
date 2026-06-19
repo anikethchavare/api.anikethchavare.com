@@ -29,6 +29,7 @@ The format will be:
 ### Documentation
 - Finalized `README.md` structure with numbered sections and updated content. 
 - Updated `CREDITS.md` to cleanly document all 6 primary core backend dependencies.
+- Finalized the comprehensive API documentation under `/docs` for the official `v1.0.0` release.
 
 ## [0.8.0] - 2026-06-16
 
