@@ -16,7 +16,7 @@ The format will be:
 - Performance
 - Documentation
 
-## [Unreleased]
+## [1.0.0] - 2026-06-19
 
 ### Changed
 - Cleaned up and updated dependencies to latest versions.
@@ -141,6 +141,7 @@ ensure frontend stability.
 - Established `requirements.txt` with core dependencies (FastAPI, Pydantic).
 
 ---
+[1.0.0]: https://github.com/anikethchavare/api.anikethchavare.com/releases/tag/v1.0.0
 [0.8.0]: https://github.com/anikethchavare/api.anikethchavare.com/releases/tag/v0.8.0
 [0.7.0]: https://github.com/anikethchavare/api.anikethchavare.com/releases/tag/v0.7.0
 [0.6.1]: https://github.com/anikethchavare/api.anikethchavare.com/releases/tag/v0.6.1
