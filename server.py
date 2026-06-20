@@ -218,5 +218,6 @@ async def exception_handler_universal(request: Request, exc: Exception):
             "path": request.url.path,
             "report_issue": "https://github.com/anikethchavare/api.anikethchavare.com/issues",
             "help": "If this persists, please open an issue with the request_id."
-        }
+        },
+        error_details=error_details
     )

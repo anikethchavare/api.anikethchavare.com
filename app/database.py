@@ -145,7 +145,8 @@ async def init_db(retry_count: int = 0) -> None:
                         origin TEXT,
                         path TEXT,
                         vercel_execution_id TEXT,
-                        http_version TEXT
+                        http_version TEXT,
+                        error_details TEXT
                     );
                 """)
     except Exception as db_exception:
@@ -200,6 +201,7 @@ async def log_request(
         path: str,
         vercel_execution_id: str,
         http_version: str,
+        error_details: str,
         retry_count: int = 0
 ) -> None:
     """
@@ -220,6 +222,7 @@ async def log_request(
         path: The specific endpoint path being accessed.
         vercel_execution_id: The unique execution trace ID injected by Vercel.
         http_version: The HTTP protocol version used for the request.
+        error_details: Traceback details in case of an error.
         retry_count: The number of times to retry the request.
 
     Returns:
@@ -240,8 +243,8 @@ async def log_request(
                 INSERT INTO request_logs (
                     request_id, success, message, data, meta,
                     api_version, timestamp, status_code, ip_address, user_agent,
-                    origin, path, vercel_execution_id, http_version
-                ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);
+                    origin, path, vercel_execution_id, http_version, error_details
+                ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);
                 """, (
                 request_id,
                 success,
@@ -256,7 +259,8 @@ async def log_request(
                 origin,
                 path,
                 vercel_execution_id,
-                http_version
+                http_version,
+                error_details
             ))
     except Exception as db_exception:
         return await _handle_db_exception(db_exception, connection, log_request, **local_args)

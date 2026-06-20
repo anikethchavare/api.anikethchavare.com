@@ -33,7 +33,8 @@ def send_response(
     message: str,
     background_tasks: BackgroundTasks,
     data: Optional[Dict[str, Any]] = None,
-    meta: Optional[Dict[str, Any]] = None
+    meta: Optional[Dict[str, Any]] = None,
+    error_details: str = None
 ) -> JSONResponse:
     """
     Constructs and returns a standardized API response. Also, logs the request
@@ -52,6 +53,7 @@ def send_response(
         background_tasks: An instance of FastAPI's "BackgroundTasks".
         data: The primary payload. If None, an empty dict is initialized.
         meta: Additional context. If None, an empty dict is initialized.
+        error_details: Traceback details in case of an error.
 
     Returns:
         A FastAPI JSONResponse object containing the serialized APIResponse
@@ -76,6 +78,7 @@ def send_response(
         "timestamp": request.state.timestamp,
         "request_id": request.state.request_id,
         "status_code": status_code,
+        "error_details": error_details,
         **request.state.telemetry_data
     }
 
