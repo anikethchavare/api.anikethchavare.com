@@ -14,6 +14,7 @@ These endpoints are bound directly to the `router_app_v1` router and operate und
 * **Description:** Serves as the introductory entry point.
 * **HTTP Method:** `GET`
 * **Response Type:** `application/json`
+* **Example Request URL:** `https://api.anikethchavare.com/v1`
 * **Example Response:**
 ```json
 {
@@ -23,7 +24,7 @@ These endpoints are bound directly to the `router_app_v1` router and operate und
     "meta": {
         "rate_limit": "60 requests per minute."
     },
-    "api_version": "1.0.0",
+    "api_version": "1.1.0",
     "timestamp": "2026-06-19T11:37:05.738455+00:00",
     "request_id": "req_9e7abd1e-548f-4260-a50f-0e3a4e50109e",
     "status_code": 200
@@ -34,4 +35,4 @@ These endpoints are bound directly to the `router_app_v1` router and operate und
 
 ## 2. 🧭 Next Guide
 
-Additional feature sets, utility endpoints, and expanded business logic are currently in development and will be documented here as they release.
+* **[2_language.md](./2_language.md) $\rightarrow$** Explore the `language` utility namespace.

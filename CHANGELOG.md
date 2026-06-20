@@ -19,7 +19,7 @@ The format will be:
 ## [Unreleased]
 
 ### Added
-- Introduced the `language` utility sub-router namespace under the `/v1` prefix.
+- Introduced the `language` utility namespace under the `/v1` prefix.
 - **language**: Added a `/dictionary` endpoint to query words via an external API.
 - Added a custom global exception handler for `RequestValidationError` to return structured, detailed data validation diagnostics.
 
@@ -38,6 +38,7 @@ The format will be:
 ### Documentation
 - Updated the hyperlink to the documentation in `README.md`.
 - Updated `CREDITS.md` to reflect new dependencies.
+- Completely updated all API endpoints with standardized documentation for v1.1.0, including explicit "Possible Exceptions" breakdowns and error states.
 
 ## [1.0.0] - 2026-06-19
 

@@ -25,6 +25,7 @@ These base endpoints are attached directly to the underlying application instanc
 * **Description:** Serves as the introductory entry point.
 * **HTTP Method:** `GET`
 * **Response Type:** `application/json`
+* **Example Request URL:** `https://api.anikethchavare.com`
 * **Example Response:**
 ```json
 {
@@ -34,7 +35,7 @@ These base endpoints are attached directly to the underlying application instanc
     "meta": {
         "rate_limit": "60 requests per minute."
     },
-    "api_version": "1.0.0",
+    "api_version": "1.1.0",
     "timestamp": "2026-06-19T03:50:27.795509+00:00",
     "request_id": "req_e085e44c-eea3-495c-a9be-bb4e90a6694d",
     "status_code": 200
@@ -45,12 +46,16 @@ These base endpoints are attached directly to the underlying application instanc
 * **Description:** Retrieves the standard graphic favicon of the API.
 * **HTTP Method:** `GET`
 * **Response Type:** `image/x-icon`
+* **Example Request URL:** `https://api.anikethchavare.com/favicon.ico`
 * **Example Response:** Binary stream of image/x-icon asset.
 
 ### 3. `/health`
 * **Description:** Performs an operational check to verify the overall health, status, and availability of the API.
 * **HTTP Method:** `GET`
 * **Response Type:** `application/json`
+* **Possible Exceptions:**
+  * `503 Service Unavailable` (`ServiceStatusFailure`): Returned if the application is running but failing its internal service checks.
+* **Example Request URL:** `https://api.anikethchavare.com/health`
 * **Example Response:**
 ```json
 {
@@ -65,7 +70,7 @@ These base endpoints are attached directly to the underlying application instanc
     "meta": {
         "rate_limit": "60 requests per minute."
     },
-    "api_version": "1.0.0",
+    "api_version": "1.1.0",
     "timestamp": "2026-06-19T04:01:15.922319+00:00",
     "request_id": "req_742e83f5-044d-4f02-bf52-ecfb2c5e1de9",
     "status_code": 200

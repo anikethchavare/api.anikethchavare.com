@@ -21,4 +21,4 @@ This document defines the global JSON response structure utilized by the API. Ev
 
 ## 2. 🧭 Next Guide
 
-* **[3_error_handling.md](./3_error_handling.md) $\rightarrow$** Explore the API error codes, the universal exception handler, and layouts for 404 and rate limiting errors.
+* **[3_global_error_handling.md](./3_global_error_handling.md) $\rightarrow$** Explore the API error codes, the universal exception handler, and layouts for 404 and rate limiting errors.

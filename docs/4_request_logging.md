@@ -24,6 +24,7 @@ The table below defines the exact data points extracted from the network lifecyc
 | `path` | `TEXT`                     | HTTP Request | The absolute path endpoint targeted by the client (e.g., `/v1/sample`). |
 | `vercel_execution_id` | `TEXT`                     | Environment | The specific internal function execution ID assigned by the Vercel serverless platform. |
 | `http_version` | `TEXT`                     | HTTP Request | The HTTP protocol version used for the connection (e.g., `1.1`, `2`). |
+| `error_details` | `TEXT` | HTTP Response | The complete stack trace string capturing unhandled server exceptions (null if successful). |
 
 <hr>
 
