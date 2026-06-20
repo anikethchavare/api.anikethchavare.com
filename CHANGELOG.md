@@ -36,6 +36,7 @@ The format will be:
 
 ### Documentation
 - Updated the hyperlink to the documentation in `README.md`.
+- Updated `CREDITS.md` to reflect new dependencies.
 
 ## [1.0.0] - 2026-06-19
 
