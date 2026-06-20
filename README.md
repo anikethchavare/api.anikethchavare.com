@@ -90,7 +90,7 @@ Ensure you have **Python 3.10+** and a **PostgreSQL** database ready.
 
 For detailed guides on endpoints, response schemas, and error handling, please visit the dedicated documentation directory:
 
-📂 **[Explore the API Documentation](https://github.com/anikethchavare/api.anikethchavare.com/tree/main/docs)**
+📂 **[Explore the API Documentation](https://github.com/anikethchavare/api.anikethchavare.com/tree/main/docs/1_introduction.md)**
 
 <hr>
 

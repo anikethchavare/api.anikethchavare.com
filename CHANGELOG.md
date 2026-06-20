@@ -16,6 +16,11 @@ The format will be:
 - Performance
 - Documentation
 
+## [Unreleased]
+
+### Documentation
+- Updated the hyperlink to the documentation.
+
 ## [1.0.0] - 2026-06-19
 
 ### Changed
