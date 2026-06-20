@@ -16,7 +16,7 @@ The format will be:
 - Performance
 - Documentation
 
-## [Unreleased]
+## [1.1.0] - 2026-06-20
 
 ### Added
 - Introduced the `language` utility namespace under the `/v1` prefix.
@@ -165,6 +165,7 @@ ensure frontend stability.
 - Established `requirements.txt` with core dependencies (FastAPI, Pydantic).
 
 ---
+[1.1.0]: https://github.com/anikethchavare/api.anikethchavare.com/releases/tag/v1.1.0
 [1.0.0]: https://github.com/anikethchavare/api.anikethchavare.com/releases/tag/v1.0.0
 [0.8.0]: https://github.com/anikethchavare/api.anikethchavare.com/releases/tag/v0.8.0
 [0.7.0]: https://github.com/anikethchavare/api.anikethchavare.com/releases/tag/v0.7.0

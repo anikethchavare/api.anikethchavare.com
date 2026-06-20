@@ -2,7 +2,7 @@
 
 Welcome to the documentation of `api.anikethchavare.com`. This is a high-performance, general-purpose public REST API powered by FastAPI and Python.
 
-* **Current Release:** v1.0.0
+* **Current Release:** v1.1.0
 * **Production Base URL:** `https://api.anikethchavare.com`
 
 <hr>

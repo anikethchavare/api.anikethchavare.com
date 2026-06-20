@@ -21,7 +21,7 @@
     <img src="https://img.shields.io/badge/Postgresql-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white" alt="PostgreSQL">&nbsp;&nbsp;
     <img src="https://img.shields.io/badge/JSON-000000?style=for-the-badge&logo=json&logoColor=white" alt="JSON">
     <br><br>
-    <img src="https://img.shields.io/badge/version-1.0.0-blue?style=for-the-badge&logo=github&logoColor=white" alt="Version">&nbsp;&nbsp;
+    <img src="https://img.shields.io/badge/version-1.1.0-blue?style=for-the-badge&logo=github&logoColor=white" alt="Version">&nbsp;&nbsp;
     <img src="https://img.shields.io/badge/Status-Online-brightgreen?style=for-the-badge&logo=statuspage&logoColor=white" alt="Status: Online">&nbsp;&nbsp;
     <img src="https://img.shields.io/badge/license-Apache_2.0-blue?style=for-the-badge&logo=apache&logoColor=white" alt="Apache 2.0 License">&nbsp;&nbsp;
     <img src="https://img.shields.io/badge/maintained-yes-brightgreen?style=for-the-badge&logo=checkmarx&logoColor=white" alt="Maintenance: Active">
@@ -46,7 +46,7 @@ Designed as a general-purpose utility engine, this **API** offers a versatile su
 
 This project leverages a modern, asynchronous Python stack to provide a high-performance and reliable foundation for the API.
 
-* **Framework: [FastAPI](https://fastapi.tiangolo.com/) (v0.137.1)** – Asynchronous framework for low-latency request handling.
+* **Framework: [FastAPI](https://fastapi.tiangolo.com/) (v0.138.0)** – Asynchronous framework for low-latency request handling.
 * **Validation: [Pydantic](https://docs.pydantic.dev/) (v2.13.4)** – Data validation and settings management using Python type hints.
 * **Rate Limiting: [SlowAPI](https://github.com/laurents/slowapi) (v0.1.10)** – Enforces per-endpoint rate limits to ensure service stability.
 * **Database: [PostgreSQL](https://vercel.com/marketplace/neon)** – Asynchronous telemetry and logging storage handled via `psycopg` pooling.
