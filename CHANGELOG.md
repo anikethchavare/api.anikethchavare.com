@@ -18,8 +18,12 @@ The format will be:
 
 ## [Unreleased]
 
+### Performance
+- Reduced response time by injecting security headers into every response via the `.update()` method instead of manual for loop iteration.
+- Security headers will be injected into every response via the `.update()` function 
+
 ### Documentation
-- Updated the hyperlink to the documentation.
+- Updated the hyperlink to the documentation in `README.md`.
 
 ## [1.0.0] - 2026-06-19
 

@@ -105,8 +105,7 @@ SECURITY_HEADERS = {
 async def middleware_security_headers(request: Request, call_next):
     response = await call_next(request)
 
-    for name, value in SECURITY_HEADERS.items():
-        response.headers[name] = value
+    response.headers.update(SECURITY_HEADERS)
 
     return response
 
