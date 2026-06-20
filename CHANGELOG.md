@@ -20,6 +20,7 @@ The format will be:
 
 ### Added
 - Introduced the `language` utility sub-router namespace under the `/v1` prefix.
+- **language**: Added a `/dictionary` endpoint to query words via an external API.
 
 ### Fixed
 - Updated the favicon's location to an absolute file path.

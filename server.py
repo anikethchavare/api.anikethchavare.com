@@ -133,7 +133,7 @@ async def middleware_telemetry_pre_calculation(request: Request, call_next):
 # Include the API Routers
 app.include_router(app_v1)
 
-# Route 1: main (app)
+# Route 1: Main (app)
 @app.get("/")
 @rate_limiter.limiter.limit("60/minute")
 async def app_main(request: Request, background_tasks: BackgroundTasks):
@@ -155,7 +155,7 @@ async def app_main(request: Request, background_tasks: BackgroundTasks):
 async def app_favicon(request: Request):
     return FileResponse(FAVICON_PATH, status_code=200)
 
-# Route 3: health (app)
+# Route 3: Health (app)
 @app.get("/health", include_in_schema=False)
 async def app_health(request: Request, background_tasks: BackgroundTasks):
     # Performing Health Checks

@@ -30,7 +30,7 @@ app_v1 = APIRouter(prefix="/v1")
 # Include the API Routers
 app_v1.include_router(app_v1_language)
 
-# Route 1: main (app_v1)
+# Route 1: Main (app_v1)
 @app_v1.get("/")
 @rate_limiter.limiter.limit("60/minute")
 async def app_v1_main(request: Request, background_tasks: BackgroundTasks):
