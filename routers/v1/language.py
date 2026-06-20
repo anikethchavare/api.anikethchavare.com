@@ -40,7 +40,7 @@ async def app_v1_language_main(request: Request, background_tasks: BackgroundTas
         message="Welcome to the 'language' utility namespace. Check the documentation for available endpoints.",
         background_tasks=background_tasks,
         meta={
-            "help": "Check the API v1 documentation for available endpoints.",
+            "help": "Check the API v1 documentation (/language) for available endpoints.",
             "docs": "https://github.com/anikethchavare/api.anikethchavare.com/tree/main/docs/v1/2_language.md"
         }
     )

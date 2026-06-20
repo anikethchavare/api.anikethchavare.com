@@ -33,6 +33,7 @@ from contextlib import asynccontextmanager
 
 from fastapi.responses import FileResponse
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.exceptions import RequestValidationError
 from fastapi import FastAPI, Request, HTTPException, BackgroundTasks
 
 from slowapi.errors import RateLimitExceeded
@@ -191,7 +192,7 @@ async def exception_handler_rate_limiting(request: Request, exc: RateLimitExceed
 
 # Exception Handler 2: Error 404 (app)
 @app.exception_handler(404)
-async def exception_handler_error_404(request: Request, exec: HTTPException):
+async def exception_handler_error_404(request: Request, exc: HTTPException):
     return utils.send_response(
         request=request,
         status_code=404,
@@ -205,7 +206,43 @@ async def exception_handler_error_404(request: Request, exec: HTTPException):
         }
     )
 
-# Exception Handler 3: Universal (app)
+# Exception Handler 3: Data Validation (app)
+@app.exception_handler(RequestValidationError)
+async def exception_handler_data_validation(request: Request, exc: RequestValidationError):
+    errors_list = []
+
+    for error in exc.errors():
+        location = " - ".join(str(loc) for loc in error.get("loc", []))
+
+        error_details = {
+            "location": location,
+            "type": error.get("type"),
+            "message": error.get("msg"),
+        }
+
+        if "ctx" in error:
+            error_details["context"] = error["ctx"]
+
+        errors_list.append(error_details)
+
+    return utils.send_response(
+        request=request,
+        status_code=422,
+        success=False,
+        message="The request payload or parameters failed data validation checks.",
+        background_tasks=BackgroundTasks(),
+        data={
+            "validation_errors": errors_list
+        },
+        meta={
+            "path": request.url.path,
+            "help": "Check the API documentation for valid endpoints and corresponding parameters. If this persists, please open an issue with the request_id.",
+            "docs": "https://github.com/anikethchavare/api.anikethchavare.com/tree/main/docs/1_introduction.md",
+            "report_issue": "https://github.com/anikethchavare/api.anikethchavare.com/issues"
+        }
+    )
+
+# Exception Handler 4: Universal (app)
 @app.exception_handler(Exception)
 async def exception_handler_universal(request: Request, exc: Exception):
     error_details = "".join(traceback.format_exception(type(exc), exc, exc.__traceback__))
@@ -220,8 +257,8 @@ async def exception_handler_universal(request: Request, exc: Exception):
         meta={
             "error_type": type(exc).__name__,
             "path": request.url.path,
-            "report_issue": "https://github.com/anikethchavare/api.anikethchavare.com/issues",
-            "help": "If this persists, please open an issue with the request_id."
+            "help": "If this persists, please open an issue with the request_id.",
+            "report_issue": "https://github.com/anikethchavare/api.anikethchavare.com/issues"
         },
         error_details=error_details
     )
