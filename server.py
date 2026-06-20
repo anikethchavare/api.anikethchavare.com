@@ -22,7 +22,7 @@ from app import schemas
 from app import database
 from app import rate_limiter
 
-from routers.app_v1 import router_app_v1
+from routers.app_v1 import app_v1
 
 import os
 import uuid
@@ -131,7 +131,7 @@ async def middleware_telemetry_pre_calculation(request: Request, call_next):
     return await call_next(request)
 
 # Include the API Routers
-app.include_router(router_app_v1)
+app.include_router(app_v1)
 
 # Route 1: main (app)
 @app.get("/")
@@ -142,7 +142,11 @@ async def app_main(request: Request, background_tasks: BackgroundTasks):
         status_code=200,
         success=True,
         message="A high-performance, general-purpose public REST API powered by FastAPI and Python.",
-        background_tasks=background_tasks
+        background_tasks=background_tasks,
+        meta={
+            "help": "Check the API documentation to learn how to use it.",
+            "docs": "https://github.com/anikethchavare/api.anikethchavare.com/tree/main/docs/1_introduction.md"
+        }
     )
 
 # Route 2: favicon.ico (app)

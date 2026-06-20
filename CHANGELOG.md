@@ -18,6 +18,9 @@ The format will be:
 
 ## [Unreleased]
 
+### Added
+- Introduced the `language` utility sub-router namespace under the `/v1` prefix.
+
 ### Fixed
 - Updated the favicon's location to an absolute file path.
 - Fixed an error where requests weren't being logged in the case of unsuccessful requests.

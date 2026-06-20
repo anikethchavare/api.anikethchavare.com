@@ -1,4 +1,4 @@
-# api.anikethchavare.com - routers/app_v1.py
+# api.anikethchavare.com - routers/v1/language.py
 
 """
 Copyright 2026 Aniketh Chavare (anikethchavare@zohomail.in)
@@ -20,28 +20,23 @@ limitations under the License.
 from app import utils
 from app import rate_limiter
 
-from routers.v1.language import app_v1_language
-
 from fastapi import APIRouter, Request, BackgroundTasks
 
-# Initializing the "app_v1" API Router
-app_v1 = APIRouter(prefix="/v1")
+# Initializing the "app_v1_language" API Router
+app_v1_language = APIRouter(prefix="/language")
 
-# Include the API Routers
-app_v1.include_router(app_v1_language)
-
-# Route 1: main (app_v1)
-@app_v1.get("/")
+# Route 1: main (app_v1_language)
+@app_v1_language.get("/")
 @rate_limiter.limiter.limit("60/minute")
-async def app_v1_main(request: Request, background_tasks: BackgroundTasks):
+async def app_v1_language_main(request: Request, background_tasks: BackgroundTasks):
     return utils.send_response(
         request=request,
         status_code=200,
         success=True,
-        message="Welcome to Version 1 of the API.",
+        message="Welcome to the 'language' utility namespace. Check the documentation for available endpoints.",
         background_tasks=background_tasks,
         meta={
             "help": "Check the API v1 documentation for available endpoints.",
-            "docs": "https://github.com/anikethchavare/api.anikethchavare.com/tree/main/docs/v1/1_core.md"
+            "docs": "https://github.com/anikethchavare/api.anikethchavare.com/tree/main/docs/v1/2_language.md"
         }
     )
