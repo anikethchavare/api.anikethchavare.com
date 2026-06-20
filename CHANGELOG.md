@@ -20,6 +20,7 @@ The format will be:
 
 ### Fixed
 - Updated the favicon's location to an absolute file path.
+- Fixed an error where requests weren't being logged in the case of unsuccessful requests.
 
 ### Performance
 - Reduced response time by injecting security headers into every response via the `.update()` method instead of manual for loop iteration.

@@ -85,4 +85,7 @@ def send_response(
     # Logging the Request
     background_tasks.add_task(database.log_request, **response_args)
 
-    return JSONResponse(content=response.model_dump())
+    json_response = JSONResponse(content=response.model_dump(), status_code=status_code)
+    json_response.background = background_tasks
+
+    return json_response

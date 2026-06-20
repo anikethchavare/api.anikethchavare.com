@@ -197,7 +197,7 @@ async def exception_handler_error_404(request: Request, exec: HTTPException):
         meta={
             "path": request.url.path,
             "help": "Check the API documentation for valid endpoints.",
-            "docs": "https://github.com/anikethchavare/api.anikethchavare.com/tree/main/docs"
+            "docs": "https://github.com/anikethchavare/api.anikethchavare.com/tree/main/docs/1_introduction.md"
         }
     )
 
@@ -205,7 +205,7 @@ async def exception_handler_error_404(request: Request, exec: HTTPException):
 @app.exception_handler(Exception)
 async def exception_handler_universal(request: Request, exc: Exception):
     error_details = "".join(traceback.format_exception(type(exc), exc, exc.__traceback__))
-    logger.error(f"INTERNAL SERVER ERROR on {request.url.path}:\n{error_details}")
+    logger.error(f"\nINTERNAL SERVER ERROR on {request.url.path}:\n{error_details}")
 
     return utils.send_response(
         request=request,
