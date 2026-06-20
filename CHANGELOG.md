@@ -18,9 +18,11 @@ The format will be:
 
 ## [Unreleased]
 
+### Fixed
+- Updated the favicon's location to an absolute file path.
+
 ### Performance
 - Reduced response time by injecting security headers into every response via the `.update()` method instead of manual for loop iteration.
-- Security headers will be injected into every response via the `.update()` function 
 
 ### Documentation
 - Updated the hyperlink to the documentation in `README.md`.

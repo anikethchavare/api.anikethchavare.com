@@ -50,6 +50,10 @@ Response Structure: All API responses must follow this order:
 8. status_code - HTTP status code for the response.
 """
 
+# Constants
+BASE_DIRECTORY = os.path.dirname(os.path.abspath(__file__))
+FAVICON_PATH = os.path.join(BASE_DIRECTORY, "media", "favicon.png")
+
 # Async Context Manager: Lifespan
 @asynccontextmanager
 async def async_context_manager_lifespan(app_local: FastAPI):
@@ -79,7 +83,7 @@ app.state.limiter = rate_limiter.limiter
 logging.basicConfig(level=logging.WARNING)
 logger = logging.getLogger(__name__)
 
-# Configure CORS for Secure Public Access
+# Configuring CORS for Secure Public Access
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -145,10 +149,7 @@ async def app_main(request: Request, background_tasks: BackgroundTasks):
 @app.get("/favicon.ico", include_in_schema=False)
 @rate_limiter.limiter.limit("60/minute")
 async def app_favicon(request: Request):
-    return FileResponse(
-        os.getcwd().replace(os.sep, "/") + "/media/favicon.png",
-        status_code=200
-    )
+    return FileResponse(FAVICON_PATH, status_code=200)
 
 # Route 3: health (app)
 @app.get("/health", include_in_schema=False)
