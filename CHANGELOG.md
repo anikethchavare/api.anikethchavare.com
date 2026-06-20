@@ -18,15 +18,14 @@ The format will be:
 
 ## [Unreleased]
 
-### Changed
-- Logs detailed traceback information in case of an error to the database.
-
 ### Fixed
 - Updated the favicon's location to an absolute file path.
 - Fixed an error where requests weren't being logged in the case of unsuccessful requests.
+- Modified the `init_pool` function in `app/database.py` to raise database exceptions instead of silently dropping operations.
 
 ### Performance
 - Reduced response time by injecting security headers into every response via the `.update()` method instead of manual for loop iteration.
+- Logs detailed traceback information in case of an error to the database.
 
 ### Documentation
 - Updated the hyperlink to the documentation in `README.md`.

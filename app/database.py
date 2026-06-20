@@ -57,7 +57,8 @@ async def init_pool():
 
         await connection_pool.open()
     except Exception as connection_pool_exception:
-        logger.error(f"DATABASE ERROR:\n{connection_pool_exception}")
+        logger.error(f"\nDATABASE ERROR:\n{connection_pool_exception}")
+        raise RuntimeError(f"DATABASE ERROR: {connection_pool_exception}")
 
 # Function 2: Close Connection Pool
 async def close_pool():
@@ -96,7 +97,7 @@ async def _handle_db_exception(
 
     if isinstance(exception, (psycopg.OperationalError, psycopg.InterfaceError)):
         if retry_count < 1:
-            logger.warning(f"DATABASE WARNING:\nConnection lost. Retrying... (Error: {exception})")
+            logger.warning(f"\nDATABASE WARNING:\nConnection lost. Retrying... (Error: {exception})")
 
             if connection and connection_pool:
                 await connection_pool.putconn(connection)
@@ -104,10 +105,10 @@ async def _handle_db_exception(
             kwargs["retry_count"] = retry_count + 1
             return await retry_func(*args, **kwargs)
         else:
-            logger.error(f"DATABASE ERROR:\nConnection retry failed. Dropping operation: {retry_func.__name__}")
+            logger.error(f"\nDATABASE ERROR:\nConnection retry failed. Dropping operation: {retry_func.__name__}")
             return False
     else:
-        logger.error(f"DATABASE ERROR:\n{exception}")
+        logger.error(f"\nDATABASE ERROR:\n{exception}")
         return False
 
 # Function 3: Initialize Database
