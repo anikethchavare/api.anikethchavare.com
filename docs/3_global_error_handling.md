@@ -32,7 +32,32 @@ This error occurs when a client attempts to access a non-existent API route or a
 }
 ```
 
-### 2. 422 Unprocessable Entity
+### 2. 405 Method Not Allowed
+
+This error occurs when a client attempts to access a valid API route using an HTTP method that the specific endpoint is not configured to accept.
+
+**Example Error Response:**
+
+```json
+{
+    "success": false,
+    "message": "The HTTP method 'GET' is not allowed for this route.",
+    "data": {},
+    "meta": {
+        "rate_limit": "60 requests per minute.",
+        "path": "/v1/language/speech",
+        "method": "GET",
+        "help": "Ensure you are using the correct HTTP method as defined in the API documentation.",
+        "docs": "https://github.com/anikethchavare/api.anikethchavare.com/tree/main/docs/1_introduction.md"
+    },
+    "api_version": "1.1.0",
+    "timestamp": "2026-06-22T06:44:20.088295+00:00",
+    "request_id": "req_b3f97617-12a6-47ea-b07a-b0fda3896e63",
+    "status_code": 405
+}
+```
+
+### 3. 422 Unprocessable Entity
 
 Dispatched by the data validation exception handler when an incoming request payload, query string parameters, or headers break Pydantic's structural validation constraints.
 
@@ -65,7 +90,7 @@ Dispatched by the data validation exception handler when an incoming request pay
 }
 ```
 
-### 3. 429 Too Many Requests
+### 4. 429 Too Many Requests
 
 Triggered by the rate limiting middleware when a client exceeds their allocated request quota within a specific window.
 
@@ -86,7 +111,7 @@ Triggered by the rate limiting middleware when a client exceeds their allocated 
 }
 ```
 
-### 4. 500 Internal Server Error
+### 5. 500 Internal Server Error
 
 Handled entirely by the universal exception handler. This response is dispatched when an unhandled code exception or unexpected runtime failure happens on the backend.
 
