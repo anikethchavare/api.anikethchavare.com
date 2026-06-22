@@ -21,6 +21,7 @@ The format will be:
 ### Added
 - **language:** Added a `/speech` endpoint to convert text into spoken audio.
 - Added a custom global exception handler for the `405 Method Not Allowed` error.
+- Created a `/clear-request-logs` endpoint in `server.py` that automatically deletes request logs from the database on the 1st of every month.
 
 ### Changed
 - Added new dependencies.

@@ -15,7 +15,6 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 """
-from werkzeug.exceptions import MethodNotAllowed
 
 # Imports
 from app import utils
@@ -29,13 +28,14 @@ import os
 import uuid
 import logging
 import traceback
+from dotenv import load_dotenv
 from datetime import datetime, timezone
 from contextlib import asynccontextmanager
 
 from fastapi.responses import FileResponse
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.exceptions import RequestValidationError
-from fastapi import FastAPI, Request, HTTPException, BackgroundTasks
+from fastapi import FastAPI, Request, HTTPException, BackgroundTasks, Header
 
 from slowapi.errors import RateLimitExceeded
 
@@ -55,6 +55,9 @@ Response Structure: All API responses must follow this order:
 # Constants
 BASE_DIRECTORY = os.path.dirname(os.path.abspath(__file__))
 FAVICON_PATH = os.path.join(BASE_DIRECTORY, "media", "favicon.png")
+
+# Loading Environment Variables
+load_dotenv()
 
 # Async Context Manager: Lifespan
 @asynccontextmanager
@@ -152,13 +155,13 @@ async def app_main(request: Request, background_tasks: BackgroundTasks):
     )
 
 # Route 2: favicon.ico (app)
-@app.get("/favicon.ico", include_in_schema=False)
+@app.get("/favicon.ico")
 @rate_limiter.limiter.limit("60/minute")
 async def app_favicon(request: Request):
     return FileResponse(FAVICON_PATH, status_code=200)
 
 # Route 3: Health (app)
-@app.get("/health", include_in_schema=False)
+@app.get("/health")
 async def app_health(request: Request, background_tasks: BackgroundTasks):
     # Performing Health Checks
     api_working = True if app.router.routes else False
@@ -178,6 +181,30 @@ async def app_health(request: Request, background_tasks: BackgroundTasks):
         message="API is healthy and running." if healthy else "API is unhealthy and non-responsive. One or more internal services are currently unavailable.",
         background_tasks=background_tasks,
         data={"health_checks": health_data}
+    )
+
+# Route 4: Clear Request Logs (app)
+@app.post("/clear-request-logs")
+async def app_clear_request_logs(request: Request, background_tasks: BackgroundTasks, authorization: str = Header(None)):
+    cron_secret = os.getenv("CRON_SECRET")
+
+    if not authorization or authorization != f"Bearer {cron_secret}":
+        return utils.send_response(
+            request=request,
+            status_code=401,
+            success=False,
+            message="Unauthorized: Invalid or missing cron token.",
+            background_tasks=background_tasks
+        )
+
+    await database.clear_request_logs()
+
+    return utils.send_response(
+        request=request,
+        status_code=200,
+        success=True,
+        message="Vercel Cron: Request logs successfully deleted.",
+        background_tasks=background_tasks
     )
 
 # Exception Handler 1: 429 (app)

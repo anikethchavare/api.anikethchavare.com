@@ -268,3 +268,26 @@ async def log_request(
     finally:
         if connection:
             await connection_pool.putconn(connection)
+
+# Function 6: Clear Request Logs
+async def clear_request_logs(retry_count: int = 0) -> None:
+    """
+    Clears the request logs from the 'request_logs' database table in Neon (Vercel).
+
+    Args:
+        retry_count: The number of times to retry the request.
+    """
+
+    connection = None
+
+    try:
+        # Fetching a Connection from the Pool
+        connection = await connection_pool.getconn()
+
+        async with connection.cursor() as cursor:
+            await cursor.execute("TRUNCATE TABLE request_logs;")
+    except Exception as db_exception:
+        return await _handle_db_exception(db_exception, connection, clear_request_logs, retry_count=retry_count)
+    finally:
+        if connection:
+            await connection_pool.putconn(connection)

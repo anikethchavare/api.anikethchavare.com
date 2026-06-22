@@ -10,5 +10,11 @@
             "src": "/(.*)",
             "dest": "server.py"
         }
+    ],
+    "crons": [
+        {
+            "path": "/clear-request-logs",
+            "schedule": "0 0 1 * *"
+        }
     ]
 }
