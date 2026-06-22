@@ -20,6 +20,7 @@ The format will be:
 
 ### Added
 - **language:** Added a `/speech` endpoint to convert text into spoken audio.
+- Added a custom global exception handler for the `405 Method Not Allowed` error.
 
 ### Changed
 - Added new dependencies.

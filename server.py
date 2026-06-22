@@ -15,6 +15,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 """
+from werkzeug.exceptions import MethodNotAllowed
 
 # Imports
 from app import utils
@@ -179,9 +180,9 @@ async def app_health(request: Request, background_tasks: BackgroundTasks):
         data={"health_checks": health_data}
     )
 
-# Exception Handler 1: Rate Limiting (app)
+# Exception Handler 1: 429 (app)
 @app.exception_handler(RateLimitExceeded)
-async def exception_handler_rate_limiting(request: Request, exc: RateLimitExceeded):
+async def exception_handler_429(request: Request, exc: RateLimitExceeded):
     return utils.send_response(
         request=request,
         status_code=429,
@@ -190,9 +191,9 @@ async def exception_handler_rate_limiting(request: Request, exc: RateLimitExceed
         background_tasks=BackgroundTasks()
     )
 
-# Exception Handler 2: Error 404 (app)
+# Exception Handler 2: 404 (app)
 @app.exception_handler(404)
-async def exception_handler_error_404(request: Request, exc: HTTPException):
+async def exception_handler_404(request: Request, exc: HTTPException):
     return utils.send_response(
         request=request,
         status_code=404,
@@ -206,9 +207,9 @@ async def exception_handler_error_404(request: Request, exc: HTTPException):
         }
     )
 
-# Exception Handler 3: Data Validation (app)
+# Exception Handler 3: 422 (app)
 @app.exception_handler(RequestValidationError)
-async def exception_handler_data_validation(request: Request, exc: RequestValidationError):
+async def exception_handler_422(request: Request, exc: RequestValidationError):
     errors_list = []
 
     for error in exc.errors():
@@ -242,7 +243,24 @@ async def exception_handler_data_validation(request: Request, exc: RequestValida
         }
     )
 
-# Exception Handler 4: Universal (app)
+# Exception Handler 4: 405 (app)
+@app.exception_handler(405)
+async def exception_handler_405(request: Request, exc: HTTPException):
+    return utils.send_response(
+        request=request,
+        status_code=405,
+        success=False,
+        message=f"The HTTP method '{request.method}' is not allowed for this route.",
+        background_tasks=BackgroundTasks(),
+        meta={
+            "path": request.url.path,
+            "method": request.method,
+            "help": "Ensure you are using the correct HTTP method as defined in the API documentation.",
+            "docs": "https://github.com/anikethchavare/api.anikethchavare.com/tree/main/docs/1_introduction.md"
+        }
+    )
+
+# Exception Handler 5: Universal (app)
 @app.exception_handler(Exception)
 async def exception_handler_universal(request: Request, exc: Exception):
     error_details = "".join(traceback.format_exception(type(exc), exc, exc.__traceback__))
