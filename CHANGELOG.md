@@ -31,6 +31,7 @@ The format will be:
 - Enhanced consistency across documentation, providing the type of FastAPI response (e.g. JSONResponse, StreamingResponse, etc.).
 - Added the `405 Method Not Allowed` error to the `3_global_error_handling.md` file.
 - Updated the documentation with the new endpoint `/clear-request-logs` in the `server.py` file.
+- 
 
 ## [1.1.0] - 2026-06-20
 

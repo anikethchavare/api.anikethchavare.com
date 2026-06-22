@@ -28,6 +28,16 @@ The table below defines the exact data points extracted from the network lifecyc
 
 <hr>
 
-## 2. 🧭 Next Guide
+## 2. 🧹 Data Retention & Maintenance
+
+To optimize relational database space, prevent row bloat, and protect transactional telemetry, the database enforces a strict rolling 30-day logging retention policy.
+
+* **Automated Schedule:** A secure, cryptographically signed Vercel Cron engine triggers a complete table purge on the **1st of every month** at exactly `00:00 UTC`.
+* **Purge Execution Method:** The system invokes a raw SQL `TRUNCATE TABLE` command. This instantly clears all historical records from the `request_logs` table and resets internal allocations without causing serverless timeout lags or locks.
+* **Security Isolation:** The administrative maintenance routing is strictly isolated from public traffic using a private dashboard `CRON_SECRET` environmental token. Unauthorized access requests are automatically rejected with a `401 Unauthorized` exception.
+
+<hr>
+
+## 3. 🧭 Next Guide
 
 * **[5_setup.md](./5_setup.md) $\rightarrow$** Proceed to the setup guide to learn how to clone, configure, and deploy the complete API application locally.

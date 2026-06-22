@@ -73,10 +73,11 @@ Ensure you have **Python 3.10+** and a **PostgreSQL** database ready.
     pip install -r requirements.txt uvicorn
     ```
 
-2.  **Environment Setup**: Add your `DATABASE_URL` to a `.env` file in the root directory.
+2.  **Environment Setup**: Add your `DATABASE_URL` and `CRON_SECRET` to a `.env` file in the root directory. The `CRON_SECRET` can be anything you like, but must be kept a secret to ensure only Vercel Cron Jobs can purge the request logs.
 
     ```env
     DATABASE_URL=<YOUR_POSTGRESQL_DATABASE_URL>
+    CRON_SECRET=<YOUR_VERCEL_CRON_SECRET>
     ```
 
 3.  **Launch**:
