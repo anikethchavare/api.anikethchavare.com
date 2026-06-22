@@ -10,7 +10,7 @@ This document outlines the core baseline endpoints available under the Version 1
 
 These endpoints are bound directly to the `router_app_v1` router and operate under the `/v1` prefix namespace.
 
-### 1. `/`
+### 1. `/v1`
 * **Description:** Serves as the introductory entry point.
 * **HTTP Method:** `GET`
 * **Response Type:** `application/json` (JSONResponse)

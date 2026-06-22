@@ -25,7 +25,7 @@ This error occurs when a client attempts to access a non-existent API route or a
         "help": "Check the API documentation for valid endpoints.",
         "docs": "https://github.com/anikethchavare/api.anikethchavare.com/tree/main/docs"
     },
-    "api_version": "1.1.0",
+    "api_version": "1.2.0",
     "timestamp": "2026-06-19T10:44:07.541101+00:00",
     "request_id": "req_09dee9af-de41-4324-a96f-7b31dd9981e1",
     "status_code": 404

@@ -16,6 +16,11 @@ The format will be:
 - Performance
 - Documentation
 
+## [Unreleased]
+
+### Documentation
+- Enhanced consistency across the documentation.
+
 ## [1.2.0] - 2026-06-22
 
 ### Added
