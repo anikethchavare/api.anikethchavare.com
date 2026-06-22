@@ -16,7 +16,7 @@ The format will be:
 - Performance
 - Documentation
 
-## [Unreleased]
+## [1.2.0] - 2026-06-22
 
 ### Added
 - **language:** Added a `/speech` endpoint to convert text into spoken audio.
@@ -31,7 +31,6 @@ The format will be:
 - Enhanced consistency across documentation, providing the type of FastAPI response (e.g. JSONResponse, StreamingResponse, etc.).
 - Added the `405 Method Not Allowed` error to the `3_global_error_handling.md` file.
 - Updated the documentation with the new endpoint `/clear-request-logs` in the `server.py` file.
-- 
 
 ## [1.1.0] - 2026-06-20
 
@@ -182,6 +181,7 @@ ensure frontend stability.
 - Established `requirements.txt` with core dependencies (FastAPI, Pydantic).
 
 ---
+[1.2.0]: https://github.com/anikethchavare/api.anikethchavare.com/releases/tag/v1.2.0
 [1.1.0]: https://github.com/anikethchavare/api.anikethchavare.com/releases/tag/v1.1.0
 [1.0.0]: https://github.com/anikethchavare/api.anikethchavare.com/releases/tag/v1.0.0
 [0.8.0]: https://github.com/anikethchavare/api.anikethchavare.com/releases/tag/v0.8.0

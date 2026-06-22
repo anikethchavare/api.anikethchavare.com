@@ -24,7 +24,7 @@ These endpoints are bound directly to the `app_v1_language` router and operate u
         "help": "Check the API v1 documentation (/language) for available endpoints.",
         "docs": "https://github.com/anikethchavare/api.anikethchavare.com/tree/main/docs/v1/2_language.md"
     },
-    "api_version": "1.1.0",
+    "api_version": "1.2.0",
     "timestamp": "2026-06-20T13:13:15.403122+00:00",
     "request_id": "req_663a8a12-ea1e-46c0-a4e1-ac0b85cdd601",
     "status_code": 200
@@ -72,7 +72,7 @@ These endpoints are bound directly to the `app_v1_language` router and operate u
     "meta": {
         "rate_limit": "60 requests per minute."
     },
-    "api_version": "1.0.0",
+    "api_version": "1.2.0",
     "timestamp": "2026-06-20T13:19:18.008099+00:00",
     "request_id": "req_eb41dfeb-1762-4b0e-8ede-3005e24a98ba",
     "status_code": 200
