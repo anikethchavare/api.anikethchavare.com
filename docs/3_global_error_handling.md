@@ -99,7 +99,7 @@ Handled entirely by the universal exception handler. This response is dispatched
     "data": {},
     "meta": {
         "rate_limit": "60 requests per minute.",
-        "error_type": "ZeroDivisionError: Cannot divide by zero.",
+        "error_type": "ZeroDivisionError",
         "path": "/sample",
         "report_issue": "https://github.com/anikethchavare/api.anikethchavare.com/issues",
         "help": "If this persists, please open an issue with the request_id."

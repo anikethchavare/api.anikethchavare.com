@@ -20,11 +20,14 @@ limitations under the License.
 from app import utils
 from app import rate_limiter
 
+import io
 import httpx
 import orjson
+import edge_tts
 from pydantic import StrictStr, StrictBool
 
-from fastapi import APIRouter, Request, BackgroundTasks, Query
+from fastapi.responses import StreamingResponse
+from fastapi import APIRouter, Request, BackgroundTasks, Query, Body
 
 # Initializing the "app_v1_language" API Router
 app_v1_language = APIRouter(prefix="/language")
@@ -115,3 +118,47 @@ async def app_v1_language_dictionary(
         background_tasks=background_tasks,
         data=payload
     )
+
+# Route 3: Speech (app_v1_language)
+@app_v1_language.post("/speech")
+@rate_limiter.limiter.limit("10/minute")
+async def app_v1_language_speech(
+        request: Request,
+        background_tasks: BackgroundTasks,
+        text: str = Body(..., min_length=1, max_length=500, embed=True, description="The English text content to convert into synthesized spoken audio."),
+        voice: str = Body("en-US-ChristopherNeural", embed=True, description="The short name identifier of the premium Microsoft neural voice model."),
+        rate: str = Body("+0%", embed=True, description="The relative speaking rate modification percentage string."),
+        pitch: str = Body("+0Hz", embed=True, description="The relative structural voice pitch adjustment string.")
+):
+    try:
+        # Initializing the Microsoft Edge TTS Communication Manager
+        communicate = edge_tts.Communicate(text=text, voice=voice, rate=rate, pitch=pitch)
+
+        # Streaming Audio Chunks Into an In-Memory Byte Buffer
+        audio_buffer = io.BytesIO()
+
+        async for chunk in communicate.stream():
+            if chunk["type"] == "audio":
+                audio_buffer.write(chunk["data"])
+
+        # Resetting the Stream pointer to the Beginning Before Reading It
+        audio_buffer.seek(0)
+
+        # Purely for Request Logging
+        utils.send_response(
+            request=request,
+            status_code=200,
+            success=True,
+            message="Successfully converted text into spoken audio.",
+            background_tasks=background_tasks,
+        )
+
+        return StreamingResponse(audio_buffer, media_type="audio/mpeg", background=background_tasks)
+    except Exception:
+        return utils.send_response(
+            request=request,
+            status_code=502,
+            success=False,
+            message="An unexpected error occurred while converting text into spoken audio. Please try again later.",
+            background_tasks=background_tasks
+        )

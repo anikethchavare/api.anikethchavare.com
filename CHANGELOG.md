@@ -18,6 +18,9 @@ The format will be:
 
 ## [Unreleased]
 
+### Added
+- **language:** Added a `/speech` endpoint to convert text into spoken audio.
+
 ### Changed
 - Added new dependencies.
 
@@ -25,7 +28,7 @@ The format will be:
 
 ### Added
 - Introduced the `language` utility namespace under the `/v1` prefix.
-- **language**: Added a `/dictionary` endpoint to query words via an external API.
+- **language:** Added a `/dictionary` endpoint to query words via an external API.
 - Added a custom global exception handler for `RequestValidationError` to return structured, detailed data validation diagnostics.
 
 ### Changed

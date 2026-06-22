@@ -23,7 +23,7 @@ from pydantic import BaseModel
 # Constants
 API_VERSION = "1.1.0"
 
-# Class 1 - API Response
+# Class 1 - APIResponse (Base)
 class APIResponse(BaseModel):
     """
     Constructs an "APIResponse" Pydantic model for an API response.
