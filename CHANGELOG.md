@@ -24,6 +24,9 @@ The format will be:
 ### Changed
 - Added new dependencies.
 
+### Documentation
+- Updated the documentation with the new endpoint `/speech` under the `language` namespace utility.
+
 ## [1.1.0] - 2026-06-20
 
 ### Added

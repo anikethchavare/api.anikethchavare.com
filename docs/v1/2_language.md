@@ -79,6 +79,29 @@ These endpoints are bound directly to the `app_v1_language` router and operate u
 }
 ```
 
+### 3. `/speech`
+* **Description:** Converts custom English text content into a high-quality, synthesized spoken audio file stream using premium Microsoft neural AI voice models.
+* **HTTP Method:** `POST`
+* **Response Type:** `audio/mpeg`
+* **Request Body Parameters (`application/json`):**
+  * `text` *(String, Required)*: The primary English text payload to be converted into speech. Minimum length of 1 character, maximum length of 500 characters.
+  * `voice` *(String, Optional)*: The short-name identifier of the target neural voice model. Defaults to `en-US-ChristopherNeural`.
+  * `rate` *(String, Optional)*: The relative speaking tempo/speed modification percentage string. Defaults to `+0%`.
+  * `pitch` *(String, Optional)*: The relative structural vocal frequency pitch adjustment string. Defaults to `+0Hz`.
+* **Possible Exceptions:**
+  * `502 Bad Gateway` (`UpstreamServiceError`): Dispatched when the underlying Microsoft Edge TTS communication loop fails, drops, or encounters an upstream connection exception.
+* **Example Request URL:** `https://api.anikethchavare.com/v1/language/speech`
+* **Example Request Body:**
+```json
+{
+    "text": "Hello, welcome to the language namespace utility.",
+    "voice": "en-US-AnaNeural",
+    "rate": "+10%",
+    "pitch": "-5Hz"
+}
+```
+* **Example Response:** Binary data stream of the generated `audio/mpeg` asset (MP3 file).
+
 <hr>
 
 ## 2. 🧭 Next Guide
