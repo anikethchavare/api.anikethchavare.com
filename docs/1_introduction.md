@@ -13,7 +13,7 @@ Every request routed through the API is subject to strict security middleware la
 
 * **CORS Policy:** Cross-Origin Resource Sharing (CORS) rules are set to allow complete access to the public. This allows any frontend application, mobile app, program, or client script to make requests to the API.
 * **Security Headers:** The API automatically injects robust security headers into every single response payload to safeguard transactions.
-* **Rate Limiting:** To prevent server degradation and abuse, clients are limited to a strict threshold of **60 requests per minute per IP address**. Exceeding this quota triggers an immediate `429 Too Many Requests` error.
+* **Rate Limiting:** To prevent server degradation and abuse, clients are limited to a strict threshold of **60 requests per minute per IP address**. Exceeding this quota triggers an immediate `429 Too Many Requests` error. Some endpoints might have custom rate limits enforced.
 
 <hr>
 

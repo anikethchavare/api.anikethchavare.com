@@ -82,6 +82,7 @@ These endpoints are bound directly to the `app_v1_language` router and operate u
 ### 3. `/speech`
 * **Description:** Converts custom English text content into a high-quality, synthesized spoken audio file stream using premium Microsoft neural AI voice models.
 * **HTTP Method:** `POST`
+* **Custom Rate Limit:** 10 requests per minute per IP Address
 * **Response Type:** `audio/mpeg` (StreamingResponse)
 * **Request Body Parameters (`application/json`):**
   * `text` *(String, Required)*: The primary English text payload to be converted into speech. Minimum length of 1 character, maximum length of 500 characters.
