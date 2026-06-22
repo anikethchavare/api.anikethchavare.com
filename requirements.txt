@@ -1,6 +1,7 @@
 httpx==0.28.1
 orjson==3.11.9
 slowapi==0.1.10
+edge-tts==7.2.8
 fastapi==0.138.0
 pydantic==2.13.4
 psycopg-pool==3.3.1
