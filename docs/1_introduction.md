@@ -24,7 +24,7 @@ These base endpoints are attached directly to the underlying application instanc
 ### 1. `/`
 * **Description:** Serves as the introductory entry point.
 * **HTTP Method:** `GET`
-* **Response Type:** `application/json`
+* **Response Type:** `application/json` (JSONResponse)
 * **Example Request URL:** `https://api.anikethchavare.com`
 * **Example Response:**
 ```json
@@ -45,15 +45,15 @@ These base endpoints are attached directly to the underlying application instanc
 ### 2. `/favicon.ico`
 * **Description:** Retrieves the standard graphic favicon of the API.
 * **HTTP Method:** `GET`
-* **Response Type:** `image/x-icon`
+* **Response Type:** `image/x-icon` (FileResponse)
 * **Example Request URL:** `https://api.anikethchavare.com/favicon.ico`
 * **Example Response:** Binary stream of image/x-icon asset.
 
 ### 3. `/health`
 * **Description:** Performs an operational check to verify the overall health, status, and availability of the API.
 * **HTTP Method:** `GET`
-* **Response Type:** `application/json`
-* **Possible Exceptions:**
+* **Response Type:** `application/json` (JSONResponse)
+* **Possible Local Exceptions:**
   * `503 Service Unavailable` (`ServiceStatusFailure`): Returned if the application is running but failing its internal service checks.
 * **Example Request URL:** `https://api.anikethchavare.com/health`
 * **Example Response:**

@@ -13,7 +13,7 @@ These endpoints are bound directly to the `router_app_v1` router and operate und
 ### 1. `/`
 * **Description:** Serves as the introductory entry point.
 * **HTTP Method:** `GET`
-* **Response Type:** `application/json`
+* **Response Type:** `application/json` (JSONResponse)
 * **Example Request URL:** `https://api.anikethchavare.com/v1`
 * **Example Response:**
 ```json

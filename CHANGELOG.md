@@ -26,6 +26,7 @@ The format will be:
 
 ### Documentation
 - Updated the documentation with the new endpoint `/speech` under the `language` namespace utility.
+- Enhanced consistency across documentation, providing the type of FastAPI response (e.g. JSONResponse, StreamingResponse, etc.).
 
 ## [1.1.0] - 2026-06-20
 
