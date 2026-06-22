@@ -134,15 +134,11 @@ async def app_v1_language_speech(
         # Initializing the Microsoft Edge TTS Communication Manager
         communicate = edge_tts.Communicate(text=text, voice=voice, rate=rate, pitch=pitch)
 
-        # Streaming Audio Chunks Into an In-Memory Byte Buffer
-        audio_buffer = io.BytesIO()
-
-        async for chunk in communicate.stream():
-            if chunk["type"] == "audio":
-                audio_buffer.write(chunk["data"])
-
-        # Resetting the Stream pointer to the Beginning Before Reading It
-        audio_buffer.seek(0)
+        # Asynchronous Generator
+        async def audio_stream_generator():
+            async for chunk in communicate.stream():
+                if chunk["type"] == "audio":
+                    yield chunk["data"]
 
         # Purely for Request Logging
         utils.send_response(
@@ -153,7 +149,7 @@ async def app_v1_language_speech(
             background_tasks=background_tasks,
         )
 
-        return StreamingResponse(audio_buffer, media_type="audio/mpeg", background=background_tasks)
+        return StreamingResponse(audio_stream_generator(), media_type="audio/mpeg", background=background_tasks)
     except Exception:
         return utils.send_response(
             request=request,

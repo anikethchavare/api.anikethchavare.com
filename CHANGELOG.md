@@ -21,6 +21,9 @@ The format will be:
 ### Security
 - Fixed implementation of clearing request logs by validating the cron token.
 
+### Performance
+- Increased the speed of execution of the `/speech` endpoint in the `language` utility namespace.
+
 ### Documentation
 - Enhanced consistency across the documentation.
 
