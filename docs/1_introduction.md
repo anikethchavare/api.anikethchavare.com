@@ -77,6 +77,35 @@ These base endpoints are attached directly to the underlying application instanc
 }
 ```
 
+### 4. `/clear-request-logs`
+* **Description:** Explicitly clears all transaction history logs from the database. This route is optimized for automated data retention maintenance and is designed to be triggered exclusively by Vercel Cron Jobs.
+* **HTTP Method:** `POST`
+* **Response Type:** `application/json` (JSONResponse)
+* **Headers Required:**
+  * `Authorization` *(String, Required)*: A bearer token string formatted as `Bearer <CRON_SECRET>`. This token maps to a private project environment variable to securely isolate administrative functionalities from public clients.
+* **Possible Local Exceptions:**
+  * `401 Unauthorized`: Returned if the `Authorization` header is entirely missing, improperly formatted, or contains an invalid credential token string.
+* **Example Request URL:** `https://api.anikethchavare.com/clear-request-logs`
+* **Example Request Headers:**
+```http request
+Authorization: Bearer secure_cron_secret_token
+```
+* **Example Response:**
+```json
+{
+    "success": true,
+    "message": "Vercel Cron: Request logs successfully deleted.",
+    "data": {},
+    "meta": {
+        "rate_limit": "60 requests per minute."
+    },
+    "api_version": "1.1.0",
+    "timestamp": "2026-06-22T06:44:20.088295+00:00",
+    "request_id": "req_b3f97617-12a6-47ea-b07a-b0fda3896e63",
+    "status_code": 200
+}
+```
+
 <hr>
 
 ## 3. 🧭 Next Guide
