@@ -24,7 +24,7 @@ These endpoints are bound directly to the `router_app_v1` router and operate und
     "meta": {
         "rate_limit": "60 requests per minute."
     },
-    "api_version": "1.2.0",
+    "api_version": "1.2.1",
     "timestamp": "2026-06-19T11:37:05.738455+00:00",
     "request_id": "req_9e7abd1e-548f-4260-a50f-0e3a4e50109e",
     "status_code": 200

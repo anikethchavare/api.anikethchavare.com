@@ -2,7 +2,7 @@
 
 Welcome to the documentation of `api.anikethchavare.com`. This is a high-performance, general-purpose public REST API powered by FastAPI and Python.
 
-* **Current Release:** v1.2.0
+* **Current Release:** v1.2.1
 * **Production Base URL:** `https://api.anikethchavare.com`
 
 <hr>
@@ -35,7 +35,7 @@ These base endpoints are attached directly to the underlying application instanc
     "meta": {
         "rate_limit": "60 requests per minute."
     },
-    "api_version": "1.2.0",
+    "api_version": "1.2.1",
     "timestamp": "2026-06-19T03:50:27.795509+00:00",
     "request_id": "req_e085e44c-eea3-495c-a9be-bb4e90a6694d",
     "status_code": 200
@@ -70,7 +70,7 @@ These base endpoints are attached directly to the underlying application instanc
     "meta": {
         "rate_limit": "60 requests per minute."
     },
-    "api_version": "1.2.0",
+    "api_version": "1.2.1",
     "timestamp": "2026-06-19T04:01:15.922319+00:00",
     "request_id": "req_742e83f5-044d-4f02-bf52-ecfb2c5e1de9",
     "status_code": 200
@@ -99,7 +99,7 @@ Authorization: Bearer secure_cron_secret_token
     "meta": {
         "rate_limit": "60 requests per minute."
     },
-    "api_version": "1.2.0",
+    "api_version": "1.2.1",
     "timestamp": "2026-06-22T06:44:20.088295+00:00",
     "request_id": "req_b3f97617-12a6-47ea-b07a-b0fda3896e63",
     "status_code": 200

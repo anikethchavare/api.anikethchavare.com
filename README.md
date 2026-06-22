@@ -21,7 +21,7 @@
     <img src="https://img.shields.io/badge/Postgresql-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white" alt="PostgreSQL">&nbsp;&nbsp;
     <img src="https://img.shields.io/badge/JSON-000000?style=for-the-badge&logo=json&logoColor=white" alt="JSON">
     <br><br>
-    <img src="https://img.shields.io/badge/version-1.2.0-blue?style=for-the-badge&logo=github&logoColor=white" alt="Version">&nbsp;&nbsp;
+    <img src="https://img.shields.io/badge/version-1.2.1-blue?style=for-the-badge&logo=github&logoColor=white" alt="Version">&nbsp;&nbsp;
     <img src="https://img.shields.io/badge/Status-Online-brightgreen?style=for-the-badge&logo=statuspage&logoColor=white" alt="Status: Online">&nbsp;&nbsp;
     <img src="https://img.shields.io/badge/license-Apache_2.0-blue?style=for-the-badge&logo=apache&logoColor=white" alt="Apache 2.0 License">&nbsp;&nbsp;
     <img src="https://img.shields.io/badge/maintained-yes-brightgreen?style=for-the-badge&logo=checkmarx&logoColor=white" alt="Maintenance: Active">
