@@ -27,6 +27,7 @@ from routers.app_v1 import app_v1
 import os
 import uuid
 import logging
+import secrets
 import traceback
 from dotenv import load_dotenv
 from datetime import datetime, timezone
@@ -188,7 +189,7 @@ async def app_health(request: Request, background_tasks: BackgroundTasks):
 async def app_clear_request_logs(request: Request, background_tasks: BackgroundTasks, authorization: str = Header(None)):
     cron_secret = os.getenv("CRON_SECRET")
 
-    if not authorization or authorization != f"Bearer {cron_secret}":
+    if not authorization or not secrets.compare_digest(authorization, f"Bearer {cron_secret}"):
         return utils.send_response(
             request=request,
             status_code=401,

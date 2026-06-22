@@ -18,6 +18,9 @@ The format will be:
 
 ## [Unreleased]
 
+### Security
+- Fixed implementation of clearing request logs by validating the cron token.
+
 ### Documentation
 - Enhanced consistency across the documentation.
 
