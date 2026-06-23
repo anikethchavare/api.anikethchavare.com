@@ -21,6 +21,9 @@ The format will be:
 ### Added
 - Created tests for all routes and endpoints.
 
+### Changed
+- Added new dependencies.
+
 ### Documentation
 - Added a documentation versioning note at the top of `1_introduction.md`.
 
