@@ -13,7 +13,8 @@ These endpoints are bound directly to the `router_app_v1` router and operate und
 ### 1. `/v1`
 * **Description:** Serves as the introductory entry point.
 * **HTTP Method:** `GET`
-* **Response Type:** `application/json` (JSONResponse)
+* **Response Type & Schema:** `application/json` (JSONResponse)
+  * *Returns an empty dictionary `{}` inside the core `data` block.*
 * **Query Parameters:** None
 * **Headers Required:** None
 * **Request Body Parameters (application/json):** None

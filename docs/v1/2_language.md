@@ -11,7 +11,8 @@ These endpoints are bound directly to the `app_v1_language` router and operate u
 ### 1. `/v1/language`
 * **Description:** Serves as the introductory entry point to the namespace.
 * **HTTP Method:** `GET`
-* **Response Type:** `application/json` (JSONResponse)
+* **Response Type & Schema:** `application/json` (JSONResponse)
+  * *Returns an empty dictionary `{}` inside the core `data` block.*
 * **Query Parameters:** None
 * **Headers Required:** None
 * **Request Body Parameters (application/json):** None
@@ -41,7 +42,12 @@ These endpoints are bound directly to the `app_v1_language` router and operate u
 ### 2. `/v1/language/dictionary?word=<word>&phonetics=<boolean>&definitions=<boolean>&strict=<boolean>`
 * **Description:** Queries detailed linguistic data for a given English word, including phonetics, parts of speech, and definitions from an external dictionary provider.
 * **HTTP Method:** `GET`
-* **Response Type:** `application/json` (JSONResponse)
+* **Response Type & Schema:** `application/json` (JSONResponse)
+  * `word` *(String)*: The validated target English word being queried.
+  * `phonetics` *(Array[Object] | Null)*: List of pronunciation transcriptions and audio asset links. Omitted if `phonetics=false`.
+  * `definitions` *(Array | Null)*: Dictionary definitions. If `strict=true`, returns a flat array of strings; otherwise, returns an array of objects grouped by parts of speech. Omitted if `definitions=false`.
+  * `license` *(Object)*: License metadata mapping for the queried word entry.
+  * `source_urls` *(Array[String])*: List of source link URLs tracking the origin definition data.
 * **Query Parameters:**
   * `word` *(StrictStr, Required)*: The target English word to look up in the dictionary. Must be at least 1 character long.
   * `phonetics` *(StrictBool, Optional)*: Toggles whether the phonetic transcriptions and audio URLs are returned. Defaults to `true`.
@@ -94,7 +100,8 @@ These endpoints are bound directly to the `app_v1_language` router and operate u
 ### 3. `/v1/language/speech`
 * **Description:** Converts custom English text content into a high-quality, synthesized spoken audio file stream using premium Microsoft neural AI voice models.
 * **HTTP Method:** `POST`
-* **Response Type:** `audio/mpeg` (StreamingResponse)
+* **Response Type & Schema:** `audio/mpeg` (StreamingResponse)
+  * *Returns a raw binary stream of the synthesized audio file payload directly (No structured JSON `data` payload wrapper is used for this streaming response binary).*
 * **Query Parameters:** None
 * **Headers Required:** None
 * **Request Body Parameters (`application/json`):**

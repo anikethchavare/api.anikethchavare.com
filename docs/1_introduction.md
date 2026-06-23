@@ -11,7 +11,7 @@ Welcome to the documentation of `api.anikethchavare.com`. This is a high-perform
 
 ## 1. 🛡️ Global Security & Network Policy
 
-Every request routed through the API is subject to strict security middleware layers before hitting destination routes:
+Every request routed  through the API is subject to strict security middleware layers before hitting destination routes:
 
 * **CORS Policy:** Cross-Origin Resource Sharing (CORS) rules are set to allow complete access to the public. This allows any frontend application, mobile app, program, or client script to make requests to the API.
 * **Security Headers:** The API automatically injects robust security headers into every single response payload to safeguard transactions.
@@ -25,7 +25,7 @@ To maintain absolute uniformity across all utility guides, every endpoint bluepr
 
 * **`Description`:** A brief summary detailing the purpose and operational behavior of the endpoint.
 * **`HTTP Method`:** The required network request verb.
-* **`Response Type`:** The explicit media type header and matching FastAPI response class returned by the server.
+* **`Response Type & Schema`:** The explicit media type header, matching FastAPI response class, and a structured breakdown of the keys returned inside the `data` object payload.
 * **`Query Parameters`:** A breakdown of the keys, validation types, and constraints expected in the URL query string.
 * **`Headers Required`:** Contextual metadata or security tokens that must be passed inside the network header.
 * **`Request Body Parameters (application/json)`:** The strict dictionary payload parameters and constraint rules required for the request body.
@@ -45,7 +45,8 @@ These base endpoints are attached directly to the underlying application instanc
 ### 1. `/`
 * **Description:** Serves as the introductory entry point.
 * **HTTP Method:** `GET`
-* **Response Type:** `application/json` (JSONResponse)
+* **Response Type & Schema:** `application/json` (JSONResponse)
+  * *Returns an empty dictionary `{}` inside the core `data` block.*
 * **Query Parameters:** None
 * **Headers Required:** None
 * **Request Body Parameters (application/json):** None
@@ -73,7 +74,8 @@ These base endpoints are attached directly to the underlying application instanc
 ### 2. `/favicon.ico` and `/favicon.png`
 * **Description:** Retrieves the standard graphic favicon of the API.
 * **HTTP Method:** `GET`
-* **Response Type:** `image/png` (FileResponse)
+* **Response Type & Schema:** `image/png` (FileResponse)
+  * *Returns the raw binary image data of the favicon directly (No structured JSON `data` payload wrapper is used for this file response).*
 * **Query Parameters:** None
 * **Headers Required:** None
 * **Request Body Parameters (application/json):** None
@@ -87,7 +89,10 @@ These base endpoints are attached directly to the underlying application instanc
 ### 3. `/health`
 * **Description:** Performs an operational check to verify the overall health, status, and availability of the API.
 * **HTTP Method:** `GET`
-* **Response Type:** `application/json` (JSONResponse)
+* **Response Type & Schema:** `application/json` (JSONResponse)
+  * `health_checks` *(Object)*: Nested diagnostics detailing the connectivity health of system backends.
+    * `api` *(String)*: Validation status tracking the operational responsiveness of the FastAPI container instance (`pass` or `fail`).
+    * `database` *(String)*: Validation status tracking pool connectivity to the persistent relational database layer (`pass` or `fail`).
 * **Query Parameters:** None
 * **Headers Required:** None
 * **Request Body Parameters (application/json):** None
@@ -121,7 +126,8 @@ These base endpoints are attached directly to the underlying application instanc
 ### 4. `/clear-request-logs`
 * **Description:** Explicitly clears all transaction history logs from the database. This route is optimized for automated data retention maintenance and is designed to be triggered exclusively by Vercel Cron Jobs.
 * **HTTP Method:** `POST`
-* **Response Type:** `application/json` (JSONResponse)
+* **Response Type & Schema:** `application/json` (JSONResponse)
+  * *Returns an empty dictionary `{}` inside the core `data` block.*
 * **Query Parameters:** None
 * **Headers Required:**
   * `Authorization` *(String, Required)*: A bearer token string formatted as `Bearer <CRON_SECRET>`. This token maps to a private project environment variable to securely isolate administrative functionalities from public clients.

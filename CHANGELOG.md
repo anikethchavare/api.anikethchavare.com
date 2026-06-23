@@ -23,6 +23,9 @@ The format will be:
 - **math:** Added a `/trigonometry` sub-utility namespace.
 - **math:** Added 8 endpoints (`/degrees-to-radians`, `/radians-to-degrees`, `/sin`, `/cos`, `/tan`, `/cosec`, `/sec`, `/cot`) under the `/trigonometry` sub-utility namespace.
 
+### Documentation
+- Enhanced documentation across all endpoints to include response schema.
+
 ## [1.2.2] - 2026-06-23
 
 ### Added
