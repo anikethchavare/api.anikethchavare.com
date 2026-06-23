@@ -16,6 +16,11 @@ The format will be:
 - Performance
 - Documentation
 
+## [Unreleased]
+
+### Documentation
+- Added a documentation versioning note at the top of `1_introduction.md`.
+
 ## [1.2.1] - 2026-06-22
 
 ### Security

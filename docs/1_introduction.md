@@ -5,6 +5,8 @@ Welcome to the documentation of `api.anikethchavare.com`. This is a high-perform
 * **Current Release:** v1.2.1
 * **Production Base URL:** `https://api.anikethchavare.com`
 
+**Documentation Versioning Note:** The code samples, responses, and version references throughout these guides may reflect previous stable releases. For the definitive list of latest additions, patches, and security improvements, please always refer directly to the live **[CHANGELOG.md](../CHANGELOG.md)**.
+
 <hr>
 
 ## 1. 🛡️ Global Security & Network Policy
