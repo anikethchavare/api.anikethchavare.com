@@ -9,7 +9,7 @@ This document outlines the endpoints available under the `language` utility name
 These endpoints are bound directly to the `app_v1_language` router and operate under the `/language` prefix namespace.
 
 ### 1. `/v1/language`
-* **Description:** Serves as the introductory entry point to the namespace.
+* **Description:** Serves as the introductory entry point to the utility namespace.
 * **HTTP Method:** `GET`
 * **Response Type & Schema:** `application/json` (JSONResponse)
   * *Returns an empty dictionary `{}` inside the core `data` block.*
@@ -39,7 +39,7 @@ These endpoints are bound directly to the `app_v1_language` router and operate u
 }
 ```
 
-### 2. `/v1/language/dictionary?word=<word>&phonetics=<boolean>&definitions=<boolean>&strict=<boolean>`
+### 2. `/v1/language/dictionary`
 * **Description:** Queries detailed linguistic data for a given English word, including phonetics, parts of speech, and definitions from an external dictionary provider.
 * **HTTP Method:** `GET`
 * **Response Type & Schema:** `application/json` (JSONResponse)
@@ -129,4 +129,4 @@ These endpoints are bound directly to the `app_v1_language` router and operate u
 
 ## 2. 🧭 Next Guide
 
-Additional feature sets, utility endpoints, and expanded business logic are currently in development and will be documented here as they release.
+* **[3_math.md](./3_math.md) $\rightarrow$** Explore the `math` utility namespace.
