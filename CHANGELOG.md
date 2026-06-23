@@ -18,6 +18,9 @@ The format will be:
 
 ## [Unreleased]
 
+### Added
+- Created tests for all routes and endpoints.
+
 ### Documentation
 - Added a documentation versioning note at the top of `1_introduction.md`.
 

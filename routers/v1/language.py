@@ -20,7 +20,6 @@ limitations under the License.
 from app import utils
 from app import rate_limiter
 
-import io
 import httpx
 import orjson
 import edge_tts
