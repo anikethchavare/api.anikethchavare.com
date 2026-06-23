@@ -14,7 +14,14 @@ These endpoints are bound directly to the `router_app_v1` router and operate und
 * **Description:** Serves as the introductory entry point.
 * **HTTP Method:** `GET`
 * **Response Type:** `application/json` (JSONResponse)
+* **Query Parameters:** None
+* **Headers Required:** None
+* **Request Body Parameters (application/json):** None
+* **Custom Rate Limit:** None
+* **Possible Local Exceptions:** None
 * **Example Request URL:** `https://api.anikethchavare.com/v1`
+* **Example Request Headers:** None
+* **Example Request Body:** None
 * **Example Response:**
 ```json
 {

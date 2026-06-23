@@ -12,7 +12,14 @@ These endpoints are bound directly to the `app_v1_language` router and operate u
 * **Description:** Serves as the introductory entry point to the namespace.
 * **HTTP Method:** `GET`
 * **Response Type:** `application/json` (JSONResponse)
+* **Query Parameters:** None
+* **Headers Required:** None
+* **Request Body Parameters (application/json):** None
+* **Custom Rate Limit:** None
+* **Possible Local Exceptions:** None
 * **Example Request URL:** `https://api.anikethchavare.com/v1/language`
+* **Example Request Headers:** None
+* **Example Request Body:** None
 * **Example Response:**
 ```json
 {
@@ -40,10 +47,15 @@ These endpoints are bound directly to the `app_v1_language` router and operate u
   * `phonetics` *(StrictBool, Optional)*: Toggles whether the phonetic transcriptions and audio URLs are returned. Defaults to `true`.
   * `definitions` *(StrictBool, Optional)*: Toggles whether the dictionary definitions section is included. Defaults to `true`.
   * `strict` *(StrictBool, Optional)*: Modifies the `definitions` payload to output a flat list of string definitions rather than a structured object grouped by parts of speech. Only applies if `definitions=true`. Defaults to `false`.
+* **Headers Required:** None
+* **Request Body Parameters (application/json):** None
+* **Custom Rate Limit:** None
 * **Possible Local Exceptions:**
   * `404 Not Found` (`WordNotFound`): Returned when the target word is spelled incorrectly or does not exist within the external dictionary database.
   * `502 Bad Gateway` (`UpstreamServiceError`): Dispatched when the external dictionary provider API (`api.dictionaryapi.dev`) is down, unreachable, or returns an unexpected server error.
 * **Example Request URL:** `https://api.anikethchavare.com/v1/language/dictionary?word=hello&phonetics=false&strict=true`
+* **Example Request Headers:** None
+* **Example Request Body:** None
 * **Example Response:**
 ```json
 {
@@ -82,16 +94,19 @@ These endpoints are bound directly to the `app_v1_language` router and operate u
 ### 3. `/v1/language/speech`
 * **Description:** Converts custom English text content into a high-quality, synthesized spoken audio file stream using premium Microsoft neural AI voice models.
 * **HTTP Method:** `POST`
-* **Custom Rate Limit:** 10 requests per minute per IP Address
 * **Response Type:** `audio/mpeg` (StreamingResponse)
+* **Query Parameters:** None
+* **Headers Required:** None
 * **Request Body Parameters (`application/json`):**
   * `text` *(String, Required)*: The primary English text payload to be converted into speech. Minimum length of 1 character, maximum length of 500 characters.
   * `voice` *(String, Optional)*: The short-name identifier of the target neural voice model. Defaults to `en-US-ChristopherNeural`. A complete, interactive directory of available voice models can be found [here](https://tts.travisvn.com).
   * `rate` *(String, Optional)*: The relative speaking tempo/speed modification percentage string. Defaults to `+0%`.
   * `pitch` *(String, Optional)*: The relative structural vocal frequency pitch adjustment string. Defaults to `+0Hz`.
+* **Custom Rate Limit:** 10 requests per minute per IP Address
 * **Possible Local Exceptions:**
   * `502 Bad Gateway` (`UpstreamServiceError`): Dispatched when the underlying Microsoft Edge TTS communication loop fails, drops, or encounters an upstream connection exception.
 * **Example Request URL:** `https://api.anikethchavare.com/v1/language/speech`
+* **Example Request Headers:** None
 * **Example Request Body:**
 ```json
 {

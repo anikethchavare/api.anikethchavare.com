@@ -15,11 +15,30 @@ Every request routed through the API is subject to strict security middleware la
 
 * **CORS Policy:** Cross-Origin Resource Sharing (CORS) rules are set to allow complete access to the public. This allows any frontend application, mobile app, program, or client script to make requests to the API.
 * **Security Headers:** The API automatically injects robust security headers into every single response payload to safeguard transactions.
-* **Rate Limiting:** To prevent server degradation and abuse, clients are limited to a strict threshold of **60 requests per minute per IP address**. Exceeding this quota triggers an immediate `429 Too Many Requests` error. Some endpoints might have custom rate limits enforced.
+* **Rate Limiting:** To prevent server degradation and abuse, clients are limited to a strict global threshold of **60 requests per minute per IP address**. Exceeding this quota triggers an immediate `429 Too Many Requests` error. Some endpoints might have custom rate limits enforced.
 
 <hr>
 
-## 2. 📡 Endpoints
+## 2. 📋 Endpoint Documentation Schema
+
+To maintain absolute uniformity across all utility guides, every endpoint blueprint adheres to a predictable sequence. Depending on the route's technical requirements, a combination of the following structural keys is used:
+
+* **`Description`:** A brief summary detailing the purpose and operational behavior of the endpoint.
+* **`HTTP Method`:** The required network request verb.
+* **`Response Type`:** The explicit media type header and matching FastAPI response class returned by the server.
+* **`Query Parameters`:** A breakdown of the keys, validation types, and constraints expected in the URL query string.
+* **`Headers Required`:** Contextual metadata or security tokens that must be passed inside the network header.
+* **`Request Body Parameters (application/json)`:** The strict dictionary payload parameters and constraint rules required for the request body.
+* **`Custom Rate Limit`:** A localized threshold that overrides the default global request allowance for specific routes.
+* **`Possible Local Exceptions`:** Granular error types or upstream breakdown scenarios unique to the endpoint.
+* **`Example Request URL`:** A mock reference illustrating a properly structured destination link.
+* **`Example Request Headers`:** A sample key-value preview of an authorized request header block.
+* **`Example Request Body`:** A structural JSON snippet illustrating a valid request payload.
+* **`Example Response`:** The definitive response returned upon a successful `200 OK` transaction.
+
+<hr>
+
+## 3. 📡 Endpoints
 
 These base endpoints are attached directly to the underlying application instance within `server.py` and execute independently of any API versioning namespaces.
 
@@ -27,7 +46,14 @@ These base endpoints are attached directly to the underlying application instanc
 * **Description:** Serves as the introductory entry point.
 * **HTTP Method:** `GET`
 * **Response Type:** `application/json` (JSONResponse)
+* **Query Parameters:** None
+* **Headers Required:** None
+* **Request Body Parameters (application/json):** None
+* **Custom Rate Limit:** None
+* **Possible Local Exceptions:** None
 * **Example Request URL:** `https://api.anikethchavare.com`
+* **Example Request Headers:** None
+* **Example Request Body:** None
 * **Example Response:**
 ```json
 {
@@ -48,16 +74,29 @@ These base endpoints are attached directly to the underlying application instanc
 * **Description:** Retrieves the standard graphic favicon of the API.
 * **HTTP Method:** `GET`
 * **Response Type:** `image/png` (FileResponse)
+* **Query Parameters:** None
+* **Headers Required:** None
+* **Request Body Parameters (application/json):** None
+* **Custom Rate Limit:** None
+* **Possible Local Exceptions:** None
 * **Example Request URL:** `https://api.anikethchavare.com/favicon.ico` or `https://api.anikethchavare.com/favicon.png`
+* **Example Request Headers:** None
+* **Example Request Body:** None
 * **Example Response:** Binary stream of image/png asset.
 
 ### 3. `/health`
 * **Description:** Performs an operational check to verify the overall health, status, and availability of the API.
 * **HTTP Method:** `GET`
 * **Response Type:** `application/json` (JSONResponse)
+* **Query Parameters:** None
+* **Headers Required:** None
+* **Request Body Parameters (application/json):** None
+* **Custom Rate Limit:** None
 * **Possible Local Exceptions:**
   * `503 Service Unavailable` (`ServiceStatusFailure`): Returned if the application is running but failing its internal service checks.
 * **Example Request URL:** `https://api.anikethchavare.com/health`
+* **Example Request Headers:** None
+* **Example Request Body:** None
 * **Example Response:**
 ```json
 {
@@ -83,8 +122,11 @@ These base endpoints are attached directly to the underlying application instanc
 * **Description:** Explicitly clears all transaction history logs from the database. This route is optimized for automated data retention maintenance and is designed to be triggered exclusively by Vercel Cron Jobs.
 * **HTTP Method:** `POST`
 * **Response Type:** `application/json` (JSONResponse)
+* **Query Parameters:** None
 * **Headers Required:**
   * `Authorization` *(String, Required)*: A bearer token string formatted as `Bearer <CRON_SECRET>`. This token maps to a private project environment variable to securely isolate administrative functionalities from public clients.
+* **Request Body Parameters (application/json):** None
+* **Custom Rate Limit:** None
 * **Possible Local Exceptions:**
   * `401 Unauthorized`: Returned if the `Authorization` header is entirely missing, improperly formatted, or contains an invalid credential token string.
 * **Example Request URL:** `https://api.anikethchavare.com/clear-request-logs`
@@ -92,6 +134,7 @@ These base endpoints are attached directly to the underlying application instanc
 ```http request
 Authorization: Bearer secure_cron_secret_token
 ```
+* **Example Request Body:** None
 * **Example Response:**
 ```json
 {
@@ -110,7 +153,7 @@ Authorization: Bearer secure_cron_secret_token
 
 <hr>
 
-## 3. 🕦 Automated Maintenance
+## 4. 🕦 Automated Maintenance
 
 The API features built-in self-cleaning pipelines managed via Vercel Cron jobs.
 
@@ -121,6 +164,6 @@ The API features built-in self-cleaning pipelines managed via Vercel Cron jobs.
 
 <hr>
 
-## 4. 🧭 Next Guide
+## 5. 🧭 Next Guide
 
 * **[2_response_structure.md](./2_response_structure.md) $\rightarrow$** Explore the global response schema and structural JSON examples.
