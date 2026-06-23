@@ -18,6 +18,7 @@ limitations under the License.
 
 # Imports
 from server import app
+from app.config import settings
 from fastapi.testclient import TestClient
 
 # Initializing the TestClient
@@ -57,10 +58,10 @@ def test_clear_request_logs_unauthorized():
     assert response.json()["success"] is False
 
 def test_clear_request_logs_authorized(monkeypatch):
-    """ Tests log deletion with valid token signature using mock environment variable (POST /clear-request-logs). """
+    """ Tests log deletion with valid token signature using mock settings (POST /clear-request-logs). """
 
     test_secret = "test_cron_secret_key"
-    monkeypatch.setenv("CRON_SECRET", test_secret)
+    monkeypatch.setattr(settings, "cron_secret", test_secret)
 
     response = client.post("/clear-request-logs", headers={"Authorization": f"Bearer {test_secret}"})
     assert response.status_code == 200

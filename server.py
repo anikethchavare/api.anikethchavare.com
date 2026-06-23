@@ -66,6 +66,7 @@ async def async_context_manager_lifespan(app_local: FastAPI):
 
     # Shutdown: Close the Async connection pool.
     await database.close_pool()
+    await rate_limiter.close_limiter()
 
 # Initializing the "app" FastAPI Server
 app = FastAPI(title="api.anikethchavare.com",

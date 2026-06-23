@@ -29,6 +29,7 @@ The format will be:
 ### Refactored
 - Minimized code for fetching the favicon in the `/favicon.ico` endpoint.
 - Changed implementation of loading environment variables through `pydantic-settings` instead of `python-dotenv`.
+- Added a SlowAPI Redis teardown hook to fix idle connection leaks on Vercel container shutdown.
 
 ### Performance
 - Changed the implementation of rate limiting to Redis via Upstash (Vercel).

@@ -23,6 +23,18 @@ from slowapi import Limiter
 from slowapi.util import get_remote_address
 
 # Initializing the Limiter
-limiter = Limiter(key_func=get_remote_address,
-                  storage_uri=settings.upstash_redis_url,
-                  default_limits=["60/minute"])
+limiter = Limiter(
+    key_func=get_remote_address,
+    storage_uri=settings.upstash_redis_url,
+    default_limits=["60/minute"]
+)
+
+# Function 1: Close Limiter
+async def close_limiter():
+    """ Gracefully disconnects SlowAPI's underlying storage connection pool. """
+
+    if hasattr(limiter.limiter, "storage") and limiter.limiter.storage:
+        storage = limiter.limiter.storage
+
+        if hasattr(storage, "reg") and storage.reg:
+            await storage.reg.close()
