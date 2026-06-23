@@ -110,6 +110,17 @@ Authorization: Bearer secure_cron_secret_token
 
 <hr>
 
-## 3. 🧭 Next Guide
+## 3. 🕦 Automated Maintenance
+
+The API features built-in self-cleaning pipelines managed via Vercel Cron jobs.
+
+### Request Log Cleanup
+* **Endpoint:** `/clear-request-logs`
+* **Execution Interval:** Managed via `vercel.json` configurations.
+* **Security:** This endpoint strictly requires a `CRON_SECRET` sent via authorization headers matching the infrastructure environment variables. Unauthorized or manual requests without the correct signing key will return a `401 Unauthorized` response.
+
+<hr>
+
+## 4. 🧭 Next Guide
 
 * **[2_response_structure.md](./2_response_structure.md) $\rightarrow$** Explore the global response schema and structural JSON examples.

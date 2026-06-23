@@ -70,6 +70,15 @@ vercel env add DATABASE_URL
 
 <hr>
 
-## 3. 🧭 Next Guide
+## 3. 🔧 Testing Architecture
+
+The test suite utilizes a localized environment structure to run integration tests without needing live network access to production third-party resources.
+
+* **Rate Limiting Isolation:** During `pytest` runs, the configuration hooks intercept external service requirements and mock/force `memory://` as the tracking backend. This prevents local development tests from consuming production Upstash service limits.
+* **Database Mocking:** Testing workflows simulate isolated execution paths ensuring that tests do not clear or pollute the live Neon PostgreSQL database instance.
+
+<hr>
+
+## 4. 🧭 Next Guide
 
 * **[v1/1_core.md](./v1/1_core.md) $\rightarrow$** Proceed to the **Version 1** core documentation to explore the primary API endpoints, request patterns, and integration workflows.
