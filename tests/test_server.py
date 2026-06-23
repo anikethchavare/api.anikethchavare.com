@@ -67,17 +67,24 @@ def test_clear_request_logs_authorized(monkeypatch):
     assert response.json()["success"] is True
 
 # Test Exception Handler 1: 429 (app)
-def test_exception_handler_429():
-    """ Tests global 429 handler by rapidly spamming a rate-limited endpoint. """
+def test_exception_handler_429(monkeypatch):
+    """ Tests global 429 handler and ensures limits fall back to local memory safely. """
 
+    monkeypatch.setenv("UPSTASH_REDIS_URL", "memory://")
+
+    from app.rate_limiter import limiter
+    limiter.reset()
+
+    hit_triggered_429 = False
     for _ in range(65):
         response = client.get("/")
         if response.status_code == 429:
+            hit_triggered_429 = True
+            assert response.json()["success"] is False
+            assert "Rate limit exceeded" in response.json()["message"]
             break
 
-    assert response.status_code == 429
-    assert response.json()["success"] is False
-    assert "Rate limit exceeded" in response.json()["message"]
+    assert hit_triggered_429 is True
 
 # Test Exception Handler 2: 404 (app)
 def test_exception_handler_404():

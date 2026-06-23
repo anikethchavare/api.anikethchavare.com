@@ -24,6 +24,7 @@ The format will be:
 ### Changed
 - Added new dependencies.
 - Enhanced styling of docstrings.
+- Changed test code of rate limiting implementation.
 
 ### Refactored
 - Minimized code for fetching the favicon in the `/favicon.ico` endpoint.
