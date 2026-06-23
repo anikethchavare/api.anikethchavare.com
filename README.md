@@ -65,7 +65,7 @@ Point your HTTP client to `https://api.anikethchavare.com/v1` to begin. No authe
 ### 💻 Method 2: Local Development
 Ensure you have **Python 3.10+** and a **PostgreSQL** database ready.
 
-1.  **Download & Install**: Clone the repository via Git or download and extract the source ZIP file.
+1.  **Download & Install:** Clone the repository via Git or download and extract the source ZIP file.
 
     ```bash
     git clone https://github.com/anikethchavare/api.anikethchavare.com.git
@@ -73,12 +73,15 @@ Ensure you have **Python 3.10+** and a **PostgreSQL** database ready.
     pip install -r requirements.txt uvicorn
     ```
 
-2.  **Environment Setup**: Add your `DATABASE_URL` and `CRON_SECRET` to a `.env` file in the root directory. The `CRON_SECRET` can be anything you like, but must be kept a secret to ensure only Vercel Cron Jobs can purge the request logs.
+2.  **Environment Setup:** Add your `DATABASE_URL` and `CRON_SECRET` to a `.env` file in the root directory. The `UPSTASH_REDIS_URL` is the URL of the Redis (Upstash) instance in Vercel. The `CRON_SECRET` can be anything you like, but must be kept a secret to ensure only Vercel Cron Jobs can purge the request logs.
 
     ```env
     DATABASE_URL=<YOUR_POSTGRESQL_DATABASE_URL>
+    UPSTASH_REDIS_URL=<YOUR_UPSTASH_REDIS_CONNECTION_STRING>
     CRON_SECRET=<YOUR_VERCEL_CRON_SECRET>
     ```
+
+**Note:** For local development, setting `UPSTASH_REDIS_URL="memory://"` forces the application to track rate limits directly inside your local computer's volatile RAM.
 
 3.  **Launch**:
     ```bash

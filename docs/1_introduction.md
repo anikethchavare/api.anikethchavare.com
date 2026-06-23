@@ -44,12 +44,12 @@ These base endpoints are attached directly to the underlying application instanc
 }
 ```
 
-### 2. `/favicon.ico`
+### 2. `/favicon.ico` and `/favicon.png`
 * **Description:** Retrieves the standard graphic favicon of the API.
 * **HTTP Method:** `GET`
-* **Response Type:** `image/x-icon` (FileResponse)
-* **Example Request URL:** `https://api.anikethchavare.com/favicon.ico`
-* **Example Response:** Binary stream of image/x-icon asset.
+* **Response Type:** `image/png` (FileResponse)
+* **Example Request URL:** `https://api.anikethchavare.com/favicon.ico` or `https://api.anikethchavare.com/favicon.png`
+* **Example Response:** Binary stream of image/png asset.
 
 ### 3. `/health`
 * **Description:** Performs an operational check to verify the overall health, status, and availability of the API.

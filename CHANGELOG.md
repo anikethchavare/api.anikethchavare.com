@@ -34,6 +34,7 @@ The format will be:
 
 ### Documentation
 - Added a documentation versioning note at the top of `1_introduction.md`.
+- Updated documentation to highlight the new rate limiting setup via Upstash (Vercel).
 
 ## [1.2.1] - 2026-06-22
 

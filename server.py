@@ -156,6 +156,7 @@ async def app_main(request: Request, background_tasks: BackgroundTasks):
 
 # Route 2: favicon.ico (app)
 @app.get("/favicon.ico")
+@app.get("/favicon.png")
 @rate_limiter.limiter.limit("60/minute")
 async def app_favicon(request: Request):
     return FileResponse(FAVICON_PATH, media_type="image/png", status_code=200)

@@ -94,6 +94,8 @@ Dispatched by the data validation exception handler when an incoming request pay
 
 Triggered by the rate limiting middleware when a client exceeds their allocated request quota within a specific window.
 
+**Infrastructure Implementation Note:** Rate-limiting states and hit-frequency windows are managed globally across an atomic, asynchronous Upstash Redis memory collection layer to prevent transactional serverless latency overhead.
+
 **Example Error Response:**
 
 ```json
