@@ -153,7 +153,7 @@ These endpoints are bound directly to the `app_v1_math` router and operate under
 ```json
 {
     "success": true,
-    "message": "Successfully converted the value from degrees or radians to sin.",
+    "message": "Successfully converted the value from degrees to sin.",
     "data": {
         "result": 1.0
     },
@@ -186,7 +186,7 @@ These endpoints are bound directly to the `app_v1_math` router and operate under
 ```json
 {
     "success": true,
-    "message": "Successfully converted the value from degrees or radians to cos.",
+    "message": "Successfully converted the value from degrees to cos.",
     "data": {
         "result": 6.12323399573677e-17
     },
@@ -220,7 +220,7 @@ These endpoints are bound directly to the `app_v1_math` router and operate under
 ```json
 {
     "success": true,
-    "message": "Successfully converted the value from degrees or radians to tan.",
+    "message": "Successfully converted the value from degrees to tan.",
     "data": {
         "result": 16331239353195370
     },
@@ -254,7 +254,7 @@ These endpoints are bound directly to the `app_v1_math` router and operate under
 ```json
 {
     "success": true,
-    "message": "Successfully converted the value from degrees or radians to cosec.",
+    "message": "Successfully converted the value from degrees to cosec.",
     "data": {
         "result": 1
     },
@@ -288,7 +288,7 @@ These endpoints are bound directly to the `app_v1_math` router and operate under
 ```json
 {
     "success": true,
-    "message": "Successfully converted the value from degrees or radians to sec.",
+    "message": "Successfully converted the value from degrees to sec.",
     "data": {
         "result": 16331239353195370
     },
@@ -322,7 +322,7 @@ These endpoints are bound directly to the `app_v1_math` router and operate under
 ```json
 {
     "success": true,
-    "message": "Successfully converted the value from degrees or radians to cot.",
+    "message": "Successfully converted the value from degrees to cot.",
     "data": {
         "result": 6.12323399573677e-17
     },

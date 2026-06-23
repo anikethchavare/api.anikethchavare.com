@@ -111,7 +111,7 @@ async def app_v1_math_trigonometry_sin(
         request=request,
         status_code=200,
         success=True,
-        message="Successfully converted the value from degrees or radians to sin.",
+        message=f"Successfully converted the value from {unit} to sin.",
         background_tasks=background_tasks,
         data={
             "result": math.sin(math.radians(value) if unit == "degrees" else value)
@@ -131,7 +131,7 @@ async def app_v1_math_trigonometry_cos(
         request=request,
         status_code=200,
         success=True,
-        message="Successfully converted the value from degrees or radians to cos.",
+        message=f"Successfully converted the value from {unit} to cos.",
         background_tasks=background_tasks,
         data={
             "result": math.cos(math.radians(value) if unit == "degrees" else value)
@@ -152,7 +152,7 @@ async def app_v1_math_trigonometry_tan(
             request=request,
             status_code=200,
             success=True,
-            message="Successfully converted the value from degrees or radians to tan.",
+            message=f"Successfully converted the value from {unit} to tan.",
             background_tasks=background_tasks,
             data={
                 "result": math.tan(math.radians(value) if unit == "degrees" else value)
@@ -181,7 +181,7 @@ async def app_v1_math_trigonometry_cosec(
             request=request,
             status_code=200,
             success=True,
-            message="Successfully converted the value from degrees or radians to cosec.",
+            message=f"Successfully converted the value from {unit} to cosec.",
             background_tasks=background_tasks,
             data={
                 "result": 1/math.sin(math.radians(value) if unit == "degrees" else value)
@@ -210,7 +210,7 @@ async def app_v1_math_trigonometry_sec(
             request=request,
             status_code=200,
             success=True,
-            message="Successfully converted the value from degrees or radians to sec.",
+            message=f"Successfully converted the value from {unit} to sec.",
             background_tasks=background_tasks,
             data={
                 "result": 1/math.cos(math.radians(value) if unit == "degrees" else value)
@@ -239,7 +239,7 @@ async def app_v1_math_trigonometry_cot(
             request=request,
             status_code=200,
             success=True,
-            message="Successfully converted the value from degrees or radians to cot.",
+            message=f"Successfully converted the value from {unit} to cot.",
             background_tasks=background_tasks,
             data={
                 "result": 1/math.tan(math.radians(value) if unit == "degrees" else value)
