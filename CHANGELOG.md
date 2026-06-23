@@ -16,6 +16,13 @@ The format will be:
 - Performance
 - Documentation
 
+## [Unreleased]
+
+### Added
+- Introduced the `/math` utility namespace under the `/v1` prefix.
+- **math:** Added a `/trigonometry` sub-utility namespace.
+- **math:** Added 8 endpoints (`/degrees-to-radians`, `/radians-to-degrees`, `/sin`, `/cos`, `/tan`, `/cosec`, `/sec`, `/cot`) under the `/trigonometry` sub-utility namespace.
+
 ## [1.2.2] - 2026-06-23
 
 ### Added

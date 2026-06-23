@@ -22,6 +22,8 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 # Class 1: Settings
 class Settings(BaseSettings):
+    """ Constructs a "Settings" object with all environment variables. """
+
     upstash_redis_url: str = Field(..., alias="UPSTASH_REDIS_URL")
     cron_secret: str = Field(..., alias="CRON_SECRET")
     database_url: str = Field(..., alias="DATABASE_URL")

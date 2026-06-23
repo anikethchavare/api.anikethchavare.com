@@ -133,7 +133,7 @@ async def middleware_telemetry_pre_calculation(request: Request, call_next):
 
     return await call_next(request)
 
-# Include the API Routers
+# Including the API Routers
 app.include_router(app_v1)
 
 # Route 1: Main (app)
