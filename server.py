@@ -54,8 +54,7 @@ Response Structure: All API responses must follow this order:
 """
 
 # Constants
-BASE_DIRECTORY = os.path.dirname(os.path.abspath(__file__))
-FAVICON_PATH = os.path.join(BASE_DIRECTORY, "media", "favicon.png")
+FAVICON_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), "media/favicon.png"))
 
 # Loading Environment Variables
 load_dotenv()
@@ -159,7 +158,7 @@ async def app_main(request: Request, background_tasks: BackgroundTasks):
 @app.get("/favicon.ico")
 @rate_limiter.limiter.limit("60/minute")
 async def app_favicon(request: Request):
-    return FileResponse(FAVICON_PATH, status_code=200)
+    return FileResponse(FAVICON_PATH, media_type="image/png", status_code=200)
 
 # Route 3: Health (app)
 @app.get("/health")

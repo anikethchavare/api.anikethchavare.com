@@ -25,6 +25,9 @@ The format will be:
 - Added new dependencies.
 - Enhanced styling of docstrings.
 
+### Refactored
+- Minimized code for fetching the favicon in the `/favicon.ico` endpoint.
+
 ### Documentation
 - Added a documentation versioning note at the top of `1_introduction.md`.
 
