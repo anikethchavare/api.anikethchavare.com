@@ -22,7 +22,7 @@ The format will be:
 - Created tests for all routes and endpoints.
 
 ### Changed
-- Added new dependencies.
+- Added new dependencies and removed redundant ones.
 - Enhanced styling of docstrings.
 - Changed test code of rate limiting implementation.
 

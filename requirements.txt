@@ -8,5 +8,5 @@ edge-tts==7.2.8
 fastapi==0.138.0
 pydantic==2.13.4
 psycopg-pool==3.3.1
-python-dotenv==1.2.2
 psycopg[binary]==3.3.4
+pydantic-settings==2.14.2

@@ -19,5 +19,5 @@ organizations behind these projects.
 8. [FastAPI](https://github.com/tiangolo/fastapi) v0.138.0 - License: [MIT](https://github.com/fastapi/fastapi/blob/master/LICENSE)
 9. [Pydantic](https://github.com/pydantic/pydantic) v2.13.4 - License: [MIT](https://github.com/pydantic/pydantic/blob/main/LICENSE)
 10. [psycopg-pool](https://github.com/psycopg/psycopg) v3.3.1 - License: [LGPL-3.0](https://github.com/psycopg/psycopg/blob/master/LICENSE.txt)
-11. [python-dotenv](https://github.com/theskumar/python-dotenv) v1.2.2 - License: [BSD 3-Clause](https://github.com/theskumar/python-dotenv/blob/main/LICENSE)
-12. [psycopg-binary](https://github.com/psycopg/psycopg) v3.3.4 - License: [LGPL-3.0](https://github.com/psycopg/psycopg/blob/master/LICENSE.txt)
+11. [psycopg-binary](https://github.com/psycopg/psycopg) v3.3.4 - License: [LGPL-3.0](https://github.com/psycopg/psycopg/blob/master/LICENSE.txt)
+12. [pydantic-settings](https://github.com/pydantic/pydantic-settings) v2.14.2 - License: [MIT](https://github.com/pydantic/pydantic-settings/blob/main/LICENSE)
