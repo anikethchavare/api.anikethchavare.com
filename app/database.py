@@ -17,12 +17,11 @@ limitations under the License.
 """
 
 # Imports
-import os
+from app.config import settings
+
 import json
 import logging
-
 import psycopg
-from dotenv import load_dotenv
 from typing import Any, Callable, Optional
 from psycopg_pool import AsyncConnectionPool
 
@@ -30,10 +29,7 @@ from psycopg_pool import AsyncConnectionPool
 logging.basicConfig(level=logging.WARNING)
 logger = logging.getLogger(__name__)
 
-# Loading Environment Variables
-load_dotenv()
-
-DATABASE_URL = os.getenv("DATABASE_URL")
+DATABASE_URL = settings.database_url
 
 # Initializing the Connection Pool
 connection_pool: Optional[AsyncConnectionPool] = None

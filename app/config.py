@@ -1,4 +1,4 @@
-# api.anikethchavare.com - app/schemas.py
+# api.anikethchavare.com - app/config.py
 
 """
 Copyright 2026 Aniketh Chavare (anikethchavare@zohomail.in)
@@ -17,21 +17,20 @@ limitations under the License.
 """
 
 # Imports
-from typing import Any, Dict
-from pydantic import BaseModel
+from pydantic import Field
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
-# Constants
-API_VERSION = "1.2.1"
+# Class 1: Settings
+class Settings(BaseSettings):
+    upstash_redis_url: str = Field(..., alias="UPSTASH_REDIS_URL")
+    cron_secret: str = Field(..., alias="CRON_SECRET")
+    database_url: str = Field(..., alias="DATABASE_URL")
 
-# Class 1: APIResponse (Base)
-class APIResponse(BaseModel):
-    """ Constructs an "APIResponse" Pydantic model for an API response. """
+    model_config = SettingsConfigDict(
+        env_file=".env",
+        env_file_encoding="utf-8",
+        extra="ignore",
+    )
 
-    success: bool
-    message: str
-    data: Dict[str, Any] = {}
-    meta: Dict[str, Any] = {}
-    api_version: str
-    timestamp: str
-    request_id: str
-    status_code: int
+# Instantiate "settings" Globally
+settings = Settings()

@@ -17,15 +17,12 @@ limitations under the License.
 """
 
 # Imports
-import os
-from slowapi import Limiter
-from dotenv import load_dotenv
-from slowapi.util import get_remote_address
+from app.config import settings
 
-# Loading Environment Variables
-load_dotenv()
+from slowapi import Limiter
+from slowapi.util import get_remote_address
 
 # Initializing the Limiter
 limiter = Limiter(key_func=get_remote_address,
-                  storage_uri=os.getenv("UPSTASH_REDIS_URL", "memory://"),
+                  storage_uri=settings.upstash_redis_url,
                   default_limits=["60/minute"])

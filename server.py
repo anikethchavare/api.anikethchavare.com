@@ -21,6 +21,7 @@ from app import utils
 from app import schemas
 from app import database
 from app import rate_limiter
+from app.config import settings
 
 from routers.app_v1 import app_v1
 
@@ -29,7 +30,6 @@ import uuid
 import logging
 import secrets
 import traceback
-from dotenv import load_dotenv
 from datetime import datetime, timezone
 from contextlib import asynccontextmanager
 
@@ -55,9 +55,6 @@ Response Structure: All API responses must follow this order:
 
 # Constants
 FAVICON_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), "media/favicon.png"))
-
-# Loading Environment Variables
-load_dotenv()
 
 # Async Context Manager: Lifespan
 @asynccontextmanager
@@ -187,9 +184,7 @@ async def app_health(request: Request, background_tasks: BackgroundTasks):
 # Route 4: Clear Request Logs (app)
 @app.post("/clear-request-logs")
 async def app_clear_request_logs(request: Request, background_tasks: BackgroundTasks, authorization: str = Header(None)):
-    cron_secret = os.getenv("CRON_SECRET")
-
-    if not authorization or not secrets.compare_digest(authorization, f"Bearer {cron_secret}"):
+    if not authorization or not secrets.compare_digest(authorization, f"Bearer {settings.cron_secret}"):
         return utils.send_response(
             request=request,
             status_code=401,
