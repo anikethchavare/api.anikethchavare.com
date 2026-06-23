@@ -23,6 +23,7 @@ The format will be:
 
 ### Changed
 - Added new dependencies.
+- Enhanced styling of docstrings.
 
 ### Documentation
 - Added a documentation versioning note at the top of `1_introduction.md`.

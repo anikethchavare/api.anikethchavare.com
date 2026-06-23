@@ -25,9 +25,7 @@ API_VERSION = "1.2.1"
 
 # Class 1 - APIResponse (Base)
 class APIResponse(BaseModel):
-    """
-    Constructs an "APIResponse" Pydantic model for an API response.
-    """
+    """ Constructs an "APIResponse" Pydantic model for an API response. """
 
     success: bool
     message: str

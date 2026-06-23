@@ -40,9 +40,7 @@ connection_pool: Optional[AsyncConnectionPool] = None
 
 # Function 1: Initialize Connection Pool
 async def init_pool():
-    """
-    Initializes the database connection pool asynchronously at server startup.
-    """
+    """ Initializes the database connection pool asynchronously at server startup. """
 
     global connection_pool
 
@@ -62,9 +60,7 @@ async def init_pool():
 
 # Function 2: Close Connection Pool
 async def close_pool():
-    """
-    Closes the database connection pool.
-    """
+    """ Closes the database connection pool. """
 
     global connection_pool
 
