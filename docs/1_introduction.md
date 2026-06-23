@@ -2,7 +2,7 @@
 
 Welcome to the documentation of `api.anikethchavare.com`. This is a high-performance, general-purpose public REST API powered by FastAPI and Python.
 
-* **Current Release:** v1.2.1
+* **Current Release:** v1.2.2
 * **Production Base URL:** `https://api.anikethchavare.com`
 
 **Documentation Versioning Note:** The code samples, responses, and version references throughout these guides may reflect previous stable releases. For the definitive list of latest additions, patches, and security improvements, please always refer directly to the live **[CHANGELOG.md](../CHANGELOG.md)**.

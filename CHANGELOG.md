@@ -16,7 +16,7 @@ The format will be:
 - Performance
 - Documentation
 
-## [Unreleased]
+## [1.2.2] - 2026-06-23
 
 ### Added
 - Created tests for all routes and endpoints.
@@ -217,6 +217,7 @@ ensure frontend stability.
 - Established `requirements.txt` with core dependencies (FastAPI, Pydantic).
 
 ---
+[1.2.2]: https://github.com/anikethchavare/api.anikethchavare.com/releases/tag/v1.2.2
 [1.2.1]: https://github.com/anikethchavare/api.anikethchavare.com/releases/tag/v1.2.1
 [1.2.0]: https://github.com/anikethchavare/api.anikethchavare.com/releases/tag/v1.2.0
 [1.1.0]: https://github.com/anikethchavare/api.anikethchavare.com/releases/tag/v1.1.0
