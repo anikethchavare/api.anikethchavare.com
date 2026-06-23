@@ -81,12 +81,12 @@ Ensure you have **Python 3.10+** and a **PostgreSQL** database ready.
     CRON_SECRET=<YOUR_VERCEL_CRON_SECRET>
     ```
 
-**Note:** For local development, setting `UPSTASH_REDIS_URL="memory://"` forces the application to track rate limits directly inside your local computer's volatile RAM.
-
 3.  **Launch**:
     ```bash
     uvicorn server:app --reload
     ```
+
+**Note:** For local development, setting `UPSTASH_REDIS_URL="memory://"` forces the application to track rate limits directly inside your local computer's volatile RAM.
 
 <hr>
 

@@ -10,27 +10,27 @@ Ensure you have **Python 3.10+** and a **PostgreSQL** database ready before proc
 
 1. **Download & Install:** Clone the repository via Git or download and extract the source ZIP file of the latest release.
 
-```bash
-git clone https://github.com/anikethchavare/api.anikethchavare.com.git
-cd api.anikethchavare.com
-pip install -r requirements.txt uvicorn
-```
+    ```bash
+    git clone https://github.com/anikethchavare/api.anikethchavare.com.git
+    cd api.anikethchavare.com
+    pip install -r requirements.txt uvicorn
+    ```
 
 2. **Environment Setup:** Add your `DATABASE_URL`, `UPSTASH_REDIS_URL`, `CRON_SECRET` to a `.env` file in the root directory. The `UPSTASH_REDIS_URL` is the URL of the Redis (Upstash) instance in Vercel. The `CRON_SECRET` can be anything you like, but must be kept a secret to ensure only Vercel Cron Jobs can purge the request logs.
 
-```env
-DATABASE_URL=<YOUR_POSTGRESQL_DATABASE_URL>
-UPSTASH_REDIS_URL=<YOUR_UPSTASH_REDIS_CONNECTION_STRING>
-CRON_SECRET=<YOUR_VERCEL_CRON_SECRET>
-```
-
-**Note:** For local development, setting `UPSTASH_REDIS_URL="memory://"` forces the application to track rate limits directly inside your local computer's volatile RAM.
+    ```env
+    DATABASE_URL=<YOUR_POSTGRESQL_DATABASE_URL>
+    UPSTASH_REDIS_URL=<YOUR_UPSTASH_REDIS_CONNECTION_STRING>
+    CRON_SECRET=<YOUR_VERCEL_CRON_SECRET>
+    ```
 
 3. **Launch:** Start the local development server.
 
-```bash
-uvicorn server:app --reload
-```
+    ```bash
+    uvicorn server:app --reload
+    ```
+
+**Note:** For local development, setting `UPSTASH_REDIS_URL="memory://"` forces the application to track rate limits directly inside your local computer's volatile RAM.
 
 <hr>
 
@@ -42,23 +42,23 @@ Since the core engine is optimized for serverless environments, you can deploy i
 
 1. **Install Vercel CLI:** If you haven't already, install the utility globally via npm:
 
-```bash
-npm install -g vercel
-```
+    ```bash
+    npm install -g vercel
+    ```
 
 2. **Deploy & Link:** Open your terminal in the root directory and initialize the deployment process:
 
-```bash
-vercel
-```
+    ```bash
+    vercel
+    ```
 
 Follow the terminal prompts to log in, create a new project, and link your repository.
 
 3. **Set Environment Variables:** When prompted or after initialization, add your production database URL to your environment variables:
 
-```bash
-vercel env add DATABASE_URL
-```
+    ```bash
+    vercel env add DATABASE_URL
+    ```
 
 ### Option B: Via Vercel Dashboard (Browser)
 
