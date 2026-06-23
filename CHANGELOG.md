@@ -28,6 +28,9 @@ The format will be:
 ### Refactored
 - Minimized code for fetching the favicon in the `/favicon.ico` endpoint.
 
+### Performance
+- Changed the implementation of rate limiting to Redis via Upstash (Vercel).
+
 ### Documentation
 - Added a documentation versioning note at the top of `1_introduction.md`.
 
