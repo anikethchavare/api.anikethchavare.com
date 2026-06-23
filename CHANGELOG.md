@@ -78,7 +78,7 @@ The format will be:
 ## [1.1.0] - 2026-06-20
 
 ### Added
-- Introduced the `language` utility namespace under the `/v1` prefix.
+- Introduced the `/language` utility namespace under the `/v1` prefix.
 - **language:** Added a `/dictionary` endpoint to query words via an external API.
 - Added a custom global exception handler for `RequestValidationError` to return structured, detailed data validation diagnostics.
 
