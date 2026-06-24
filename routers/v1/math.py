@@ -21,9 +21,11 @@ from app import utils
 from app import rate_limiter
 
 import math
-from typing import Union, Literal
+import statistics
+from pydantic import Field
+from typing import Union, Literal, List, Annotated
 
-from fastapi import APIRouter, Request, BackgroundTasks, Query
+from fastapi import APIRouter, Request, BackgroundTasks, Query, Body
 
 # Initializing the "app_v1_math" API Router
 app_v1_math = APIRouter(prefix="/math")
@@ -253,3 +255,76 @@ async def app_v1_math_trigonometry_cot(
             message="Math Error: The resulting value is undefined (division by zero).",
             background_tasks=background_tasks
         )
+
+# Route 11: Statistics (app_v1_math)
+@app_v1_math.get("/statistics")
+@rate_limiter.limiter.limit("60/minute")
+async def app_v1_math_statistics(request: Request, background_tasks: BackgroundTasks):
+    return utils.send_response(
+        request=request,
+        status_code=200,
+        success=True,
+        message="Welcome to the 'statistics' sub-utility namespace under 'math'. Check the documentation for available endpoints.",
+        background_tasks=background_tasks,
+        meta={
+            "help": "Check the API v1 documentation (/math) for available endpoints.",
+            "docs": "https://github.com/anikethchavare/api.anikethchavare.com/tree/main/docs/v1/3_math.md"
+        }
+    )
+
+# Route 12: Statistics - Mean (app_v1_math)
+@app_v1_math.post("/statistics/mean")
+@rate_limiter.limiter.limit("60/minute")
+async def app_v1_math_statistics_mean(
+        request: Request,
+        background_tasks: BackgroundTasks,
+        data: List[Union[int, float]] = Body(..., embed=True, min_length=1, description="The list of values used to calculate the mean.")
+):
+    return utils.send_response(
+        request=request,
+        status_code=200,
+        success=True,
+        message="Successfully calculated the mean of the data.",
+        background_tasks=background_tasks,
+        data={
+            "mean": statistics.mean(data)
+        }
+    )
+
+# Route 13: Statistics - Median (app_v1_math)
+@app_v1_math.post("/statistics/median")
+@rate_limiter.limiter.limit("60/minute")
+async def app_v1_math_statistics_median(
+        request: Request,
+        background_tasks: BackgroundTasks,
+        data: List[Union[int, float]] = Body(..., embed=True, min_length=1, description="The list of values used to calculate the median.")
+):
+    return utils.send_response(
+        request=request,
+        status_code=200,
+        success=True,
+        message="Successfully calculated the median of the data.",
+        background_tasks=background_tasks,
+        data={
+            "median": statistics.median(data)
+        }
+    )
+
+# Route 14: Statistics - Mode (app_v1_math)
+@app_v1_math.post("/statistics/mode")
+@rate_limiter.limiter.limit("60/minute")
+async def app_v1_math_statistics_mode(
+        request: Request,
+        background_tasks: BackgroundTasks,
+        data: List[Union[int, float]] = Body(..., embed=True, min_length=1, description="The list of values used to calculate the mode.")
+):
+    return utils.send_response(
+        request=request,
+        status_code=200,
+        success=True,
+        message="Successfully calculated the mode of the data.",
+        background_tasks=background_tasks,
+        data={
+            "mode": statistics.multimode(data)
+        }
+    )
