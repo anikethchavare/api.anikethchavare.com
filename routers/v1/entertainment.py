@@ -108,7 +108,7 @@ async def app_v1_entertainment_jokes(
             request=request,
             status_code=502,
             success=False,
-            message="An unexpected error occurred while fetching jokes. Please try again later.",
+            message="An unexpected error occurred while fetching the jokes. Please try again later.",
             background_tasks=background_tasks
         )
 
@@ -140,5 +140,39 @@ async def app_v1_entertainment_jokes(
         data={
             "jokes": jokes_list,
             "safe": response_data.get("jokes", [response_data])[0].get("safe", True)
+        }
+    )
+
+# Route 3: Fact (app_v1_entertainment)
+@app_v1_entertainment.get("/fact")
+@rate_limiter.limiter.limit("60/minute")
+async def app_v1_entertainment_fact(
+        request: Request,
+        background_tasks: BackgroundTasks,
+        type: Literal["random", "today"] = Query("random", description="The type of fact. Either a random fact or today's fact."),
+):
+    # Fetching Data
+    async with httpx.AsyncClient() as client:
+        response = await client.get(f"https://uselessfacts.jsph.pl/api/v2/facts/{type}")
+
+    if response.status_code != 200:
+        return utils.send_response(
+            request=request,
+            status_code=502,
+            success=False,
+            message="An unexpected error occurred while fetching the fact. Please try again later.",
+            background_tasks=background_tasks
+        )
+
+    response_data = orjson.loads(response.content)
+
+    return utils.send_response(
+        request=request,
+        status_code=200,
+        success=True,
+        message="Successfully fetched the fact.",
+        background_tasks=background_tasks,
+        data={
+            "fact": response_data["text"]
         }
     )
