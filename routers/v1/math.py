@@ -22,8 +22,8 @@ from app import rate_limiter
 
 import math
 import statistics
-from pydantic import Field
-from typing import Union, Literal, List, Annotated
+import numpy as np
+from typing import Union, Literal, List
 
 from fastapi import APIRouter, Request, BackgroundTasks, Query, Body
 
@@ -326,5 +326,84 @@ async def app_v1_math_statistics_mode(
         background_tasks=background_tasks,
         data={
             "mode": statistics.multimode(data)
+        }
+    )
+
+# Route 15: Algebra (app_v1_math)
+@app_v1_math.get("/algebra")
+@rate_limiter.limiter.limit("60/minute")
+async def app_v1_math_algebra(request: Request, background_tasks: BackgroundTasks):
+    return utils.send_response(
+        request=request,
+        status_code=200,
+        success=True,
+        message="Welcome to the 'algebra' sub-utility namespace under 'math'. Check the documentation for available endpoints.",
+        background_tasks=background_tasks,
+        meta={
+            "help": "Check the API v1 documentation (/math) for available endpoints.",
+            "docs": "https://github.com/anikethchavare/api.anikethchavare.com/tree/main/docs/v1/3_math.md"
+        }
+    )
+
+# Route 16: Algebra - Discriminant (app_v1_math)
+@app_v1_math.post("/algebra/discriminant")
+@rate_limiter.limiter.limit("60/minute")
+async def app_v1_math_algebra_discriminant(
+        request: Request,
+        background_tasks: BackgroundTasks,
+        coefficients: List[Union[int, float]] = Body(..., embed=True, min_length=3, max_length=4, description="The list of coefficients of an equation.")
+):
+    if coefficients[0] == 0:
+        return utils.send_response(
+            request=request,
+            status_code=422,
+            success=False,
+            message="The first coefficient (a) of an equation must not be zero.",
+            background_tasks=background_tasks
+        )
+
+    if len(coefficients) == 3:
+        a, b, c = coefficients
+        discriminant = (b**2) - (4*a*c)
+    else:
+        a, b, c, d = coefficients
+        discriminant = ((b**2)*(c**2)) - (4*a*(c**3)) - (4*(b**3)*d) - (27*(a**2)*(d**2)) + (18*a*b*c*d)
+
+    return utils.send_response(
+        request=request,
+        status_code=200,
+        success=True,
+        message=f"Successfully calculated the discriminant of the {'quadratic' if len(coefficients) == 3 else 'cubic'} equation.",
+        background_tasks=background_tasks,
+        data={
+            "discriminant": discriminant
+        }
+    )
+
+# Route 17: Algebra - Roots (app_v1_math)
+@app_v1_math.post("/algebra/roots")
+@rate_limiter.limiter.limit("60/minute")
+async def app_v1_math_algebra_roots(
+        request: Request,
+        background_tasks: BackgroundTasks,
+        coefficients: List[Union[int, float]] = Body(..., embed=True, min_length=3, max_length=4, description="The list of coefficients of an equation.")
+):
+    if coefficients[0] == 0:
+        return utils.send_response(
+            request=request,
+            status_code=422,
+            success=False,
+            message="The first coefficient (a) of an equation must not be zero.",
+            background_tasks=background_tasks
+        )
+
+    return utils.send_response(
+        request=request,
+        status_code=200,
+        success=True,
+        message=f"Successfully calculated the roots of the {'quadratic' if len(coefficients) == 3 else 'cubic'} equation.",
+        background_tasks=background_tasks,
+        data={
+            "roots": [r.item().real if np.isreal(r) else str(r.item()) for r in np.roots(coefficients)]
         }
     )
