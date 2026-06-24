@@ -112,7 +112,23 @@ This project is made possible by the incredible work of the open-source communit
 
 <hr>
 
-## 7. ✨ Conclusion
+## 7. 💎 Become a Sponsor
+
+This project is built and maintained entirely for open-source development. If these utility engines save you development hours, streamline your personal experiments, or add value to your production workflows, please consider supporting its continuous maintenance, global edge infrastructure, and expansion.
+
+Your sponsorship helps offset serverless compute costs and keeps the API public and accessible to developers worldwide.
+
+<br>
+
+<div align="center">
+    <a href="https://github.com/sponsors/anikethchavare">
+        <img src="https://img.shields.io/badge/Sponsor_on_GitHub-EA4AAA?style=for-the-badge&logo=github-sponsors&logoColor=white" alt="Sponsor on GitHub">
+    </a>
+</div>
+
+<hr>
+
+## 8. ✨ Conclusion
 
 Thank you for exploring `api.anikethchavare.com`. Whether you are scaling a production application or experimenting with a personal project, I hope these utilities serve as a valuable and reliable foundation for your work.
 
