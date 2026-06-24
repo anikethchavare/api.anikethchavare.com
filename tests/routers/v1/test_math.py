@@ -126,3 +126,104 @@ def test_app_v1_math_trigonometry_trigonometric_zero_division_exception(endpoint
     json_data = response.json()
     assert json_data["success"] is False
     assert "division by zero" in json_data["message"].lower()
+
+# Test Route 9: Statistics (app_v1_math)
+def test_app_v1_math_statistics():
+    """ Tests the base informational entry point of the statistics sub-utility namespace. """
+
+    response = client.get("/v1/math/statistics")
+    assert response.status_code == 200
+
+    json_data = response.json()
+    assert json_data["success"] is True
+    assert "statistics" in json_data["message"]
+
+# Test Routes 10: Statistics - Evaluation Tests -> Success & Min Length Validation (app_v1_math)
+@pytest.mark.parametrize("endpoint, dataset, key, expected", [
+    ("mean", [1, 2, 3, 4, 5], "mean", 3.0),
+    ("mean", [10.5, 20.5], "mean", 15.5),
+    ("median", [1, 3, 3, 6, 7, 8, 9], "median", 6.0),
+    ("median", [1, 2, 3, 4], "median", 2.5),
+    ("mode", [1, 2, 2, 3], "mode", [2]),
+    ("mode", [1, 1, 2, 2, 3], "mode", [1, 2])
+])
+def test_app_v1_math_statistics_endpoints_success(endpoint, dataset, key, expected):
+    """ Verifies correct calculation values across mean, median, and mode array handlers. """
+
+    response = client.getClient().post(f"/v1/math/statistics/{endpoint}", json={"data": dataset}) if hasattr(client, "getClient") else client.post(f"/v1/math/statistics/{endpoint}", json={"data": dataset})
+    assert response.status_code == 200
+
+    json_data = response.json()
+    assert json_data["success"] is True
+    assert json_data["data"][key] == expected
+
+@pytest.mark.parametrize("endpoint", ["mean", "median", "mode"])
+def test_app_v1_math_statistics_min_length_validation(endpoint):
+    """ Verifies that passing an empty list fails the min_length=1 guardrail. """
+
+    response = client.post(f"/v1/math/statistics/{endpoint}", json={"data": []})
+    assert response.status_code == 422
+    assert response.json()["success"] is False
+
+# Test Route 11: Algebra (app_v1_math)
+def test_app_v1_math_algebra():
+    """ Tests the base informational entry point of the algebra sub-utility namespace. """
+
+    response = client.get("/v1/math/algebra")
+    assert response.status_code == 200
+
+    json_data = response.json()
+    assert json_data["success"] is True
+    assert "algebra" in json_data["message"]
+
+# Test Route 12: Algebra - Constraints -> Leading Coefficient Cannot Be Zero (app_v1_math)
+@pytest.mark.parametrize("endpoint", ["discriminant", "roots"])
+def test_app_v1_math_algebra_leading_coefficient_zero(endpoint):
+    """ Ensures requests are rejected with a 422 if the leading coefficient (a) is 0. """
+
+    response = client.post(f"/v1/math/algebra/{endpoint}", json={"coefficients": [0, 2, 3]})
+    assert response.status_code == 422
+    assert "must not be zero" in response.json()["message"]
+
+# Test Route 13: Algebra - Constraints -> Length Bounds Validation (app_v1_math)
+@pytest.mark.parametrize("endpoint, payload", [
+    ("discriminant", [1, 2]),
+    ("discriminant", [1, 2, 3, 4, 5]),
+    ("roots", [1, 2]),
+    ("roots", [1, 2, 3, 4, 5])
+])
+def test_app_v1_math_algebra_length_constraints(endpoint, payload):
+    """ Verifies that array length bounds (min_length=3, max_length=4) are strictly enforced. """
+
+    response = client.post(f"/v1/math/algebra/{endpoint}", json={"coefficients": payload})
+    assert response.status_code == 422
+
+# Test Route 14: Algebra - Discriminant Execution Paths (app_v1_math)
+def test_app_v1_math_algebra_discriminant_calculation():
+    """ Verifies quadratic and cubic discriminant evaluations work correctly. """
+
+    response_quad = client.post("/v1/math/algebra/discriminant", json={"coefficients": [1, 5, 6]})
+    assert response_quad.status_code == 200
+    assert response_quad.json()["data"]["discriminant"] == 1
+
+    response_cubic = client.post("/v1/math/algebra/discriminant", json={"coefficients": [1, -6, 11, -6]})
+    assert response_cubic.status_code == 200
+    assert "discriminant" in response_cubic.json()["data"]
+
+# Test Route 15: Algebra - Roots Processing Paths (app_v1_math)
+def test_app_v1_math_algebra_roots_serialization():
+    """ Ensures algebraic root calculation handles types and outputs cleanly without dropping payloads. """
+
+    response_real = client.post("/v1/math/algebra/roots", json={"coefficients": [1, -5, 6]})
+    assert response_real.status_code == 200
+
+    roots_real = response_real.json()["data"]["roots"]
+    assert len(roots_real) == 2
+    assert pytest.approx(sorted(roots_real)) == [2.0, 3.0]
+
+    response_complex = client.post("/v1/math/algebra/roots", json={"coefficients": [1, 0, 1]})
+    assert response_complex.status_code == 200
+
+    roots_complex = response_complex.json()["data"]["roots"]
+    assert len(roots_complex) == 2
+    assert any("j" in str(r) for r in roots_complex)

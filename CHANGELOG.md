@@ -27,6 +27,8 @@ The format will be:
 - **math:** Added 3 endpoints (`/mean`, `/median`, `/mode`) under the `/statistics` sub-utility namespace.
 - **math:** Added 2 endpoints (`/discriminant`, `/roots`) under the `/algebra` sub-utility namespace.
 - **math:** Created tests for the `/trigonometry` sub-utility namespace endpoints.
+- **math:** Created tests for the `/statistics` sub-utility namespace endpoints.
+- **math:** Created tests for the `/algebra` sub-utility namespace endpoints.
 
 ### Changed
 - **math:** Specifically mentioned the unit in the `message` block of the response.
