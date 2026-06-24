@@ -30,6 +30,7 @@ The format will be:
 
 ### Changed
 - **math:** Specifically mentioned the unit in the `message` block of the response.
+- Updated and added new dependencies.
 
 ### Documentation
 - Enhanced documentation across all endpoints to include response schema.
