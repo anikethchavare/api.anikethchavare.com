@@ -35,6 +35,7 @@ The format will be:
 ### Documentation
 - Enhanced documentation across all endpoints to include response schema.
 - Created a `FUNDING.yml` file to accept sponsorships.
+- Updated the `CREDITS.md` file to include new packages or APIs.
 - **math:** Added documentation for all endpoints of the following sub-utility namespaces: `/trigonometry`, `/statistics`, and `/algebra`.
 
 ## [1.2.2] - 2026-06-23

@@ -7,6 +7,7 @@ organizations behind these projects.
 
 ## <i>APIs</i>
 1. [api.dictionaryapi.dev](https://dictionaryapi.dev) - License: [GPL-3.0](https://github.com/meetDeveloper/freeDictionaryAPI/blob/master/LICENSE)
+2. [jokeapi.dev](https://v2.jokeapi.dev) - License: [MIT](https://git.sv443.net/Sv443/JokeAPI-v2/src/main/LICENSE.txt)
 
 ## <i>Python Packages/Libraries</i>
 1. [numpy](https://github.com/numpy/numpy) v2.5.0 - License: [Custom](https://github.com/numpy/numpy/blob/main/LICENSE.txt)
