@@ -336,6 +336,255 @@ These endpoints are bound directly to the `app_v1_math` router and operate under
 }
 ```
 
+### 11. `/v1/math/statistics`
+* **Description:** Serves as the introductory entry point to the sub-utility namespace.
+* **HTTP Method:** `GET`
+* **Response Type & Schema:** `application/json` (JSONResponse)
+  * *Returns an empty dictionary `{}` inside the core `data` block.*
+* **Query Parameters:** None
+* **Headers Required:** None
+* **Request Body Parameters (application/json):** None
+* **Custom Rate Limit:** None
+* **Possible Local Exceptions:** None
+* **Example Request URL:** `https://api.anikethchavare.com/v1/math/statistics`
+* **Example Request Headers:** None
+* **Example Request Body:** None
+* **Example Response:**
+```json
+{
+    "success": true,
+    "message": "Welcome to the 'statistics' sub-utility namespace under 'math'. Check the documentation for available endpoints.",
+    "data": {},
+    "meta": {
+        "rate_limit": "60 requests per minute.",
+        "help": "Check the API v1 documentation (/math) for available endpoints.",
+        "docs": "https://github.com/anikethchavare/api.anikethchavare.com/tree/main/docs/v1/3_math.md"
+    },
+    "api_version": "1.2.2",
+    "timestamp": "2026-06-24T07:10:00.777000+00:00",
+    "request_id": "req_97d1710e-b2eb-4779-9b4f-f772f4f91676",
+    "status_code": 200
+}
+```
+
+### 12. `/v1/math/statistics/mean`
+* **Description:** Calculates the mean (average) of the given values.
+* **HTTP Method:** `POST`
+* **Response Type & Schema:** `application/json` (JSONResponse)
+  * `mean` *(Number)*: The calculated mean.
+* **Query Parameters:** None
+* **Headers Required:** None
+* **Request Body Parameters (application/json):**
+  * `data` *(List[Int/Float], Required)*: The list of values used to calculate the mean.
+* **Custom Rate Limit:** None
+* **Possible Local Exceptions:** None
+* **Example Request URL:** `https://api.anikethchavare.com/v1/math/statistics/mean`
+* **Example Request Headers:** None
+* **Example Request Body:**
+```json
+{
+    "data": [1, 2, 3]
+}
+```
+* **Example Response:**
+```json
+{
+    "success": true,
+    "message": "Successfully calculated the mean of the data.",
+    "data": {
+        "mean": 2
+    },
+    "meta": {
+        "rate_limit": "60 requests per minute."
+    },
+    "api_version": "1.2.2",
+    "timestamp": "2026-06-24T07:11:13.194478+00:00",
+    "request_id": "req_462b6517-d58f-4c72-aad1-73cefb0dd0e4",
+    "status_code": 200
+}
+```
+
+### 13. `/v1/math/statistics/median`
+* **Description:** Calculates the median of the given values.
+* **HTTP Method:** `POST`
+* **Response Type & Schema:** `application/json` (JSONResponse)
+  * `median` *(Nummber)*: The calculated median.
+* **Query Parameters:** None
+* **Headers Required:** None
+* **Request Body Parameters (application/json):**
+  * `data` *(List[Int/Float], Required)*: The list of values used to calculate the median.
+* **Custom Rate Limit:** None
+* **Possible Local Exceptions:** None
+* **Example Request URL:** `https://api.anikethchavare.com/v1/math/statistics/median`
+* **Example Request Headers:** None
+* **Example Request Body:**
+```json
+{
+    "data": [1, 2, 3]
+}
+```
+* **Example Response:**
+```json
+{
+    "success": true,
+    "message": "Successfully calculated the median of the data.",
+    "data": {
+        "median": 2
+    },
+    "meta": {
+        "rate_limit": "60 requests per minute."
+    },
+    "api_version": "1.2.2",
+    "timestamp": "2026-06-24T07:13:03.626481+00:00",
+    "request_id": "req_2d60a452-617d-47cf-bbde-dbd74bcbbf75",
+    "status_code": 200
+}
+```
+
+### 14. `/v1/math/statistics/mode`
+* **Description:** Calculates the mode of the given values.
+* **HTTP Method:** `POST`
+* **Response Type & Schema:** `application/json` (JSONResponse)
+  * `mode` *(List[Int/Float])*: The calculated mode(s).
+* **Query Parameters:** None
+* **Headers Required:** None
+* **Request Body Parameters (application/json):**
+  * `data` *(List[Int/Float], Required)*: The list of values used to calculate the mode.
+* **Custom Rate Limit:** None
+* **Possible Local Exceptions:** None
+* **Example Request URL:** `https://api.anikethchavare.com/v1/math/statistics/mode`
+* **Example Request Headers:** None
+* **Example Request Body:**
+```json
+{
+    "data": [1, 2, 2, 3]
+}
+```
+* **Example Response:**
+```json
+{
+    "success": true,
+    "message": "Successfully calculated the mode of the data.",
+    "data": {
+        "mode": [2]
+    },
+    "meta": {
+        "rate_limit": "60 requests per minute."
+    },
+    "api_version": "1.2.2",
+    "timestamp": "2026-06-24T07:13:44.795929+00:00",
+    "request_id": "req_8634f107-0dbf-4c80-87bd-c3a6b91178ed",
+    "status_code": 200
+}
+```
+
+### 15. `/v1/math/algebra`
+* **Description:** Serves as the introductory entry point to the sub-utility namespace.
+* **HTTP Method:** `GET`
+* **Response Type & Schema:** `application/json` (JSONResponse)
+  * *Returns an empty dictionary `{}` inside the core `data` block.*
+* **Query Parameters:** None
+* **Headers Required:** None
+* **Request Body Parameters (application/json):** None
+* **Custom Rate Limit:** None
+* **Possible Local Exceptions:** None
+* **Example Request URL:** `https://api.anikethchavare.com/v1/math/algebra`
+* **Example Request Headers:** None
+* **Example Request Body:** None
+* **Example Response:**
+```json
+{
+    "success": true,
+    "message": "Welcome to the 'algebra' sub-utility namespace under 'math'. Check the documentation for available endpoints.",
+    "data": {},
+    "meta": {
+        "rate_limit": "60 requests per minute.",
+        "help": "Check the API v1 documentation (/math) for available endpoints.",
+        "docs": "https://github.com/anikethchavare/api.anikethchavare.com/tree/main/docs/v1/3_math.md"
+    },
+    "api_version": "1.2.2",
+    "timestamp": "2026-06-24T07:16:01.463254+00:00",
+    "request_id": "req_81e9f432-a20c-4983-9065-cd4aae690901",
+    "status_code": 200
+}
+```
+
+### 16. `/v1/math/algebra/discriminant`
+* **Description:** Calculates the discriminant of a quadratic or cubic equation.
+* **HTTP Method:** `POST`
+* **Response Type & Schema:** `application/json` (JSONResponse)
+  * `discriminant` *(Int/Float)*: The evaluated mathematical discriminant.
+* **Query Parameters:** None
+* **Headers Required:** None
+* **Request Body Parameters (application/json):**
+  * `coefficients` *(List[Int/Float], Required)*: Explicit sequence array of length 3 (quadratic) or length 4 (cubic).
+* **Custom Rate Limit:** None
+* **Possible Local Exceptions:**
+  * `422 Unprocessable Entity`: Triggered locally if the leading array term (`a`) equals 0. 
+* **Example Request URL:** `https://api.anikethchavare.com/v1/math/algebra/discriminant`
+* **Example Request Headers:** None
+* **Example Request Body:**
+```json
+{
+    "coefficients": [1, 5, 6]
+}
+```
+* **Example Response:**
+```json
+{
+    "success": true,
+    "message": "Successfully calculated the discriminant of the quadratic equation.",
+    "data": {
+        "discriminant": 1
+    },
+    "meta": {
+        "rate_limit": "60 requests per minute."
+    },
+    "api_version": "1.2.2",
+    "timestamp": "2026-06-24T07:20:14.218185+00:00",
+    "request_id": "req_b423c818-3b05-4331-b3ac-2b0f72a42344",
+    "status_code": 200
+}
+```
+
+### 17. `/v1/math/algebra/roots`
+* **Description:** Extracts all real and complex roots from quadratic or cubic systems.
+* **HTTP Method:** `POST`
+* **Response Type & Schema:** `application/json` (JSONResponse)
+  * `roots` *(List[Int/Float])*: An ordered list containing evaluated roots. Complex numbers are safely cast as strings.
+* **Query Parameters:** None
+* **Headers Required:** None
+* **Request Body Parameters (application/json):**
+  * `coefficients` *(List[Int/Float], Required)*: Explicit sequence array of length 3 (quadratic) or length 4 (cubic).
+* **Custom Rate Limit:** None
+* **Possible Local Exceptions:**
+  * `422 Unprocessable Entity`: Triggered locally if the leading array term (`a`) equals 0. 
+* **Example Request URL:** `https://api.anikethchavare.com/v1/math/algebra/roots`
+* **Example Request Headers:** None
+* **Example Request Body:**
+```json
+{
+    "coefficients": [1, -5, 6]
+}
+```
+* **Example Response:**
+```json
+{
+    "success": true,
+    "message": "Successfully calculated the roots of the quadratic equation.",
+    "data": {
+        "roots": [3.0000000000000004, 1.9999999999999998]
+    },
+    "meta": {
+        "rate_limit": "60 requests per minute."
+    },
+    "api_version": "1.2.2",
+    "timestamp": "2026-06-24T07:22:16.951173+00:00",
+    "request_id": "req_86347ea8-c2ee-40fd-aa31-6ac7f596abfe",
+    "status_code": 200
+}
+```
+
 <hr>
 
 ## 2. 🧭 Next Guide

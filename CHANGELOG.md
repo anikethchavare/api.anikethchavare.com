@@ -38,6 +38,8 @@ The format will be:
 ### Documentation
 - Enhanced documentation across all endpoints to include response schema.
 - Added documentation for all endpoints of the `/trigonometry` sub-utility namespace under the `/math` utility namespace.
+- Added documentation for all endpoints of the `/statistics` sub-utility namespace under the `/math` utility namespace.
+- Added documentation for all endpoints of the `/algebra` sub-utility namespace under the `/math` utility namespace.
 
 ## [1.2.2] - 2026-06-23
 
