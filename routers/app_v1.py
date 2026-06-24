@@ -22,6 +22,7 @@ from app import rate_limiter
 
 from routers.v1.math import app_v1_math
 from routers.v1.language import app_v1_language
+from routers.v1.entertainment import app_v1_entertainment
 
 from fastapi import APIRouter, Request, BackgroundTasks
 
@@ -31,6 +32,7 @@ app_v1 = APIRouter(prefix="/v1")
 # Including the API Routers
 app_v1.include_router(app_v1_math)
 app_v1.include_router(app_v1_language)
+app_v1.include_router(app_v1_entertainment)
 
 # Route 1: Main (app_v1)
 @app_v1.get("/")

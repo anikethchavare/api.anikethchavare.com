@@ -20,12 +20,14 @@ The format will be:
 
 ### Added
 - Introduced the `/math` utility namespace under the `/v1` prefix.
+- Introduced the `/entertainment` utility namespace under the `/v1` prefix.
 - **math:** Added a `/trigonometry` sub-utility namespace.
 - **math:** Added a `/statistics` sub-utility namespace.
 - **math:** Added a `/algebra` sub-utility namespace.
 - **math:** Added 8 endpoints (`/degrees-to-radians`, `/radians-to-degrees`, `/sin`, `/cos`, `/tan`, `/cosec`, `/sec`, `/cot`) under the `/trigonometry` sub-utility namespace.
 - **math:** Added 3 endpoints (`/mean`, `/median`, `/mode`) under the `/statistics` sub-utility namespace.
 - **math:** Added 2 endpoints (`/discriminant`, `/roots`) under the `/algebra` sub-utility namespace.
+- **entertainment:** Added 1 endpoint `/jokes`.
 - **math:** Created tests for the `/trigonometry` sub-utility namespace endpoints.
 - **math:** Created tests for the `/statistics` sub-utility namespace endpoints.
 - **math:** Created tests for the `/algebra` sub-utility namespace endpoints.
