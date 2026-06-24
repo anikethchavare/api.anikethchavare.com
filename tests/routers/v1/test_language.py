@@ -34,7 +34,7 @@ def test_app_v1_language_main():
     assert response.json()["success"] is True
     assert "Welcome to the 'language' utility namespace" in response.json()["message"]
 
-# Test Route 2: Dictionary (app_v1_language)
+# Test Routes 2: Dictionary (app_v1_language)
 @respx.mock
 def test_app_v1_language_dictionary_success():
     """ Tests a successful dictionary lookup using a mocked external API response. """
@@ -108,7 +108,7 @@ def test_app_v1_language_dictionary_upstream_failure():
     assert response.json()["success"] is False
     assert "unexpected error occurred while querying the dictionary" in response.json()["message"]
 
-# Test Route 3: Speech (app_v1_language)
+# Test Routes 3: Speech (app_v1_language)
 def test_app_v1_language_speech_success():
     """ Tests successful binary voice generation synthesis text piping (POST /v1/language/speech). """
 

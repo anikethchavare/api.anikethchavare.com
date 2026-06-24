@@ -49,15 +49,15 @@ def test_app_health():
     assert response.status_code in [200, 503]
     assert "health_checks" in response.json()["data"]
 
-# Test Route 4: Clear Request Logs (app)
-def test_clear_request_logs_unauthorized():
+# Test Routes 4: Clear Request Logs (app)
+def test_app_clear_request_logs_unauthorized():
     """ Tests log deletion without valid token signature (POST /clear-request-logs). """
 
     response = client.post("/clear-request-logs", headers={"Authorization": "Bearer invalid_secret"})
     assert response.status_code == 401
     assert response.json()["success"] is False
 
-def test_clear_request_logs_authorized(monkeypatch):
+def test_app_clear_request_logs_authorized(monkeypatch):
     """ Tests log deletion with valid token signature using mock settings (POST /clear-request-logs). """
 
     test_secret = "test_cron_secret_key"
@@ -68,7 +68,7 @@ def test_clear_request_logs_authorized(monkeypatch):
     assert response.json()["success"] is True
 
 # Test Exception Handler 1: 429 (app)
-def test_exception_handler_429(monkeypatch):
+def test_app_exception_handler_429(monkeypatch):
     """ Tests global 429 handler and ensures limits fall back to local memory safely. """
 
     monkeypatch.setenv("UPSTASH_REDIS_URL", "memory://")
@@ -88,7 +88,7 @@ def test_exception_handler_429(monkeypatch):
     assert hit_triggered_429 is True
 
 # Test Exception Handler 2: 404 (app)
-def test_exception_handler_404():
+def test_app_exception_handler_404():
     """ Tests global 404 Exception Handler for invalid routes. """
 
     response = client.get("/this-route-does-not-exist")
@@ -97,7 +97,7 @@ def test_exception_handler_404():
     assert "The requested route does not exist" in response.json()["message"]
 
 # Test Exception Handler 3: 422 (app)
-def test_exception_handler_422():
+def test_app_exception_handler_422():
     """ Tests global 422 handler by omitting a strictly required body parameter. """
 
     response = client.post("/v1/language/speech", json={"text": ""})
@@ -107,7 +107,7 @@ def test_exception_handler_422():
     assert "validation_errors" in response.json()["data"]
 
 # Test Exception Handler 4: 405 (app)
-def test_exception_handler_405():
+def test_app_exception_handler_405():
     """ Tests global 405 Exception Handler for unsupported HTTP methods on valid routes. """
 
     response = client.post("/")
@@ -116,7 +116,7 @@ def test_exception_handler_405():
     assert "is not allowed for this route" in response.json()["message"]
 
 # Test Exception Handler 5: Universal (app)
-def test_exception_handler_universal(monkeypatch):
+def test_app_exception_handler_universal(monkeypatch):
     """ Test global 500 handler by forcing a dependency function to raise an unhandled runtime error. """
 
     local_client = TestClient(app, raise_server_exceptions=False)
