@@ -251,3 +251,156 @@ async def app_v1_entertainment_bored(
             "activities": [response_data["activity"]] if random else [activity["activity"] for activity in response_data]
         }
     )
+
+# Route 5: Guess Gender (app_v1_entertainment)
+@app_v1_entertainment.get("/guess-gender")
+@rate_limiter.limiter.limit("60/minute")
+async def app_v1_entertainment_guess_gender(
+        request: Request,
+        background_tasks: BackgroundTasks,
+        name: StrictStr = Query(..., description="The first or full name to evaluate for gender probability."),
+        country: StrictStr | None = Query(None, min_length=2, max_length=2, description="An optional ISO 3166-1 alpha-2 country code to localize the prediction and improve statistical accuracy.")
+):
+    # Assembling Query Parameters
+    query_params = {
+        "name": name,
+    }
+
+    if country is not None:
+        query_params["country_id"] = country
+
+    # Fetching Data
+    async with httpx.AsyncClient() as client:
+        response = await client.get("https://api.genderize.io", params=query_params)
+
+    if response.status_code != 200:
+        return utils.send_response(
+            request=request,
+            status_code=502,
+            success=False,
+            message="An unexpected error occurred while predicting the gender. Please try again later.",
+            background_tasks=background_tasks
+        )
+
+    response_data = orjson.loads(response.content)
+
+    if response_data["gender"] is None:
+        return utils.send_response(
+            request=request,
+            status_code=200,
+            success=True,
+            message="Couldn't predict the gender of the given name.",
+            background_tasks=background_tasks
+        )
+
+    return utils.send_response(
+        request=request,
+        status_code=200,
+        success=True,
+        message="Successfully predicted the gender.",
+        background_tasks=background_tasks,
+        data={
+            "gender": response_data["gender"],
+            "probability": response_data["probability"]
+        }
+    )
+
+# Route 6: Guess Age (app_v1_entertainment)
+@app_v1_entertainment.get("/guess-age")
+@rate_limiter.limiter.limit("60/minute")
+async def app_v1_entertainment_guess_age(
+        request: Request,
+        background_tasks: BackgroundTasks,
+        name: StrictStr = Query(..., description="The first or full name to evaluate for age probability."),
+        country: StrictStr | None = Query(None, min_length=2, max_length=2, description="An optional ISO 3166-1 alpha-2 country code to localize the prediction and improve statistical accuracy.")
+):
+    # Assembling Query Parameters
+    query_params = {
+        "name": name,
+    }
+
+    if country is not None:
+        query_params["country_id"] = country
+
+    # Fetching Data
+    async with httpx.AsyncClient() as client:
+        response = await client.get("https://api.agify.io", params=query_params)
+
+    if response.status_code != 200:
+        return utils.send_response(
+            request=request,
+            status_code=502,
+            success=False,
+            message="An unexpected error occurred while predicting the age. Please try again later.",
+            background_tasks=background_tasks
+        )
+
+    response_data = orjson.loads(response.content)
+
+    if response_data["age"] is None:
+        return utils.send_response(
+            request=request,
+            status_code=200,
+            success=True,
+            message="Couldn't predict the age of the given name.",
+            background_tasks=background_tasks
+        )
+
+    return utils.send_response(
+        request=request,
+        status_code=200,
+        success=True,
+        message="Successfully predicted the age.",
+        background_tasks=background_tasks,
+        data={
+            "age": response_data["age"]
+        }
+    )
+
+# Route 7: Guess Nation (app_v1_entertainment)
+@app_v1_entertainment.get("/guess-nation")
+@rate_limiter.limiter.limit("60/minute")
+async def app_v1_entertainment_guess_nation(
+        request: Request,
+        background_tasks: BackgroundTasks,
+        name: StrictStr = Query(..., description="The first or full name to evaluate for nation probability.")
+):
+    # Assembling Query Parameters
+    query_params = {
+        "name": name
+    }
+
+    # Fetching Data
+    async with httpx.AsyncClient() as client:
+        response = await client.get(f"https://api.nationalize.io", params=query_params)
+
+    if response.status_code != 200:
+        return utils.send_response(
+            request=request,
+            status_code=502,
+            success=False,
+            message="An unexpected error occurred while predicting the nation. Please try again later.",
+            background_tasks=background_tasks
+        )
+
+    response_data = orjson.loads(response.content)
+
+    if not response_data["country"]:
+        return utils.send_response(
+            request=request,
+            status_code=200,
+            success=True,
+            message="Couldn't predict the nation of the given name.",
+            background_tasks=background_tasks
+        )
+
+    return utils.send_response(
+        request=request,
+        status_code=200,
+        success=True,
+        message="Successfully predicted the nation.",
+        background_tasks=background_tasks,
+        data={
+            "country": response_data["country"]
+        }
+    )
