@@ -22,7 +22,7 @@ from app import rate_limiter
 
 import httpx
 import orjson
-from typing import Literal
+from typing import Literal, Any
 from pydantic import StrictInt, StrictStr, StrictBool
 
 from fastapi import APIRouter, Request, BackgroundTasks, Query
@@ -87,7 +87,7 @@ async def app_v1_entertainment_jokes(
                 )
 
     # Assembling Query Parameters
-    query_params = {
+    query_params: dict[str, Any] = {
         "amount": amount,
     }
 
@@ -199,6 +199,7 @@ async def app_v1_entertainment_bored(
         )
 
     base_url = "https://bored-api.appbrewery.com"
+    query_params = {}
 
     if random:
         base_url += "/random"
@@ -212,14 +213,15 @@ async def app_v1_entertainment_bored(
                 background_tasks=background_tasks
             )
 
-        base_url += f"/filter?type={type}"
+        base_url += "/filter"
+        query_params["type"] = type
 
         if participants is not None:
-            base_url += f"&participants={participants}"
+            query_params["participants"] = participants
 
     # Fetching Data & Assembling "payload"
     async with httpx.AsyncClient() as client:
-        response = await client.get(base_url)
+        response = await client.get(base_url, params=query_params)
 
     if response.status_code == 404:
         return utils.send_response(

@@ -36,6 +36,9 @@ The format will be:
 ### Fixed
 - Changed the method of `/clear-request-logs` to `GET`.
 
+### Refactored
+- Replaced manual URL string formatting with native `httpx` parameter dictionary mappings across all endpoints.
+
 ### Documentation
 - Enhanced documentation across all endpoints to include response schema.
 - Created a `FUNDING.yml` file to accept sponsorships.
