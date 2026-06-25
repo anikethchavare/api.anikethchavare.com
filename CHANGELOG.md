@@ -26,6 +26,7 @@ The format will be:
 - **math:** Added 2 endpoints (`/discriminant`, `/roots`) under the `/algebra` sub-utility namespace.
 - **entertainment:** Added 2 endpoints (`/jokes`, `/fact`).
 - **math:** Created tests for the following sub-utility namespace endpoints: `/trigonometry`, `/statistics`, and `/algebra`.
+- **entertainment:** Created tests for the endpoints under this utility namespace.
 
 ### Changed
 - **math:** Specifically mentioned the unit in the `message` block of the response.
