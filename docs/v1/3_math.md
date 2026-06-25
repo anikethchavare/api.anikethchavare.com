@@ -589,4 +589,6 @@ These endpoints are bound directly to the `app_v1_math` router and operate under
 
 ## 2. 🧭 Next Guide
 
+* **[4_entertainment.md](./4_entertainment.md) $\rightarrow$** Explore the `entertainment` utility namespace.
+
 Additional feature sets, utility endpoints, and expanded business logic are currently in development and will be documented here as they release.

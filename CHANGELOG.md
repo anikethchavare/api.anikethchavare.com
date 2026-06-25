@@ -39,6 +39,7 @@ The format will be:
 - Updated the `CREDITS.md` file to include new packages or APIs.
 - Updated the `README.md` file to include a section asking people to sponsor the project.
 - **math:** Added documentation for all endpoints of the following sub-utility namespaces: `/trigonometry`, `/statistics`, and `/algebra`.
+- **entertainment:** Added documentation for all endpoints.
 
 ## [1.2.2] - 2026-06-23
 
