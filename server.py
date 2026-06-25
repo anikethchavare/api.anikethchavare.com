@@ -183,7 +183,7 @@ async def app_health(request: Request, background_tasks: BackgroundTasks):
     )
 
 # Route 4: Clear Request Logs (app)
-@app.post("/clear-request-logs")
+@app.get("/clear-request-logs")
 async def app_clear_request_logs(request: Request, background_tasks: BackgroundTasks, authorization: str = Header(None)):
     if not authorization or not secrets.compare_digest(authorization, f"Bearer {settings.cron_secret}"):
         return utils.send_response(

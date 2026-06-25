@@ -33,6 +33,9 @@ The format will be:
 - Updated and added new dependencies.
 - Standardized test function names.
 
+### Fixed
+- Changed the method of `/clear-request-logs` to `GET`.
+
 ### Documentation
 - Enhanced documentation across all endpoints to include response schema.
 - Created a `FUNDING.yml` file to accept sponsorships.
