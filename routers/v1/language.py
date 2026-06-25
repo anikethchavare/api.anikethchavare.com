@@ -58,7 +58,7 @@ async def app_v1_language_dictionary(
         definitions: StrictBool = Query(True, description="If true, outputs the entire 'definitions' list."),
         strict: StrictBool = Query(False, description="Modifies 'definitions' to output a flat list of strings. Only applies if 'definitions=true'.")
 ):
-    # Fetching Data & Assembling 'payload'
+    # Fetching Data & Assembling "payload"
     async with httpx.AsyncClient() as client:
         response = await client.get(f"https://api.dictionaryapi.dev/api/v2/entries/en/{word}")
 

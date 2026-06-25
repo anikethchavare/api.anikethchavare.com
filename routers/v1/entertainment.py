@@ -23,7 +23,7 @@ from app import rate_limiter
 import httpx
 import orjson
 from typing import Literal
-from pydantic import StrictInt, StrictStr
+from pydantic import StrictInt, StrictStr, StrictBool
 
 from fastapi import APIRouter, Request, BackgroundTasks, Query
 
@@ -174,5 +174,69 @@ async def app_v1_entertainment_fact(
         background_tasks=background_tasks,
         data={
             "fact": response_data["text"]
+        }
+    )
+
+# Route 4: Bored (app_v1_entertainment)
+@app_v1_entertainment.get("/bored")
+@rate_limiter.limiter.limit("60/minute")
+async def app_v1_entertainment_bored(
+        request: Request,
+        background_tasks: BackgroundTasks,
+        random: StrictBool = Query(True, description="if true, fetches a random activity."),
+        type: Literal["education", "recreational", "social", "charity", "cooking", "relaxation", "busywork"] | None = Query(None, description="The type of activity. Required if random is false."),
+        participants: Literal[1, 2, 3, 4, 5, 6, 8] | None = Query(None, description="The number of participants.")
+):
+    base_url = "https://bored-api.appbrewery.com"
+
+    if random:
+        base_url += "/random"
+    else:
+        if type is None:
+            return utils.send_response(
+                request=request,
+                status_code=422,
+                success=False,
+                message="Validation Error: Choose a valid type from ['education', 'recreational', 'social', 'charity', 'cooking', 'relaxation', 'busywork']",
+                background_tasks=background_tasks
+            )
+
+        base_url += f"/filter?type={type}"
+
+        if participants is not None:
+            base_url += f"&participants={participants}"
+
+    # Fetching Data & Assembling "payload"
+    async with httpx.AsyncClient() as client:
+        response = await client.get(base_url)
+
+    if response.status_code == 404:
+        return utils.send_response(
+            request=request,
+            status_code=404,
+            success=False,
+            message="No activities found matching the specified parameters.",
+            background_tasks=background_tasks
+        )
+
+    if response.status_code != 200:
+        return utils.send_response(
+            request=request,
+            status_code=502,
+            success=False,
+            message="An unexpected error occurred while fetching the activity. Please try again later.",
+            background_tasks=background_tasks
+        )
+
+    response_data = orjson.loads(response.content)
+
+    return utils.send_response(
+        request=request,
+        status_code=200,
+        success=True,
+        message="Successfully fetched the activities.",
+        background_tasks=background_tasks,
+        data={
+            "activities": [response_data["activity"]] if random else [activity["activity"] for activity in response_data]
         }
     )

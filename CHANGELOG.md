@@ -24,7 +24,7 @@ The format will be:
 - **math:** Added 8 endpoints (`/degrees-to-radians`, `/radians-to-degrees`, `/sin`, `/cos`, `/tan`, `/cosec`, `/sec`, `/cot`) under the `/trigonometry` sub-utility namespace.
 - **math:** Added 3 endpoints (`/mean`, `/median`, `/mode`) under the `/statistics` sub-utility namespace.
 - **math:** Added 2 endpoints (`/discriminant`, `/roots`) under the `/algebra` sub-utility namespace.
-- **entertainment:** Added 2 endpoints (`/jokes`, `/fact`).
+- **entertainment:** Added 3 endpoints (`/jokes`, `/fact`, `/bored`).
 - **math:** Created tests for the following sub-utility namespace endpoints: `/trigonometry`, `/statistics`, and `/algebra`.
 - **entertainment:** Created tests for the endpoints under this utility namespace.
 
