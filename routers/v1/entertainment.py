@@ -185,8 +185,19 @@ async def app_v1_entertainment_bored(
         background_tasks: BackgroundTasks,
         random: StrictBool = Query(True, description="if true, fetches a random activity."),
         type: Literal["education", "recreational", "social", "charity", "cooking", "relaxation", "busywork"] | None = Query(None, description="The type of activity. Required if random is false."),
-        participants: Literal[1, 2, 3, 4, 5, 6, 8] | None = Query(None, description="The number of participants.")
+        participants: int | None = Query(None, description="The number of participants.")
 ):
+    allowed_participants = (1, 2, 3, 4, 5, 6, 8)
+
+    if participants is not None and participants not in allowed_participants:
+        return utils.send_response(
+            request=request,
+            status_code=422,
+            success=False,
+            message=f"Validation Error: '{participants}' is not a valid number of participants. Choose from {list(allowed_participants)}.",
+            background_tasks=background_tasks
+        )
+
     base_url = "https://bored-api.appbrewery.com"
 
     if random:
@@ -197,7 +208,7 @@ async def app_v1_entertainment_bored(
                 request=request,
                 status_code=422,
                 success=False,
-                message="Validation Error: Choose a valid type from ['education', 'recreational', 'social', 'charity', 'cooking', 'relaxation', 'busywork']",
+                message="Validation Error: Choose a valid type from ['education', 'recreational', 'social', 'charity', 'cooking', 'relaxation', 'busywork'].",
                 background_tasks=background_tasks
             )
 

@@ -173,3 +173,89 @@ def test_app_v1_entertainment_fact_upstream_failure():
     assert response.status_code == 502
     assert response.json()["success"] is False
     assert "unexpected error occurred while fetching the fact" in response.json()["message"]
+
+# Test Routes 4: Bored (app_v1_entertainment)
+@respx.mock
+def test_app_v1_entertainment_bored_random_success():
+    """ Tests a successful fetch of a completely random activity. """
+
+    mock_response = {
+        "activity": "Learn a new magic trick",
+        "type": "recreational",
+        "participants": 1,
+        "price": 0,
+        "link": "",
+        "key": "8130283",
+        "accessibility": 0
+    }
+
+    respx.get("https://bored-api.appbrewery.com/random").mock(
+        return_value=httpx.Response(200, json=mock_response)
+    )
+
+    response = client.get("/v1/entertainment/bored?random=true")
+    assert response.status_code == 200
+    assert response.json()["success"] is True
+    assert response.json()["data"]["activities"] == ["Learn a new magic trick"]
+
+@respx.mock
+def test_app_v1_entertainment_bored_filter_success():
+    """ Tests a successful fetch of filtered activities when random is false. """
+
+    mock_response = [
+        {
+            "activity": "Bake a chocolate soufflé",
+            "type": "cooking",
+            "participants": 2
+        },
+        {
+            "activity": "Prepare homemade pizza from scratch",
+            "type": "cooking",
+            "participants": 2
+        }
+    ]
+
+    respx.get("https://bored-api.appbrewery.com/filter?type=cooking&participants=2").mock(
+        return_value=httpx.Response(200, json=mock_response)
+    )
+
+    response = client.get("/v1/entertainment/bored?random=false&type=cooking&participants=2")
+    assert response.status_code == 200
+    assert response.json()["success"] is True
+    assert isinstance(response.json()["data"]["activities"], list)
+    assert "Bake a chocolate soufflé" in response.json()["data"]["activities"]
+    assert len(response.json()["data"]["activities"]) == 2
+
+def test_app_v1_entertainment_bored_missing_type_validation():
+    """ Tests the internal guardrail rejecting non-random requests lacking a type parameter. """
+
+    response = client.get("/v1/entertainment/bored?random=false")
+    assert response.status_code == 422
+    assert response.json()["success"] is False
+    assert "Validation Error" in response.json()["message"]
+
+@respx.mock
+def test_app_v1_entertainment_bored_not_found():
+    """ Tests error mapping rules when the filters yield no matches (404 Handling). """
+
+    respx.get("https://bored-api.appbrewery.com/filter?type=charity&participants=8").mock(
+        return_value=httpx.Response(404)
+    )
+
+    response = client.get("/v1/entertainment/bored?random=false&type=charity&participants=8")
+    assert response.status_code == 404
+    assert response.json()["success"] is False
+    assert "No activities found matching the specified parameters" in response.json()["message"]
+
+@respx.mock
+def test_app_v1_entertainment_bored_upstream_failure():
+    """ Tests safety wrappers when the downstream mirror suffers connection faults (502 Handling). """
+
+    respx.get("https://bored-api.appbrewery.com/random").mock(
+        return_value=httpx.Response(503)
+    )
+
+    response = client.get("/v1/entertainment/bored?random=true")
+    assert response.status_code == 502
+    assert response.json()["success"] is False
+    assert "unexpected error occurred while fetching the activity" in response.json()["message"]
