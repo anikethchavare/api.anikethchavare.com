@@ -9,6 +9,10 @@ organizations behind these projects.
 1. [api.dictionaryapi.dev](https://dictionaryapi.dev) - License: [GPL-3.0](https://github.com/meetDeveloper/freeDictionaryAPI/blob/master/LICENSE)
 2. [jokeapi.dev](https://v2.jokeapi.dev) - License: [MIT](https://git.sv443.net/Sv443/JokeAPI-v2/src/main/LICENSE.txt)
 3. [uselessfacts.jsph.pl](https://uselessfacts.jsph.pl)
+4. [bored-api.appbrewery.com](https://bored-api.appbrewery.com)
+5. [genderize.io](https://genderize.io)
+6. [agify.io](https://agify.io)
+7. [nationalize.io](https://nationalize.io)
 
 ## <i>Python Packages/Libraries</i>
 1. [numpy](https://github.com/numpy/numpy) v2.5.0 - License: [Custom](https://github.com/numpy/numpy/blob/main/LICENSE.txt)
