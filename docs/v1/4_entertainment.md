@@ -156,6 +156,123 @@ These endpoints are bound directly to the `app_v1_entertainment` router and oper
 }
 ```
 
+### 5. `/v1/entertainment/guess-gender`
+* **Description:** Predicts the statistical probability of a gender associated with a given name, with optional demographic localization.
+* **HTTP Method:** `GET`
+* **Response Type & Schema:** `application/json` (JSONResponse)
+  * `gender` *(String)*: The predicted gender (`male` or `female`).
+  * `probability` *(Float)*: A decimal value between `0.0` and `1.0` indicating the statistical certainty of the prediction.
+  * *Note: If the upstream service lacks sufficient data to make a prediction, the `data` block will return an empty dictionary `{}`.*
+* **Query Parameters:**
+  * `name` *(StrictStr, Required)*: The first or full name to evaluate for gender probability.
+  * `country` *(StrictStr, Optional)*: An ISO 3166-1 alpha-2 country code to localize the prediction and improve statistical accuracy.
+* **Headers Required:** None
+* **Request Body Parameters (application/json):** None
+* **Custom Rate Limit:** None
+* **Possible Local Exceptions:**
+  * `422 Unprocessable Entity` (`ValidationError`): Dispatched if the `country` parameter is provided but is not exactly 2 characters in length.
+  * `502 Bad Gateway` (`UpstreamServiceError`): Dispatched when the underlying microservice proxy connection (`api.genderize.io`) is offline, unreachable, or exits with a non-200 state.
+* **Example Request URL:** `https://api.anikethchavare.com/v1/entertainment/guess-gender?name=alex&country=US`
+* **Example Request Headers:** None
+* **Example Request Body:** None
+* **Example Response:**
+```json
+{
+    "success": true,
+    "message": "Successfully predicted the gender.",
+    "data": {
+        "gender": "male",
+        "probability": 0.93
+    },
+    "meta": {
+        "rate_limit": "60 requests per minute."
+    },
+    "api_version": "1.2.2",
+    "timestamp": "2026-06-25T03:26:07.642544+00:00",
+    "request_id": "req_b831cd91-5f2b-4d7c-8802-cd8201ff1234",
+    "status_code": 200
+}
+```
+
+### 6. `/v1/entertainment/guess-age`
+* **Description:** Predicts the statistical average age associated with a given name, with optional demographic localization.
+* **HTTP Method:** `GET`
+* **Response Type & Schema:** `application/json` (JSONResponse)
+  * `age` *(Integer)*: The predicted average age in years.
+  * *Note: If the upstream service lacks sufficient data to make a prediction, the `data` block will return an empty dictionary `{}`.*
+* **Query Parameters:**
+  * `name` *(StrictStr, Required)*: The first or full name to evaluate for age probability.
+  * `country` *(StrictStr, Optional)*: An ISO 3166-1 alpha-2 country code to localize the prediction and improve statistical accuracy.
+* **Headers Required:** None
+* **Request Body Parameters (application/json):** None
+* **Custom Rate Limit:** None
+* **Possible Local Exceptions:**
+  * `422 Unprocessable Entity` (`ValidationError`): Dispatched if the `country` parameter is provided but is not exactly 2 characters in length.
+  * `502 Bad Gateway` (`UpstreamServiceError`): Dispatched when the underlying microservice proxy connection (`api.agify.io`) is offline, unreachable, or exits with a non-200 state.
+* **Example Request URL:** `https://api.anikethchavare.com/v1/entertainment/guess-age?name=michael`
+* **Example Request Headers:** None
+* **Example Request Body:** None
+* **Example Response:**
+```json
+{
+    "success": true,
+    "message": "Successfully predicted the age.",
+    "data": {
+        "age": 52
+    },
+    "meta": {
+        "rate_limit": "60 requests per minute."
+    },
+    "api_version": "1.2.2",
+    "timestamp": "2026-06-25T03:26:07.642544+00:00",
+    "request_id": "req_c942de02-6f3c-5e8d-9913-de9312ff5678",
+    "status_code": 200
+}
+```
+
+### 7. `/v1/entertainment/guess-nation`
+* **Description:** Predicts a descending list of probable nationalities and their likelihood percentages based on a given name.
+* **HTTP Method:** `GET`
+* **Response Type & Schema:** `application/json` (JSONResponse)
+  * `country` *(Array[Object])*: An array containing prediction objects. Each object contains a `country_id` (String, ISO 3166-1 alpha-2) and a `probability` (Float, 0.0 - 1.0).
+  * *Note: If the upstream service lacks sufficient data to make a prediction, the `data` block will return an empty dictionary `{}`.*
+* **Query Parameters:**
+  * `name` *(StrictStr, Required)*: The first or full name to evaluate for nation probability.
+* **Headers Required:** None
+* **Request Body Parameters (application/json):** None
+* **Custom Rate Limit:** None
+* **Possible Local Exceptions:**
+  * `502 Bad Gateway` (`UpstreamServiceError`): Dispatched when the underlying microservice proxy connection (`api.nationalize.io`) is offline, unreachable, or exits with a non-200 state.
+* **Example Request URL:** `https://api.anikethchavare.com/v1/entertainment/guess-nation?name=michael`
+* **Example Request Headers:** None
+* **Example Request Body:** None
+* **Example Response:**
+```json
+{
+    "success": true,
+    "message": "Successfully predicted the nation.",
+    "data": {
+        "country": [
+            {
+                "country_id": "US",
+                "probability": 0.089
+            },
+            {
+                "country_id": "IE",
+                "probability": 0.051
+            }
+        ]
+    },
+    "meta": {
+        "rate_limit": "60 requests per minute."
+    },
+    "api_version": "1.2.2",
+    "timestamp": "2026-06-25T03:26:07.642544+00:00",
+    "request_id": "req_d153ef13-7a4d-6f9e-0024-ef0423aa6789",
+    "status_code": 200
+}
+```
+
 <hr>
 
 ## 2. 🧭 Next Guide
