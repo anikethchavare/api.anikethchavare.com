@@ -51,19 +51,16 @@ def test_app_health():
 
 # Test Routes 4: Clear Request Logs (app)
 def test_app_clear_request_logs_unauthorized():
-    """ Tests log deletion without valid token signature (POST /clear-request-logs). """
+    """ Tests that the request logs clearance route blocks unauthenticated cron targets. """
 
-    response = client.post("/clear-request-logs", headers={"Authorization": "Bearer invalid_secret"})
+    response = client.get("/clear-request-logs", headers={"Authorization": "Bearer invalid_secret"})
     assert response.status_code == 401
     assert response.json()["success"] is False
 
-def test_app_clear_request_logs_authorized(monkeypatch):
-    """ Tests log deletion with valid token signature using mock settings (POST /clear-request-logs). """
+def test_app_clear_request_logs_authorized():
+    """ Tests successful clearance execution when a valid cron secret token matches. """
 
-    test_secret = "test_cron_secret_key"
-    monkeypatch.setattr(settings, "cron_secret", test_secret)
-
-    response = client.post("/clear-request-logs", headers={"Authorization": f"Bearer {test_secret}"})
+    response = client.get("/clear-request-logs", headers={"Authorization": f"Bearer {settings.cron_secret}"})
     assert response.status_code == 200
     assert response.json()["success"] is True
 

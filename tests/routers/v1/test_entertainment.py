@@ -259,3 +259,172 @@ def test_app_v1_entertainment_bored_upstream_failure():
     assert response.status_code == 502
     assert response.json()["success"] is False
     assert "unexpected error occurred while fetching the activity" in response.json()["message"]
+
+# Test Routes 5: Guess Gender (app_v1_entertainment)
+@respx.mock
+def test_app_v1_entertainment_guess_gender_success():
+    """ Tests a successful gender prediction using a name. """
+
+    mock_response = {
+        "count": 144934,
+        "name": "alex",
+        "gender": "male",
+        "probability": 0.93
+    }
+
+    respx.get("https://api.genderize.io?name=alex").mock(
+        return_value=httpx.Response(200, json=mock_response)
+    )
+
+    response = client.get("/v1/entertainment/guess-gender?name=alex")
+    assert response.status_code == 200
+    assert response.json()["success"] is True
+    assert response.json()["data"]["gender"] == "male"
+    assert response.json()["data"]["probability"] == 0.93
+
+@respx.mock
+def test_app_v1_entertainment_guess_gender_with_country():
+    """ Tests a successful gender prediction with country localization. """
+
+    mock_response = {
+        "count": 2341,
+        "name": "andrea",
+        "country_id": "IT",
+        "gender": "male",
+        "probability": 0.99
+    }
+
+    respx.get("https://api.genderize.io?name=andrea&country_id=IT").mock(
+        return_value=httpx.Response(200, json=mock_response)
+    )
+
+    response = client.get("/v1/entertainment/guess-gender?name=andrea&country=IT")
+    assert response.status_code == 200
+    assert response.json()["success"] is True
+    assert response.json()["data"]["gender"] == "male"
+
+def test_app_v1_entertainment_guess_gender_invalid_country_length():
+    """ Tests internal validation rejecting country codes that aren't exactly 2 characters. """
+
+    response = client.get("/v1/entertainment/guess-gender?name=alex&country=USA")
+    assert response.status_code == 422
+    assert response.json()["success"] is False
+    assert "The request payload or parameters failed data validation checks." in response.json()["message"]
+
+@respx.mock
+def test_app_v1_entertainment_guess_gender_unpredictable():
+    """ Tests the graceful fallback when genderize cannot predict the gender. """
+
+    mock_response = {
+        "count": 0,
+        "name": "wxzyq",
+        "gender": None,
+        "probability": 0.0
+    }
+
+    respx.get("https://api.genderize.io?name=wxzyq").mock(
+        return_value=httpx.Response(200, json=mock_response)
+    )
+
+    response = client.get("/v1/entertainment/guess-gender?name=wxzyq")
+    assert response.status_code == 200
+    assert response.json()["success"] is True
+    assert "Couldn't predict the gender" in response.json()["message"]
+    assert response.json()["data"] == {}
+
+@respx.mock
+def test_app_v1_entertainment_guess_gender_upstream_failure():
+    """ Tests error wrappers when genderize suffers connectivity faults (502 Handling). """
+
+    respx.get("https://api.genderize.io?name=alex").mock(
+        return_value=httpx.Response(500)
+    )
+
+    response = client.get("/v1/entertainment/guess-gender?name=alex")
+    assert response.status_code == 502
+    assert response.json()["success"] is False
+    assert "unexpected error occurred while predicting the gender" in response.json()["message"]
+
+# Test Routes 6: Guess Age (app_v1_entertainment)
+@respx.mock
+def test_app_v1_entertainment_guess_age_success():
+    """ Tests a successful age prediction using a name. """
+
+    mock_response = {
+        "count": 23481,
+        "name": "michael",
+        "age": 52
+    }
+
+    respx.get("https://api.agify.io?name=michael").mock(
+        return_value=httpx.Response(200, json=mock_response)
+    )
+
+    response = client.get("/v1/entertainment/guess-age?name=michael")
+    assert response.status_code == 200
+    assert response.json()["success"] is True
+    assert response.json()["data"]["age"] == 52
+
+@respx.mock
+def test_app_v1_entertainment_guess_age_unpredictable():
+    """ Tests the graceful fallback when agify cannot predict the age. """
+
+    mock_response = {
+        "count": 0,
+        "name": "wxzyq",
+        "age": None
+    }
+
+    respx.get("https://api.agify.io?name=wxzyq").mock(
+        return_value=httpx.Response(200, json=mock_response)
+    )
+
+    response = client.get("/v1/entertainment/guess-age?name=wxzyq")
+    assert response.status_code == 200
+    assert response.json()["success"] is True
+    assert "Couldn't predict the age" in response.json()["message"]
+    assert response.json()["data"] == {}
+
+# Test Routes 7: Guess Nation (app_v1_entertainment)
+@respx.mock
+def test_app_v1_entertainment_guess_nation_success():
+    """ Tests a successful nationality prediction using a name. """
+
+    mock_response = {
+        "count": 144934,
+        "name": "michael",
+        "country": [
+            {"country_id": "US", "probability": 0.089},
+            {"country_id": "IE", "probability": 0.051}
+        ]
+    }
+
+    respx.get("https://api.nationalize.io?name=michael").mock(
+        return_value=httpx.Response(200, json=mock_response)
+    )
+
+    response = client.get("/v1/entertainment/guess-nation?name=michael")
+    assert response.status_code == 200
+    assert response.json()["success"] is True
+    assert isinstance(response.json()["data"]["country"], list)
+    assert response.json()["data"]["country"][0]["country_id"] == "US"
+
+@respx.mock
+def test_app_v1_entertainment_guess_nation_unpredictable():
+    """ Tests the graceful fallback when nationalize cannot predict nationalities. """
+
+    mock_response = {
+        "count": 0,
+        "name": "wxzyq",
+        "country": []
+    }
+
+    respx.get("https://api.nationalize.io?name=wxzyq").mock(
+        return_value=httpx.Response(200, json=mock_response)
+    )
+
+    response = client.get("/v1/entertainment/guess-nation?name=wxzyq")
+    assert response.status_code == 200
+    assert response.json()["success"] is True
+    assert "Couldn't predict the nation" in response.json()["message"]
+    assert response.json()["data"] == {}
