@@ -117,6 +117,45 @@ These endpoints are bound directly to the `app_v1_entertainment` router and oper
 }
 ```
 
+### 4. `/v1/entertainment/bored`
+* **Description:** Fetches an individual randomized activity or a structural array collection of things to do based on category types and participant size.
+* **HTTP Method:** `GET`
+* **Response Type & Schema:** `application/json` (JSONResponse)
+  * `activities` *(Array[String])*: A structured list containing the string descriptions of activities matching the queried filters.
+* **Query Parameters:**
+  * `random` *(Boolean, Optional)*: Toggles whether to pull a single random activity choice out of the pool or list all configurations. Defaults to `true`.
+  * `type` *(Literal, Optional)*: Restricts tasks to a precise behavioral category. Strictly required if `random=false`. Allowed entries: `education`, `recreational`, `social`, `charity`, `cooking`, `relaxation`, `busywork`.
+  * `participants` *(Integer, Optional)*: Limits results to tasks built for an explicit count of people. Allowed entries: `1`, `2`, `3`, `4`, `5`, `6`, `8`.
+* **Headers Required:** None
+* **Request Body Parameters (application/json):** None
+* **Custom Rate Limit:** None
+* **Possible Local Exceptions:**
+  * `422 Unprocessable Entity` (`ValidationError`): Dispatched if `random` is set to `false` but the mandatory `type` filter parameter is omitted, or if `participants` receives an unallowed integer value.
+  * `404 Not Found` (`ActivityNotFound`): Returned when no matching operational choices exist for the combined filter metrics on the server cluster.
+  * `502 Bad Gateway` (`UpstreamServiceError`): Dispatched when the underlying microservice proxy connection (`bored-api.appbrewery.com`) is offline, drops frames, or exits with an unhandled state.
+* **Example Request URL:** `https://api.anikethchavare.com/v1/entertainment/bored?random=true&type=cooking`
+* **Example Request Headers:** None
+* **Example Request Body:** None
+* **Example Response:**
+```json
+{
+    "success": true,
+    "message": "Successfully fetched the activities.",
+    "data": {
+        "activities": [
+            "Prepare homemade pizza from scratch"
+        ]
+    },
+    "meta": {
+        "rate_limit": "60 requests per minute."
+    },
+    "api_version": "1.2.2",
+    "timestamp": "2026-06-25T03:26:07.642544+00:00",
+    "request_id": "req_a298be52-4e1a-4d2c-8801-bc8100ff9241",
+    "status_code": 200
+}
+```
+
 <hr>
 
 ## 2. 🧭 Next Guide
