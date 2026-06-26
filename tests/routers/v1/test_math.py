@@ -150,7 +150,7 @@ def test_app_v1_math_statistics():
 def test_app_v1_math_statistics_endpoints_success(endpoint, dataset, key, expected):
     """ Verifies correct calculation values across mean, median, and mode array handlers. """
 
-    response = client.getClient().post(f"/v1/math/statistics/{endpoint}", json={"data": dataset}) if hasattr(client, "getClient") else client.post(f"/v1/math/statistics/{endpoint}", json={"data": dataset})
+    response = client.post(f"/v1/math/statistics/{endpoint}", json={"data": dataset})
     assert response.status_code == 200
 
     json_data = response.json()

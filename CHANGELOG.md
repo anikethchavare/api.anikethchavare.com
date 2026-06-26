@@ -37,6 +37,7 @@ The format will be:
 
 ### Fixed
 - Changed the method of `/clear-request-logs` to `GET`.
+- Fixed some test code to reflect better coding practices.
 
 ### Refactored
 - Replaced manual URL string formatting with native `httpx` parameter dictionary mappings across all endpoints.

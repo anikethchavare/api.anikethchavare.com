@@ -145,7 +145,7 @@ async def app_v1_language_speech(
             status_code=200,
             success=True,
             message="Successfully converted text into spoken audio.",
-            background_tasks=background_tasks,
+            background_tasks=background_tasks
         )
 
         return StreamingResponse(audio_stream_generator(), media_type="audio/mpeg", background=background_tasks)
