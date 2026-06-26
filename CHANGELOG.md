@@ -20,11 +20,12 @@ The format will be:
 
 ### Added
 - Introduced the following utility namespaces under the `/v1` prefix: `/math` and `/entertainment`.
-- **math:** Added the following sub-utility namespaces: `/trigonometry`, `/statistics`, `/algebra`, and `/arithmetic`.
+- **math:** Added the following sub-utility namespaces: `/trigonometry`, `/statistics`, `/algebra`, `/arithmetic`, and `/complex`.
 - **math:** Added 8 endpoints (`/degrees-to-radians`, `/radians-to-degrees`, `/sin`, `/cos`, `/tan`, `/cosec`, `/sec`, `/cot`) under the `/trigonometry` sub-utility namespace.
 - **math:** Added 3 endpoints (`/mean`, `/median`, `/mode`) under the `/statistics` sub-utility namespace.
 - **math:** Added 2 endpoints (`/discriminant`, `/roots`) under the `/algebra` sub-utility namespace.
 - **math:** Added 7 endpoints (`/factorial`, `/is-prime`, `/is-even`, `/is-odd`, `/hcf`, `/lcm`, `fibonacci`) under the `/arithmetic` sub-utility namespace.
+- **math:** Added 4 endpoints (`/modulus`, `/conjugate`, `/multiplicative-inverse`, `/polar`) under the `/complex` sub-utility namespace.
 - **entertainment:** Added 6 endpoints (`/jokes`, `/fact`, `/bored`, `/guess-gender`, `/guess-age`, `/guess-nation`).
 - **math:** Created tests for the following sub-utility namespace endpoints: `/trigonometry`, `/statistics`, and `/algebra`.
 - **entertainment:** Created tests for the endpoints under this utility namespace.

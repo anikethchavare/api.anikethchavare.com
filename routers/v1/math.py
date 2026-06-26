@@ -21,6 +21,7 @@ from app import utils
 from app import rate_limiter
 
 import math
+import cmath
 import statistics
 import numpy as np
 from pydantic import StrictInt
@@ -576,5 +577,110 @@ async def app_v1_math_arithmetic_fibonacci(
         background_tasks=background_tasks,
         data={
             "fibonacci_series": fibonacci_list
+        }
+    )
+
+# Route 26: Complex (app_v1_math)
+@app_v1_math.get("/complex")
+@rate_limiter.limiter.limit("60/minute")
+async def app_v1_math_complex(request: Request, background_tasks: BackgroundTasks):
+    return utils.send_response(
+        request=request,
+        status_code=200,
+        success=True,
+        message="Welcome to the 'complex' sub-utility namespace under 'math'. Check the documentation for available endpoints.",
+        background_tasks=background_tasks,
+        meta={
+            "help": "Check the API v1 documentation (/math) for available endpoints.",
+            "docs": "https://github.com/anikethchavare/api.anikethchavare.com/tree/main/docs/v1/3_math.md"
+        }
+    )
+
+# Route 27: Complex - Modulus (app_v1_math)
+@app_v1_math.get("/complex/modulus")
+@rate_limiter.limiter.limit("60/minute")
+async def app_v1_math_complex_modulus(
+        request: Request,
+        background_tasks: BackgroundTasks,
+        real: float = Query(..., description="The real component of the complex number"),
+        imaginary: float = Query(..., description="The imaginary component of the complex number")
+):
+    return utils.send_response(
+        request=request,
+        status_code=200,
+        success=True,
+        message="Successfully calculated the modulus of the complex number.",
+        background_tasks=background_tasks,
+        data={
+            "modulus": abs(complex(real, imaginary))
+        }
+    )
+
+# Route 28: Complex - Conjugate (app_v1_math)
+@app_v1_math.get("/complex/conjugate")
+@rate_limiter.limiter.limit("60/minute")
+async def app_v1_math_complex_conjugate(
+        request: Request,
+        background_tasks: BackgroundTasks,
+        real: float = Query(..., description="The real component of the complex number"),
+        imaginary: float = Query(..., description="The imaginary component of the complex number")
+):
+    return utils.send_response(
+        request=request,
+        status_code=200,
+        success=True,
+        message="Successfully calculated the conjugate of the complex number.",
+        background_tasks=background_tasks,
+        data={
+            "conjugate": str(complex(real, imaginary).conjugate())
+        }
+    )
+
+# Route 29: Complex - Multiplicative Inverse (app_v1_math)
+@app_v1_math.get("/complex/multiplicative-inverse")
+@rate_limiter.limiter.limit("60/minute")
+async def app_v1_math_complex_multiplicative_inverse(
+        request: Request,
+        background_tasks: BackgroundTasks,
+        real: float = Query(..., description="The real component of the complex number"),
+        imaginary: float = Query(..., description="The imaginary component of the complex number")
+):
+    if real == 0 and imaginary == 0:
+        return utils.send_response(
+            request=request,
+            status_code=422,
+            success=False,
+            message="Validation Error (Math): Multiplicative inverse of zero is undefined.",
+            background_tasks=background_tasks
+        )
+
+    return utils.send_response(
+        request=request,
+        status_code=200,
+        success=True,
+        message="Successfully calculated the multiplicative inverse of the complex number.",
+        background_tasks=background_tasks,
+        data={
+            "multiplicative_inverse": str(complex(real, imaginary).conjugate()/(abs(complex(real, imaginary))**2))
+        }
+    )
+
+# Route 30: Complex - Polar (app_v1_math)
+@app_v1_math.get("/complex/polar")
+@rate_limiter.limiter.limit("60/minute")
+async def app_v1_math_complex_polar(
+        request: Request,
+        background_tasks: BackgroundTasks,
+        real: float = Query(..., description="The real component of the complex number"),
+        imaginary: float = Query(..., description="The imaginary component of the complex number")
+):
+    return utils.send_response(
+        request=request,
+        status_code=200,
+        success=True,
+        message="Successfully converted the complex number to polar form.",
+        background_tasks=background_tasks,
+        data={
+            "polar_coordinates": list(cmath.polar(complex(real, imaginary)))
         }
     )
