@@ -227,3 +227,190 @@ def test_app_v1_math_algebra_roots_serialization():
     roots_complex = response_complex.json()["data"]["roots"]
     assert len(roots_complex) == 2
     assert any("j" in str(r) for r in roots_complex)
+
+# Test Route 16: Arithmetic (app_v1_math)
+def test_app_v1_math_arithmetic_main():
+    """ Tests the entry point landing structure for the arithmetic namespace. """
+
+    response = client.get("/v1/math/arithmetic")
+    assert response.status_code == 200
+    assert response.json()["success"] is True
+    assert "Welcome to the 'arithmetic' sub-utility namespace" in response.json()["message"]
+    assert response.json()["data"] == {}
+
+# Test Routes 17: Arithmetic - Factorial (app_v1_math)
+def test_app_v1_math_arithmetic_factorial_success():
+    """ Tests computing the factorial of a standard non-negative integer. """
+
+    response = client.get("/v1/math/arithmetic/factorial?n=5")
+    assert response.status_code == 200
+    assert response.json()["success"] is True
+    assert response.json()["data"]["factorial"] == 120
+
+def test_app_v1_math_arithmetic_factorial_zero_boundary():
+    """ Tests computing the factorial of 0 (boundary case where 0! = 1). """
+
+    response = client.get("/v1/math/arithmetic/factorial?n=0")
+    assert response.status_code == 200
+    assert response.json()["data"]["factorial"] == 1
+
+def test_app_v1_math_arithmetic_factorial_negative_invalid():
+    """ Tests that the system rejects negative integer bounds via Pydantic validator guards. """
+
+    response = client.get("/v1/math/arithmetic/factorial?n=-5")
+    assert response.status_code == 422
+    assert response.json()["success"] is False
+    assert "The request payload or parameters failed data validation checks." in response.json()["message"]
+
+# Test Route 18: Arithmetic - Is Prime (app_v1_math)
+def test_app_v1_math_arithmetic_is_prime_true():
+    """ Tests verifying a known prime number. """
+
+    response = client.get("/v1/math/arithmetic/is-prime?n=11")
+    assert response.status_code == 200
+    assert response.json()["data"]["is_prime"] is True
+
+def test_app_v1_math_arithmetic_is_prime_false():
+    """ Tests verifying a known composite number. """
+
+    response = client.get("/v1/math/arithmetic/is-prime?n=4")
+    assert response.status_code == 200
+    assert response.json()["data"]["is_prime"] is False
+
+def test_app_v1_math_arithmetic_is_prime_invalid_boundary():
+    """ Tests that values less than 2 fail validation bounds. """
+
+    response = client.get("/v1/math/arithmetic/is-prime?n=1")
+    assert response.status_code == 422
+    assert response.json()["success"] is False
+
+# Test Route 19: Arithmetic - Is Even (app_v1_math)
+def test_app_v1_math_arithmetic_is_even_true():
+    """ Tests true and false conditions for even integer parity matching. """
+
+    response_even = client.get("/v1/math/arithmetic/is-even?n=42")
+    assert response_even.status_code == 200
+    assert response_even.json()["data"]["is_even"] is True
+
+    response_odd = client.get("/v1/math/arithmetic/is-even?n=13")
+    assert response_odd.json()["data"]["is_even"] is False
+
+# Test Route 20: Arithmetic - Is Odd (app_v1_math)
+def test_app_v1_math_arithmetic_is_odd_true():
+    """ Tests true and false conditions for odd integer parity matching. """
+
+    response_odd = client.get("/v1/math/arithmetic/is-odd?n=13")
+    assert response_odd.status_code == 200
+    assert response_odd.json()["data"]["is_odd"] is True
+
+    response_even = client.get("/v1/math/arithmetic/is-odd?n=42")
+    assert response_even.json()["data"]["is_odd"] is False
+
+# Test Routes 21: Arithmetic - HCF (app_v1_math)
+def test_app_v1_math_arithmetic_hcf_success():
+    """ Tests calculating the Highest Common Factor (GCD) of multiple numbers via POST payload. """
+
+    payload = {"data": [12, 18, 24]}
+    response = client.post("/v1/math/arithmetic/hcf", json=payload)
+    assert response.status_code == 200
+    assert response.json()["success"] is True
+    assert response.json()["data"]["hcf"] == 6
+
+def test_app_v1_math_arithmetic_hcf_empty_payload():
+    """ Tests that empty arrays fail the min_length=1 schema verification step. """
+
+    payload = {"data": []}
+    response = client.post("/v1/math/arithmetic/hcf", json=payload)
+    assert response.status_code == 422
+    assert response.json()["success"] is False
+
+# Test Route 22: Arithmetic - LCM (app_v1_math)
+def test_app_v1_math_arithmetic_lcm_success():
+    """ Tests calculating the Lowest Common Multiple of multiple numbers via POST payload. """
+
+    payload = {"data": [12, 18, 24]}
+    response = client.post("/v1/math/arithmetic/lcm", json=payload)
+    assert response.status_code == 200
+    assert response.json()["success"] is True
+    assert response.json()["data"]["lcm"] == 72
+
+# Test Route 23: Arithmetic - Fibonacci (app_v1_math)
+def test_app_v1_math_arithmetic_fibonacci_sequence():
+    """ Tests generating a multi-element sequence slice array. """
+
+    response = client.get("/v1/math/arithmetic/fibonacci?n=5")
+    assert response.status_code == 200
+    assert response.json()["success"] is True
+    assert response.json()["data"]["fibonacci_series"] == [0, 1, 1, 2, 3]
+
+def test_app_v1_math_arithmetic_fibonacci_bounds():
+    """ Tests specific lower conditional sequences for n=1 and n=2 matching conditions. """
+
+    res_one = client.get("/v1/math/arithmetic/fibonacci?n=1")
+    assert res_one.json()["data"]["fibonacci_series"] == [0]
+
+    res_two = client.get("/v1/math/arithmetic/fibonacci?n=2")
+    assert res_two.json()["data"]["fibonacci_series"] == [0, 1]
+
+def test_app_v1_math_arithmetic_fibonacci_invalid_bound():
+    """ Tests validator fallback boundaries when passing zero counts (ge=1 rule violation). """
+
+    response = client.get("/v1/math/arithmetic/fibonacci?n=0")
+    assert response.status_code == 422
+    assert response.json()["success"] is False
+
+# Test Route 24: Complex (app_v1_math)
+def test_app_v1_math_complex_main():
+    """ Tests the entry point landing structure for the complex namespace. """
+
+    response = client.get("/v1/math/complex")
+    assert response.status_code == 200
+    assert response.json()["success"] is True
+    assert "Welcome to the 'complex' sub-utility namespace" in response.json()["message"]
+    assert response.json()["data"] == {}
+
+# Test Route 25: Complex - Modulus (app_v1_math)
+def test_app_v1_math_complex_modulus_success():
+    """ Tests extracting the scalar modulus length using a standard 3-4-5 right triangle. """
+
+    response = client.get("/v1/math/complex/modulus?real=3&imaginary=4")
+    assert response.status_code == 200
+    assert response.json()["success"] is True
+    assert response.json()["data"]["modulus"] == 5.0
+
+# Test Route 26: Complex - Conjugate (app_v1_math)
+def test_app_v1_math_complex_conjugate_success():
+    """ Tests that the conjugate flips the sign of the imaginary component. """
+
+    response = client.get("/v1/math/complex/conjugate?real=2&imaginary=3")
+    assert response.status_code == 200
+    assert response.json()["success"] is True
+    assert response.json()["data"]["conjugate"] == "(2-3j)"
+
+# Test Routes 27: Complex - Multiplicative Inverse (app_v1_math)
+def test_app_v1_math_complex_multiplicative_inverse_success():
+    """ Tests calculating the multiplicative inverse of a valid non-zero complex number. """
+
+    response = client.get("/v1/math/complex/multiplicative-inverse?real=1&imaginary=0")
+    assert response.status_code == 200
+    assert response.json()["success"] is True
+    assert response.json()["data"]["multiplicative_inverse"] == "(1-0j)"
+
+def test_app_v1_math_complex_multiplicative_inverse_zero_boundary():
+    """ Tests that passing zero values triggers your custom local 422 validation override. """
+
+    response = client.get("/v1/math/complex/multiplicative-inverse?real=0&imaginary=0")
+    assert response.status_code == 422
+    assert response.json()["success"] is False
+    assert "Multiplicative inverse of zero is undefined." in response.json()["message"]
+
+# Test Route 28: Complex - Polar (app_v1_math)
+def test_app_v1_math_complex_polar_success():
+    """ Tests converting standard complex numbers to coordinate list polar form tuples. """
+
+    response = client.get("/v1/math/complex/polar?real=1&imaginary=0")
+    assert response.status_code == 200
+    assert response.json()["success"] is True
+    assert isinstance(response.json()["data"]["polar_coordinates"], list)
+    assert response.json()["data"]["polar_coordinates"][0] == 1.0
+    assert response.json()["data"]["polar_coordinates"][1] == 0.0
