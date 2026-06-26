@@ -218,8 +218,7 @@ For faster navigation, select one of the following mathematical sub-utility name
 * **Headers Required:** None
 * **Request Body Parameters (application/json):** None
 * **Custom Rate Limit:** None
-* **Possible Local Exceptions:**
-  * `422 Unprocessable Entity`: Triggered if the computed inputs evaluate to a mathematical division by zero asymptote.
+* **Possible Local Exceptions:** None
 * **Example Request URL:** `https://api.anikethchavare.com/v1/math/trigonometry/tan?value=90&unit=degrees`
 * **Example Request Headers:** None
 * **Example Request Body:** None
@@ -286,8 +285,7 @@ For faster navigation, select one of the following mathematical sub-utility name
 * **Headers Required:** None
 * **Request Body Parameters (application/json):** None
 * **Custom Rate Limit:** None
-* **Possible Local Exceptions:**
-  * `422 Unprocessable Entity`: Triggered if the computed inputs evaluate to a mathematical division by zero asymptote.
+* **Possible Local Exceptions:** None
 * **Example Request URL:** `https://api.anikethchavare.com/v1/math/trigonometry/sec?value=90&unit=degrees`
 * **Example Request Headers:** None
 * **Example Request Body:** None

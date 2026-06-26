@@ -151,25 +151,16 @@ async def app_v1_math_trigonometry_tan(
         value: Union[int, float] = Query(..., description="The value of degrees or radians to convert to tan."),
         unit: Literal["degrees", "radians"] = Query(..., description="The unit of the value provided.")
 ):
-    try:
-        return utils.send_response(
-            request=request,
-            status_code=200,
-            success=True,
-            message=f"Successfully converted the value from {unit} to tan.",
-            background_tasks=background_tasks,
-            data={
-                "result": math.tan(math.radians(value) if unit == "degrees" else value)
-            }
-        )
-    except ZeroDivisionError:
-        return utils.send_response(
-            request=request,
-            status_code=422,
-            success=False,
-            message="Math Error: The resulting value is undefined (division by zero).",
-            background_tasks=background_tasks
-        )
+    return utils.send_response(
+        request=request,
+        status_code=200,
+        success=True,
+        message=f"Successfully converted the value from {unit} to tan.",
+        background_tasks=background_tasks,
+        data={
+            "result": math.tan(math.radians(value) if unit == "degrees" else value)
+        }
+    )
 
 # Route 8: Trigonometry - Cosec (app_v1_math)
 @app_v1_math.get("/trigonometry/cosec")
@@ -209,25 +200,16 @@ async def app_v1_math_trigonometry_sec(
         value: Union[int, float] = Query(..., description="The value of degrees or radians to convert to sec."),
         unit: Literal["degrees", "radians"] = Query(..., description="The unit of the value provided.")
 ):
-    try:
-        return utils.send_response(
-            request=request,
-            status_code=200,
-            success=True,
-            message=f"Successfully converted the value from {unit} to sec.",
-            background_tasks=background_tasks,
-            data={
-                "result": 1/math.cos(math.radians(value) if unit == "degrees" else value)
-            }
-        )
-    except ZeroDivisionError:
-        return utils.send_response(
-            request=request,
-            status_code=422,
-            success=False,
-            message="Math Error: The resulting value is undefined (division by zero).",
-            background_tasks=background_tasks
-        )
+    return utils.send_response(
+        request=request,
+        status_code=200,
+        success=True,
+        message=f"Successfully converted the value from {unit} to sec.",
+        background_tasks=background_tasks,
+        data={
+            "result": 1/math.cos(math.radians(value) if unit == "degrees" else value)
+        }
+    )
 
 # Route 10: Trigonometry - Cot (app_v1_math)
 @app_v1_math.get("/trigonometry/cot")
