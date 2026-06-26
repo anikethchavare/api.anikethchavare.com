@@ -145,7 +145,8 @@ async def app_v1_language_speech(
             status_code=200,
             success=True,
             message="Successfully converted text into spoken audio.",
-            background_tasks=background_tasks
+            background_tasks=background_tasks,
+            meta={"rate_limit": "10 requests per minute."}
         )
 
         return StreamingResponse(audio_stream_generator(), media_type="audio/mpeg", background=background_tasks)
@@ -155,5 +156,6 @@ async def app_v1_language_speech(
             status_code=502,
             success=False,
             message="An unexpected error occurred while converting text into spoken audio. Please try again later.",
-            background_tasks=background_tasks
+            background_tasks=background_tasks,
+            meta={"rate_limit": "10 requests per minute."}
         )
