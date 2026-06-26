@@ -23,6 +23,7 @@ from app import rate_limiter
 import math
 import statistics
 import numpy as np
+from pydantic import StrictInt
 from typing import Union, Literal, List
 
 from fastapi import APIRouter, Request, BackgroundTasks, Query, Body
@@ -405,5 +406,175 @@ async def app_v1_math_algebra_roots(
         background_tasks=background_tasks,
         data={
             "roots": [r.item().real if np.isreal(r) else str(r.item()) for r in np.roots(coefficients)]
+        }
+    )
+
+# Route 18: Arithmetic (app_v1_math)
+@app_v1_math.get("/arithmetic")
+@rate_limiter.limiter.limit("60/minute")
+async def app_v1_math_arithmetic(request: Request, background_tasks: BackgroundTasks):
+    return utils.send_response(
+        request=request,
+        status_code=200,
+        success=True,
+        message="Welcome to the 'arithmetic' sub-utility namespace under 'math'. Check the documentation for available endpoints.",
+        background_tasks=background_tasks,
+        meta={
+            "help": "Check the API v1 documentation (/math) for available endpoints.",
+            "docs": "https://github.com/anikethchavare/api.anikethchavare.com/tree/main/docs/v1/3_math.md"
+        }
+    )
+
+# Route 19: Arithmetic - Factorial (app_v1_math)
+@app_v1_math.get("/arithmetic/factorial")
+@rate_limiter.limiter.limit("60/minute")
+async def app_v1_math_arithmetic_factorial(
+        request: Request,
+        background_tasks: BackgroundTasks,
+        n: StrictInt = Query(..., ge=0, description="The non-negative integer used to compute the factorial.")
+):
+    factorial = 1
+
+    for i in range(1, n + 1):
+        factorial *= i
+
+    return utils.send_response(
+        request=request,
+        status_code=200,
+        success=True,
+        message="Successfully calculated the factorial.",
+        background_tasks=background_tasks,
+        data={
+            "factorial": factorial
+        }
+    )
+
+# Route 20: Arithmetic - Is Prime (app_v1_math)
+@app_v1_math.get("/arithmetic/is-prime")
+@rate_limiter.limiter.limit("60/minute")
+async def app_v1_math_arithmetic_is_prime(
+        request: Request,
+        background_tasks: BackgroundTasks,
+        n: StrictInt = Query(..., ge=2, description="The target integer to evaluate for primality (must be greater than or equal to 2).")
+):
+    is_prime = True
+
+    for i in range(2, int(n**0.5) + 1):
+        if n % i == 0:
+            is_prime = False
+
+    return utils.send_response(
+        request=request,
+        status_code=200,
+        success=True,
+        message="Successfully tested the number for primality.",
+        background_tasks=background_tasks,
+        data={
+            "is_prime": is_prime
+        }
+    )
+
+# Route 21: Arithmetic - Is Even (app_v1_math)
+@app_v1_math.get("/arithmetic/is-even")
+@rate_limiter.limiter.limit("60/minute")
+async def app_v1_math_arithmetic_is_even(
+        request: Request,
+        background_tasks: BackgroundTasks,
+        n: StrictInt = Query(..., description="The target integer to evaluate for even parity.")
+):
+    return utils.send_response(
+        request=request,
+        status_code=200,
+        success=True,
+        message="Successfully tested the number for even parity.",
+        background_tasks=background_tasks,
+        data={
+            "is_even": n % 2 == 0
+        }
+    )
+
+# Route 22: Arithmetic - Is Odd (app_v1_math)
+@app_v1_math.get("/arithmetic/is-odd")
+@rate_limiter.limiter.limit("60/minute")
+async def app_v1_math_arithmetic_is_odd(
+        request: Request,
+        background_tasks: BackgroundTasks,
+        n: StrictInt = Query(..., description="The target integer to evaluate for odd parity.")
+):
+    return utils.send_response(
+        request=request,
+        status_code=200,
+        success=True,
+        message="Successfully tested the number for odd parity.",
+        background_tasks=background_tasks,
+        data={
+            "is_odd": n % 2 == 1
+        }
+    )
+
+# Route 23: Arithmetic - HCF (app_v1_math)
+@app_v1_math.post("/arithmetic/hcf")
+@rate_limiter.limiter.limit("60/minute")
+async def app_v1_math_arithmetic_hcf(
+        request: Request,
+        background_tasks: BackgroundTasks,
+        data: List[int] = Body(..., embed=True, min_length=1, description="The list of values used to calculate the HCF.")
+):
+    return utils.send_response(
+        request=request,
+        status_code=200,
+        success=True,
+        message="Successfully calculated the HCF of the given values.",
+        background_tasks=background_tasks,
+        data={
+            "hcf": math.gcd(*data)
+        }
+    )
+
+# Route 24: Arithmetic - LCM (app_v1_math)
+@app_v1_math.post("/arithmetic/lcm")
+@rate_limiter.limiter.limit("60/minute")
+async def app_v1_math_arithmetic_lcm(
+        request: Request,
+        background_tasks: BackgroundTasks,
+        data: List[int] = Body(..., embed=True, min_length=1, description="The list of values used to calculate the LCM.")
+):
+    return utils.send_response(
+        request=request,
+        status_code=200,
+        success=True,
+        message="Successfully calculated the LCM of the given values.",
+        background_tasks=background_tasks,
+        data={
+            "lcm": math.lcm(*data)
+        }
+    )
+
+# Route 25: Arithmetic - Fibonacci (app_v1_math)
+@app_v1_math.get("/arithmetic/fibonacci")
+@rate_limiter.limiter.limit("60/minute")
+async def app_v1_math_arithmetic_fibonacci(
+        request: Request,
+        background_tasks: BackgroundTasks,
+        n: StrictInt = Query(..., ge=1, description="The number of terms to generate in the Fibonacci sequence.")
+):
+    if n == 1:
+        fibonacci_list = [0]
+    elif n == 2:
+        fibonacci_list = [0, 1]
+    else:
+        fibonacci_list = [0, 1]
+
+        while len(fibonacci_list) < n:
+            fibonacci_list.append(fibonacci_list[-1] + fibonacci_list[-2])
+
+    return utils.send_response(
+        request=request,
+        status_code=200,
+        success=True,
+        message="Successfully generated the Fibonacci sequence.",
+        background_tasks=background_tasks,
+        data={
+            "fibonacci_series": fibonacci_list
         }
     )
