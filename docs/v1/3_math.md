@@ -9,11 +9,11 @@ This document outlines the endpoints available under the `math` utility namespac
 These endpoints are bound directly to the `app_v1_math` router and operate under the `/math` prefix namespace.
 
 For faster navigation, select one of the following mathematical sub-utility namespaces to jump directly to its documentation:
-* **[/trigonometry Endpoints](#trigonometry)** — Converts degrees/radians and evaluates all standard and reciprocal trigonometric ratios.
-* **[/statistics Endpoints](#statistics)** — Computes metrics like mean, median, and multi-modal datasets.
-* **[/algebra Endpoints](#algebra)** — Calculates discriminants and isolates complex roots for equations.
-* **[/arithmetic Endpoints](#18-v1matharithmetic)** — Handles prime checks, factorials, HCF, LCM, and sequential series generation.
-* **[/complex Endpoints](#26-v1mathcomplex)** — Extracts properties like modulus, conjugates, inverses, and polar forms.
+* **[/trigonometry](#trigonometry)** — Converts degrees/radians and evaluates all standard and reciprocal trigonometric ratios.
+* **[/statistics](#statistics)** — Computes metrics like mean, median, and multi-modal datasets.
+* **[/algebra](#algebra)** — Calculates discriminants and isolates complex roots for equations.
+* **[/arithmetic](#arithmetic)** — Handles prime checks, factorials, HCF, LCM, and sequential series generation.
+* **[/complex](#complex)** — Extracts properties like modulus, conjugates, inverses, and polar forms.
 
 ### 1. `/v1/math`
 * **Description:** Serves as the introductory entry point to the utility namespace.
@@ -860,6 +860,171 @@ For faster navigation, select one of the following mathematical sub-utility name
     "api_version": "1.2.2",
     "timestamp": "2026-06-26T12:01:00.000000+00:00",
     "request_id": "req_b8c9d0e1-f2a3-4b5c-6d7e-8f9a0b1c2d3e",
+    "status_code": 200
+}
+```
+
+### 26. <span id="complex">`/v1/math/complex`</span>
+* **Description:** Serves as the introductory entry point to the sub-utility namespace.
+* **HTTP Method:** `GET`
+* **Response Type & Schema:** `application/json` (JSONResponse)
+  * *Returns an empty dictionary `{}` inside the core `data` block.*
+* **Query Parameters:** None
+* **Headers Required:** None
+* **Request Body Parameters (application/json):** None
+* **Custom Rate Limit:** None
+* **Possible Local Exceptions:** None
+* **Example Request URL:** `https://api.anikethchavare.com/v1/math/complex`
+* **Example Request Headers:** None
+* **Example Request Body:** None
+* **Example Response:**
+```json
+{
+    "success": true,
+    "message": "Welcome to the 'complex' sub-utility namespace under 'math'. Check the documentation for available endpoints.",
+    "data": {},
+    "meta": {
+        "rate_limit": "60 requests per minute."
+    },
+    "api_version": "1.2.2",
+    "timestamp": "2026-06-26T12:01:00.000000+00:00",
+    "request_id": "req_c1b2c3d4-e5f6-7a8b-9c0d-e1f2a3b4c5d6",
+    "status_code": 200
+}
+```
+
+### 27. `/v1/math/complex/modulus`
+* **Description:** Calculates the modulus (absolute value) of a given complex number.
+* **HTTP Method:** `GET`
+* **Response Type & Schema:** `application/json` (JSONResponse)
+  * `modulus` *(Float)*: The evaluated absolute magnitude of the complex number.
+* **Query Parameters:**
+  * `real` *(Float, Required)*: The real component of the complex number.
+  * `imaginary` *(Float, Required)*: The imaginary component of the complex number.
+* **Headers Required:** None
+* **Request Body Parameters (application/json):** None
+* **Custom Rate Limit:** None
+* **Possible Local Exceptions:** None
+* **Example Request URL:** `https://api.anikethchavare.com/v1/math/complex/modulus?real=3&imaginary=4`
+* **Example Request Headers:** None
+* **Example Request Body:** None
+* **Example Response:**
+```json
+{
+    "success": true,
+    "message": "Successfully calculated the modulus of the complex number.",
+    "data": {
+        "modulus": 5.0
+    },
+    "meta": {
+        "rate_limit": "60 requests per minute."
+    },
+    "api_version": "1.2.2",
+    "timestamp": "2026-06-26T12:01:00.000000+00:00",
+    "request_id": "req_m1o2d3u4-l5u6-7s8b-9c0d-e1f2a3b4c5d6",
+    "status_code": 200
+}
+```
+
+### 28. `/v1/math/complex/conjugate`
+* **Description:** Calculates the complex conjugate of a given complex number by reversing the sign of its imaginary part.
+* **HTTP Method:** `GET`
+* **Response Type & Schema:** `application/json` (JSONResponse)
+  * `conjugate` *(String)*: The string representation of the evaluated complex conjugate.
+* **Query Parameters:**
+  * `real` *(Float, Required)*: The real component of the complex number.
+  * `imaginary` *(Float, Required)*: The imaginary component of the complex number.
+* **Headers Required:** None
+* **Request Body Parameters (application/json):** None
+* **Custom Rate Limit:** None
+* **Possible Local Exceptions:** None
+* **Example Request URL:** `https://api.anikethchavare.com/v1/math/complex/conjugate?real=2&imaginary=3`
+* **Example Request Headers:** None
+* **Example Request Body:** None
+* **Example Response:**
+```json
+{
+    "success": true,
+    "message": "Successfully calculated the conjugate of the complex number.",
+    "data": {
+        "conjugate": "(2-3j)"
+    },
+    "meta": {
+        "rate_limit": "60 requests per minute."
+    },
+    "api_version": "1.2.2",
+    "timestamp": "2026-06-26T12:01:00.000000+00:00",
+    "request_id": "req_c1o2n3j4-u5g6-7a8t-9c0d-e1f2a3b4c5d6",
+    "status_code": 200
+}
+```
+
+### 29. `/v1/math/complex/multiplicative-inverse`
+* **Description:** Calculates the multiplicative inverse (reciprocal) of a given non-zero complex number.
+* **HTTP Method:** `GET`
+* **Response Type & Schema:** `application/json` (JSONResponse)
+  * `multiplicative_inverse` *(String)*: The string representation of the evaluated complex reciprocal.
+* **Query Parameters:**
+  * `real` *(Float, Required)*: The real component of the complex number.
+  * `imaginary` *(Float, Required)*: The imaginary component of the complex number.
+* **Headers Required:** None
+* **Request Body Parameters (application/json):** None
+* **Custom Rate Limit:** None
+* **Possible Local Exceptions:**
+  * `422 Unprocessable Entity`: Triggered if both the real and imaginary components are provided as 0, as the multiplicative inverse of zero is mathematically undefined.
+* **Example Request URL:** `https://api.anikethchavare.com/v1/math/complex/multiplicative-inverse?real=1&imaginary=0`
+* **Example Request Headers:** None
+* **Example Request Body:** None
+* **Example Response:**
+```json
+{
+    "success": true,
+    "message": "Successfully calculated the multiplicative inverse of the complex number.",
+    "data": {
+        "multiplicative_inverse": "(1-0j)"
+    },
+    "meta": {
+        "rate_limit": "60 requests per minute."
+    },
+    "api_version": "1.2.2",
+    "timestamp": "2026-06-26T12:01:00.000000+00:00",
+    "request_id": "req_m1u2l3t4-i5n6-7v8e-9r0s-e1f2a3b4c5d6",
+    "status_code": 200
+}
+```
+
+### 30. `/v1/math/complex/polar`
+* **Description:** Converts a complex number from rectangular form (real and imaginary) to polar form coordinates (modulus $r$ and phase angle $\phi$).
+* **HTTP Method:** `GET`
+* **Response Type & Schema:** `application/json` (JSONResponse)
+  * `polar_coordinates` *(List[Float])*: An array containing the modulus $r$ as the first element and the phase angle $\phi$ in radians as the second element.
+* **Query Parameters:**
+  * `real` *(Float, Required)*: The real component of the complex number.
+  * `imaginary` *(Float, Required)*: The imaginary component of the complex number.
+* **Headers Required:** None
+* **Request Body Parameters (application/json):** None
+* **Custom Rate Limit:** None
+* **Possible Local Exceptions:** None
+* **Example Request URL:** `https://api.anikethchavare.com/v1/math/complex/polar?real=1&imaginary=0`
+* **Example Request Headers:** None
+* **Example Request Body:** None
+* **Example Response:**
+```json
+{
+    "success": true,
+    "message": "Successfully converted the complex number to polar form.",
+    "data": {
+        "polar_coordinates": [
+            1.0,
+            0.0
+        ]
+    },
+    "meta": {
+        "rate_limit": "60 requests per minute."
+    },
+    "api_version": "1.2.2",
+    "timestamp": "2026-06-26T12:01:00.000000+00:00",
+    "request_id": "req_p1o2l3a4-r5c6-7o8o-9r0d-e1f2a3b4c5d6",
     "status_code": 200
 }
 ```
