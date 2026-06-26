@@ -8,6 +8,13 @@ This document outlines the endpoints available under the `math` utility namespac
 
 These endpoints are bound directly to the `app_v1_math` router and operate under the `/math` prefix namespace.
 
+For faster navigation, select one of the following mathematical sub-utility namespaces to jump directly to its documentation:
+* **[/trigonometry Endpoints](#trigonometry)** — Converts degrees/radians and evaluates all standard and reciprocal trigonometric ratios.
+* **[/statistics Endpoints](#statistics)** — Computes metrics like mean, median, and multi-modal datasets.
+* **[/algebra Endpoints](#algebra)** — Calculates discriminants and isolates complex roots for equations.
+* **[/arithmetic Endpoints](#18-v1matharithmetic)** — Handles prime checks, factorials, HCF, LCM, and sequential series generation.
+* **[/complex Endpoints](#26-v1mathcomplex)** — Extracts properties like modulus, conjugates, inverses, and polar forms.
+
 ### 1. `/v1/math`
 * **Description:** Serves as the introductory entry point to the utility namespace.
 * **HTTP Method:** `GET`
@@ -39,7 +46,7 @@ These endpoints are bound directly to the `app_v1_math` router and operate under
 }
 ```
 
-### 2. `/v1/math/trigonometry`
+### 2. <span id="trigonometry">`/v1/math/trigonometry`</span>
 * **Description:** Serves as the introductory entry point to the sub-utility namespace.
 * **HTTP Method:** `GET`
 * **Response Type & Schema:** `application/json` (JSONResponse)
@@ -336,7 +343,7 @@ These endpoints are bound directly to the `app_v1_math` router and operate under
 }
 ```
 
-### 11. `/v1/math/statistics`
+### 11. <span id="statistics">`/v1/math/statistics`</span>
 * **Description:** Serves as the introductory entry point to the sub-utility namespace.
 * **HTTP Method:** `GET`
 * **Response Type & Schema:** `application/json` (JSONResponse)
@@ -478,7 +485,7 @@ These endpoints are bound directly to the `app_v1_math` router and operate under
 }
 ```
 
-### 15. `/v1/math/algebra`
+### 15. <span id="algebra">`/v1/math/algebra`</span>
 * **Description:** Serves as the introductory entry point to the sub-utility namespace.
 * **HTTP Method:** `GET`
 * **Response Type & Schema:** `application/json` (JSONResponse)
@@ -581,6 +588,278 @@ These endpoints are bound directly to the `app_v1_math` router and operate under
     "api_version": "1.2.2",
     "timestamp": "2026-06-24T07:22:16.951173+00:00",
     "request_id": "req_86347ea8-c2ee-40fd-aa31-6ac7f596abfe",
+    "status_code": 200
+}
+```
+
+### 18. <span id="arithmetic">`/v1/math/arithmetic`</span>
+* **Description:** Serves as the introductory entry point to the sub-utility namespace.
+* **HTTP Method:** `GET`
+* **Response Type & Schema:** `application/json` (JSONResponse)
+  *  *Returns an empty dictionary `{}` inside the core `data` block.*
+* **Query Parameters:** None
+* **Headers Required:** None
+* **Request Body Parameters (application/json):** None
+* **Custom Rate Limit:** None
+* **Possible Local Exceptions:** None
+* **Example Request URL:** `https://api.anikethchavare.com/v1/math/arithmetic`
+* **Example Request Headers:** None
+* **Example Request Body:** None
+* **Example Response:**
+```json
+{
+    "success": true,
+    "message": "Welcome to the 'arithmetic' sub-utility namespace under 'math'. Check the documentation for available endpoints.",
+    "data": {},
+    "meta": {
+        "rate_limit": "60 requests per minute.",
+        "help": "Check the API v1 documentation (/math) for available endpoints.",
+        "docs": "https://github.com/anikethchavare/api.anikethchavare.com/tree/main/docs/v1/3_math.md"
+    },
+    "api_version": "1.2.2",
+    "timestamp": "2026-06-24T07:22:16.951173+00:00",
+    "request_id": "req_a1b2c3d4-e5f6-7a8b-9c0d-e1f2a3b4c5d6",
+    "status_code": 200
+}
+```
+
+### 19. `/v1/math/arithmetic/factorial`
+* **Description:** Computes the mathematical factorial sequence calculation wrapper for any non-negative integer.
+* **HTTP Method:** `GET`
+* **Response Type & Schema:** `application/json` (JSONResponse)
+  * `factorial` *(Integer)*: The evaluated factorial value.
+* **Query Parameters:**
+  * `n` *(StrictInt, Required)*: The non-negative integer used to compute the factorial.
+* **Headers Required:** None
+* **Request Body Parameters (application/json):** None
+* **Custom Rate Limit:** None
+* **Possible Local Exceptions:**
+  * `422 Unprocessable Entity` (`ValidationError`): Dispatched if `n` is omitted, not a strict integer, or evaluates to less than 0.
+* **Example Request URL:** `https://api.anikethchavare.com/v1/math/arithmetic/factorial?n=5`
+* **Example Request Headers:** None
+* **Example Request Body:** None
+* **Example Response:**
+```json
+{
+    "success": true,
+    "message": "Successfully calculated the factorial.",
+    "data": {
+        "factorial": 120
+    },
+    "meta": {
+        "rate_limit": "60 requests per minute."
+    },
+    "api_version": "1.2.2",
+    "timestamp": "2026-06-26T12:01:00.000000+00:00",
+    "request_id": "req_b2c3d4e5-f6a7-8b9c-0d1e-2f3a4b5c6d7e",
+    "status_code": 200
+}
+```
+
+### 20. `/v1/math/arithmetic/is-prime`
+* **Description:** Evaluates an integer input greater than or equal to 2 for mathematical primality.
+* **HTTP Method:** `GET`
+* **Response Type & Schema:** `application/json` (JSONResponse)
+  * `is_prime` *(Boolean)*: Evaluated truth value indicating primality.
+* **Query Parameters:**
+  * `n` *(StrictInt, Required)*: The target integer to evaluate for primality. The value must be greater than or equal to 2.
+* **Headers Required:** None
+* **Request Body Parameters (application/json):** None
+* **Custom Rate Limit:** None
+* **Possible Local Exceptions:**
+  * `422 Unprocessable Entity` (`ValidationError`): Dispatched if `n` is less than 2.
+* **Example Request URL:** `https://api.anikethchavare.com/v1/math/arithmetic/is-prime?n=11`
+* **Example Request Headers:** None
+* **Example Request Body:** None
+* **Example Response:**
+```json
+{
+    "success": true,
+    "message": "Successfully tested the number for primality.",
+    "data": {
+        "is_prime": true
+    },
+    "meta": {
+        "rate_limit": "60 requests per minute."
+    },
+    "api_version": "1.2.2",
+    "timestamp": "2026-06-26T12:01:00.000000+00:00",
+    "request_id": "req_c3d4e5f6-a7b8-9c0d-1e2f-3a4b5c6d7e8f",
+    "status_code": 200
+}
+```
+
+### 21. `/v1/math/arithmetic/is-even`
+* **Description:** Tests any arbitrary signed integer to determine if it evaluates to even parity.
+* **HTTP Method:** `GET`
+* **Response Type & Schema:** `application/json` (JSONResponse)
+  * `is_even` *(Boolean)*: Returns `true` if the value is even, otherwise `false`.
+* **Query Parameters:**
+  * `n` *(StrictInt, Required)*: The target integer to evaluate for even parity.
+* **Headers Required:** None
+* **Request Body Parameters (application/json):** None
+* **Custom Rate Limit:** None
+* **Possible Local Exceptions:**
+  * `422 Unprocessable Entity` (`ValidationError`): Dispatched if `n` is omitted or is an invalid integer type.
+* **Example Request URL:** `https://api.anikethchavare.com/v1/math/arithmetic/is-even?n=42`
+* **Example Request Headers:** None
+* **Example Request Body:** None
+* **Example Response:**
+```json
+{
+    "success": true,
+    "message": "Successfully tested the number for even parity.",
+    "data": {
+        "is_even": true
+    },
+    "meta": {
+        "rate_limit": "60 requests per minute."
+    },
+    "api_version": "1.2.2",
+    "timestamp": "2026-06-26T12:01:00.000000+00:00",
+    "request_id": "req_d4e5f6a7-b8c9-0d1e-2f3a-4b5c6d7e8f9a",
+    "status_code": 200
+}
+```
+
+### 22. `/v1/math/arithmetic/is-odd`
+* **Description:** Tests any arbitrary signed integer to determine if it evaluates to odd parity.
+* **HTTP Method:** `GET`
+* **Response Type & Schema:** `application/json` (JSONResponse)
+  * `is_odd` *(Boolean)*: Returns `true` if the value is odd, otherwise `false`.
+* **Query Parameters:**
+  * `n` *(StrictInt, Required)*: The target integer to evaluate for odd parity.
+* **Headers Required:** None
+* **Request Body Parameters (application/json):** None
+* **Custom Rate Limit:** None
+* **Possible Local Exceptions:**
+  * `422 Unprocessable Entity` (`ValidationError`): Dispatched if `n` is omitted or is an invalid integer type.
+* **Example Request URL:** `https://api.anikethchavare.com/v1/math/arithmetic/is-odd?n=13`
+* **Example Request Headers:** None
+* **Example Request Body:** None
+* **Example Response:**
+```json
+{
+    "success": true,
+    "message": "Successfully tested the number for odd parity.",
+    "data": {
+        "is_odd": true
+    },
+    "meta": {
+        "rate_limit": "60 requests per minute."
+    },
+    "api_version": "1.2.2",
+    "timestamp": "2026-06-26T12:01:00.000000+00:00",
+    "request_id": "req_e5f6a7b8-c9d0-1e2f-3a4b-5c6d7e8f9a0b",
+    "status_code": 200
+}
+```
+
+### 23. `/v1/math/arithmetic/hcf`
+* **Description:** Computes the Highest Common Factor (Greatest Common Divisor) across an array collection of integer values.
+* **HTTP Method:** `POST`
+* **Response Type & Schema:** `application/json` (JSONResponse)
+  * `hcf` *(Integer)*: The calculated HCF value.
+* **Query Parameters:** None
+* **Headers Required:** None
+* **Request Body Parameters (application/json):**
+  * `data` *(List[Integer], Required)*: The list of numbers to compute the highest common factor for. The array must contain at least 1 element.
+* **Custom Rate Limit:** None
+* **Possible Local Exceptions:**
+  * `422 Unprocessable Entity` (`ValidationError`): Dispatched if the array payload is missing or empty (`min_length=1`).
+* **Example Request URL:** `https://api.anikethchavare.com/v1/math/arithmetic/hcf`
+* **Example Request Headers:** None
+* **Example Request Body:**
+```json
+{
+    "data": [12, 18, 24]
+}
+```
+* **Example Response:**
+```json
+{
+    "success": true,
+    "message": "Successfully calculated the HCF of the given values.",
+    "data": {
+        "hcf": 6
+    },
+    "meta": {
+        "rate_limit": "60 requests per minute."
+    },
+    "api_version": "1.2.2",
+    "timestamp": "2026-06-26T12:01:00.000000+00:00",
+    "request_id": "req_f6a7b8c9-d0e1-2f3a-4b5c-6d7e8f9a0b1c",
+    "status_code": 200
+}
+```
+
+### 24. `/v1/math/arithmetic/lcm`
+* **Description:** Computes the Lowest Common Multiple across an array collection of integer values.
+* **HTTP Method:** `POST`
+* **Response Type & Schema:** `application/json` (JSONResponse)
+  * `lcm` *(Integer)*: The calculated LCM value.
+* **Query Parameters:** None
+* **Headers Required:** None
+* **Request Body Parameters (application/json):**
+  * `data` *(List[Integer], Required)*: The list of numbers to compute the lowest common multiple for. The array must contain at least 1 element.
+* **Custom Rate Limit:** None
+* **Possible Local Exceptions:**
+  * `422 Unprocessable Entity` (`ValidationError`): Dispatched if the array payload is missing or empty (`min_length=1`).
+* **Example Request URL:** `https://api.anikethchavare.com/v1/math/arithmetic/lcm`
+* **Example Request Headers:** None
+* **Example Request Body:**
+```json
+{
+    "data": [12, 18, 24]
+}
+```
+* **Example Response:**
+```json
+{
+    "success": true,
+    "message": "Successfully calculated the LCM of the given values.",
+    "data": {
+        "lcm": 72
+    },
+    "meta": {
+        "rate_limit": "60 requests per minute."
+    },
+    "api_version": "1.2.2",
+    "timestamp": "2026-06-26T12:01:00.000000+00:00",
+    "request_id": "req_a7b8c9d0-e1f2-3a4b-5c6d-7e8f9a0b1c2d",
+    "status_code": 200
+}
+```
+
+### 25. `/v1/math/arithmetic/fibonacci`
+* **Description:** Generates an ordered sequential array slice containing n elements matching the Fibonacci sequence matrix parameters.
+* **HTTP Method:** `GET`
+* **Response Type & Schema:** `application/json` (JSONResponse)
+  * `fibonacci_series` *(List[Integer])*: Array containing the generated sequence.
+* **Query Parameters:**
+  * `n` *(StrictInt, Required)*: The total number of terms to generate in the sequence. The value must be greater than or equal to 1.
+* **Headers Required:** None
+* **Request Body Parameters (application/json):** None
+* **Custom Rate Limit:** None
+* **Possible Local Exceptions:**
+  * `422 Unprocessable Entity` (`ValidationError`): Dispatched if `n` evaluates to less than 1.
+* **Example Request URL:** `https://api.anikethchavare.com/v1/math/arithmetic/fibonacci?n=5`
+* **Example Request Headers:** None
+* **Example Request Body:** None
+* **Example Response:**
+```json
+{
+    "success": true,
+    "message": "Successfully generated the Fibonacci sequence.",
+    "data": {
+        "fibonacci_series": [0, 1, 1, 2, 3]
+    },
+    "meta": {
+        "rate_limit": "60 requests per minute."
+    },
+    "api_version": "1.2.2",
+    "timestamp": "2026-06-26T12:01:00.000000+00:00",
+    "request_id": "req_b8c9d0e1-f2a3-4b5c-6d7e-8f9a0b1c2d3e",
     "status_code": 200
 }
 ```

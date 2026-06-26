@@ -46,7 +46,7 @@ The format will be:
 - Created a `FUNDING.yml` file to accept sponsorships.
 - Updated the `CREDITS.md` file to include new packages and APIs.
 - Updated the `README.md` file to include a section asking people to sponsor the project.
-- **math:** Added documentation for all endpoints of the following sub-utility namespaces: `/trigonometry`, `/statistics`, and `/algebra`.
+- **math:** Added documentation for all endpoints of the following sub-utility namespaces: `/trigonometry`, `/statistics`, `/algebra`, and `/arithmetic`.
 - **entertainment:** Added documentation for all endpoints.
 
 ## [1.2.2] - 2026-06-23
