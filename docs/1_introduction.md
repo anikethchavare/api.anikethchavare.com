@@ -125,7 +125,7 @@ These base endpoints are attached directly to the underlying application instanc
 
 ### 4. `/clear-request-logs`
 * **Description:** Explicitly clears all transaction history logs from the database. This route is optimized for automated data retention maintenance and is designed to be triggered exclusively by Vercel Cron Jobs.
-* **HTTP Method:** `POST`
+* **HTTP Method:** `GET`
 * **Response Type & Schema:** `application/json` (JSONResponse)
   * *Returns an empty dictionary `{}` inside the core `data` block.*
 * **Query Parameters:** None
