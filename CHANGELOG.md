@@ -39,7 +39,6 @@ The format will be:
 - Changed the method of `/clear-request-logs` to `GET`.
 - Fixed some test code to reflect better coding practices.
 - **math:** Removed the `ZeroDivisionError` exceptions in `/trigonometry/tan` and `/trigonometry/sec`.
-- The `meta` 
 - **language:** Passed the explicit `meta` block within the `/v1/language/speech` endpoint to document the rate limit of 10 requests per minute.
 
 ### Refactored
