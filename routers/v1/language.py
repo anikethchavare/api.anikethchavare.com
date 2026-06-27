@@ -124,10 +124,10 @@ async def app_v1_language_dictionary(
 async def app_v1_language_speech(
         request: Request,
         background_tasks: BackgroundTasks,
-        text: str = Body(..., min_length=1, max_length=500, embed=True, description="The English text content to convert into synthesized spoken audio."),
-        voice: str = Body("en-US-ChristopherNeural", embed=True, description="The short name identifier of the premium Microsoft neural voice model."),
-        rate: str = Body("+0%", embed=True, description="The relative speaking rate modification percentage string."),
-        pitch: str = Body("+0Hz", embed=True, description="The relative structural voice pitch adjustment string.")
+        text: StrictStr = Body(..., min_length=1, max_length=500, embed=True, description="The English text content to convert into synthesized spoken audio."),
+        voice: StrictStr = Body("en-US-ChristopherNeural", embed=True, description="The short name identifier of the premium Microsoft neural voice model."),
+        rate: StrictStr = Body("+0%", embed=True, description="The relative speaking rate modification percentage string."),
+        pitch: StrictStr = Body("+0Hz", embed=True, description="The relative structural voice pitch adjustment string.")
 ):
     try:
         # Initializing the Microsoft Edge TTS Communication Manager

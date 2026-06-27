@@ -24,7 +24,7 @@ import math
 import cmath
 import statistics
 import numpy as np
-from pydantic import StrictInt
+from pydantic import StrictInt, StrictFloat
 from typing import Union, Literal, List
 
 from fastapi import APIRouter, Request, BackgroundTasks, Query, Body
@@ -262,7 +262,7 @@ async def app_v1_math_statistics(request: Request, background_tasks: BackgroundT
 async def app_v1_math_statistics_mean(
         request: Request,
         background_tasks: BackgroundTasks,
-        data: List[Union[int, float]] = Body(..., embed=True, min_length=1, description="The list of values used to calculate the mean.")
+        data: List[Union[StrictInt, StrictFloat]] = Body(..., embed=True, min_length=1, description="The list of values used to calculate the mean.")
 ):
     return utils.send_response(
         request=request,
@@ -281,7 +281,7 @@ async def app_v1_math_statistics_mean(
 async def app_v1_math_statistics_median(
         request: Request,
         background_tasks: BackgroundTasks,
-        data: List[Union[int, float]] = Body(..., embed=True, min_length=1, description="The list of values used to calculate the median.")
+        data: List[Union[StrictInt, StrictFloat]] = Body(..., embed=True, min_length=1, description="The list of values used to calculate the median.")
 ):
     return utils.send_response(
         request=request,
@@ -300,7 +300,7 @@ async def app_v1_math_statistics_median(
 async def app_v1_math_statistics_mode(
         request: Request,
         background_tasks: BackgroundTasks,
-        data: List[Union[int, float]] = Body(..., embed=True, min_length=1, description="The list of values used to calculate the mode.")
+        data: List[Union[StrictInt, StrictFloat]] = Body(..., embed=True, min_length=1, description="The list of values used to calculate the mode.")
 ):
     return utils.send_response(
         request=request,
@@ -335,7 +335,7 @@ async def app_v1_math_algebra(request: Request, background_tasks: BackgroundTask
 async def app_v1_math_algebra_discriminant(
         request: Request,
         background_tasks: BackgroundTasks,
-        coefficients: List[Union[int, float]] = Body(..., embed=True, min_length=3, max_length=4, description="The list of coefficients of an equation.")
+        coefficients: List[Union[StrictInt, StrictFloat]] = Body(..., embed=True, min_length=3, max_length=4, description="The list of coefficients of an equation.")
 ):
     if coefficients[0] == 0:
         return utils.send_response(
@@ -370,7 +370,7 @@ async def app_v1_math_algebra_discriminant(
 async def app_v1_math_algebra_roots(
         request: Request,
         background_tasks: BackgroundTasks,
-        coefficients: List[Union[int, float]] = Body(..., embed=True, min_length=3, max_length=4, description="The list of coefficients of an equation.")
+        coefficients: List[Union[StrictInt, StrictFloat]] = Body(..., embed=True, min_length=3, max_length=4, description="The list of coefficients of an equation.")
 ):
     if coefficients[0] == 0:
         return utils.send_response(
@@ -414,7 +414,7 @@ async def app_v1_math_arithmetic(request: Request, background_tasks: BackgroundT
 async def app_v1_math_arithmetic_factorial(
         request: Request,
         background_tasks: BackgroundTasks,
-        n: StrictInt = Query(..., ge=0, description="The non-negative integer used to compute the factorial.")
+        n: int = Query(..., ge=0, description="The non-negative integer used to compute the factorial.")
 ):
     factorial = 1
 
@@ -438,7 +438,7 @@ async def app_v1_math_arithmetic_factorial(
 async def app_v1_math_arithmetic_is_prime(
         request: Request,
         background_tasks: BackgroundTasks,
-        n: StrictInt = Query(..., ge=2, description="The target integer to evaluate for primality (must be greater than or equal to 2).")
+        n: int = Query(..., ge=2, description="The target integer to evaluate for primality (must be greater than or equal to 2).")
 ):
     is_prime = True
 
@@ -463,7 +463,7 @@ async def app_v1_math_arithmetic_is_prime(
 async def app_v1_math_arithmetic_is_even(
         request: Request,
         background_tasks: BackgroundTasks,
-        n: StrictInt = Query(..., description="The target integer to evaluate for even parity.")
+        n: int = Query(..., description="The target integer to evaluate for even parity.")
 ):
     return utils.send_response(
         request=request,
@@ -482,7 +482,7 @@ async def app_v1_math_arithmetic_is_even(
 async def app_v1_math_arithmetic_is_odd(
         request: Request,
         background_tasks: BackgroundTasks,
-        n: StrictInt = Query(..., description="The target integer to evaluate for odd parity.")
+        n: int = Query(..., description="The target integer to evaluate for odd parity.")
 ):
     return utils.send_response(
         request=request,
@@ -501,7 +501,7 @@ async def app_v1_math_arithmetic_is_odd(
 async def app_v1_math_arithmetic_hcf(
         request: Request,
         background_tasks: BackgroundTasks,
-        data: List[int] = Body(..., embed=True, min_length=1, description="The list of values used to calculate the HCF.")
+        data: List[StrictInt] = Body(..., embed=True, min_length=1, description="The list of values used to calculate the HCF.")
 ):
     return utils.send_response(
         request=request,
@@ -520,7 +520,7 @@ async def app_v1_math_arithmetic_hcf(
 async def app_v1_math_arithmetic_lcm(
         request: Request,
         background_tasks: BackgroundTasks,
-        data: List[int] = Body(..., embed=True, min_length=1, description="The list of values used to calculate the LCM.")
+        data: List[StrictInt] = Body(..., embed=True, min_length=1, description="The list of values used to calculate the LCM.")
 ):
     return utils.send_response(
         request=request,
@@ -539,7 +539,7 @@ async def app_v1_math_arithmetic_lcm(
 async def app_v1_math_arithmetic_fibonacci(
         request: Request,
         background_tasks: BackgroundTasks,
-        n: StrictInt = Query(..., ge=1, description="The number of terms to generate in the Fibonacci sequence.")
+        n: int = Query(..., ge=1, description="The number of terms to generate in the Fibonacci sequence.")
 ):
     if n == 1:
         fibonacci_list = [0]

@@ -38,6 +38,7 @@ The format will be:
 ### Fixed
 - Changed the method of `/clear-request-logs` to `GET`.
 - Fixed some test code to reflect better coding practices.
+- Resolved endpoint signature type mismatches across routers.
 - **math:** Removed the `ZeroDivisionError` exceptions in `/trigonometry/tan` and `/trigonometry/sec`.
 - **language:** Passed the explicit `meta` block within the `/v1/language/speech` endpoint to document the rate limit of 10 requests per minute.
 
