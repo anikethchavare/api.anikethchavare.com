@@ -556,7 +556,7 @@ For faster navigation, select one of the following mathematical sub-utility name
 * **Description:** Extracts all real and complex roots from quadratic or cubic systems.
 * **HTTP Method:** `POST`
 * **Response Type & Schema:** `application/json` (JSONResponse)
-  * `roots` *(List[Int/Float])*: An ordered list containing evaluated roots. Complex numbers are safely cast as strings.
+  * `roots` *(List[Int/Float/String])*: An ordered list containing evaluated roots. Complex numbers are safely cast as strings.
 * **Query Parameters:** None
 * **Headers Required:** None
 * **Request Body Parameters (application/json):**

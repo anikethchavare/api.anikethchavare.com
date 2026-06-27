@@ -51,6 +51,7 @@ The format will be:
 - Updated the `CREDITS.md` file to include new packages and APIs.
 - Updated the `README.md` file to include a section asking people to sponsor the project.
 - Updated documentation to reflect the endpoint signature type mismatches across routers.
+- Updated documentation to reflect the response data types.
 - **math:** Added documentation for all endpoints of the following sub-utility namespaces: `/trigonometry`, `/statistics`, `/algebra`, `/arithmetic`, and `/complex`.
 - **entertainment:** Added documentation for all endpoints.
 

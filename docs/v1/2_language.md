@@ -46,8 +46,8 @@ These endpoints are bound directly to the `app_v1_language` router and operate u
   * `word` *(String)*: The validated target English word being queried.
   * `phonetics` *(Array[Object] | Null)*: List of pronunciation transcriptions and audio asset links. Omitted if `phonetics=false`.
   * `definitions` *(Array | Null)*: Dictionary definitions. If `strict=true`, returns a flat array of strings; otherwise, returns an array of objects grouped by parts of speech. Omitted if `definitions=false`.
-  * `license` *(Object)*: License metadata mapping for the queried word entry.
-  * `source_urls` *(Array[String])*: List of source link URLs tracking the origin definition data.
+  * `license` *(Object | Null)*: License metadata mapping for the queried word entry.
+  * `source_urls` *(Array[String] | Null)*: List of source link URLs tracking the origin definition data.
 * **Query Parameters:**
   * `word` *(StrictStr, Required)*: The target English word to look up in the dictionary. Must be at least 1 character long.
   * `phonetics` *(StrictBool, Optional)*: Toggles whether the phonetic transcriptions and audio URLs are returned. Defaults to `true`.
