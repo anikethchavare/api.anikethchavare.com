@@ -380,7 +380,7 @@ For faster navigation, select one of the following mathematical sub-utility name
 * **Query Parameters:** None
 * **Headers Required:** None
 * **Request Body Parameters (application/json):**
-  * `data` *(List[Int/Float], Required)*: The list of values used to calculate the mean.
+  * `data` *(List[StrictInt/StrictFloat], Required)*: The list of values used to calculate the mean.
 * **Custom Rate Limit:** None
 * **Possible Local Exceptions:** None
 * **Example Request URL:** `https://api.anikethchavare.com/v1/math/statistics/mean`
@@ -417,7 +417,7 @@ For faster navigation, select one of the following mathematical sub-utility name
 * **Query Parameters:** None
 * **Headers Required:** None
 * **Request Body Parameters (application/json):**
-  * `data` *(List[Int/Float], Required)*: The list of values used to calculate the median.
+  * `data` *(List[StrictInt/StrictFloat], Required)*: The list of values used to calculate the median.
 * **Custom Rate Limit:** None
 * **Possible Local Exceptions:** None
 * **Example Request URL:** `https://api.anikethchavare.com/v1/math/statistics/median`
@@ -454,7 +454,7 @@ For faster navigation, select one of the following mathematical sub-utility name
 * **Query Parameters:** None
 * **Headers Required:** None
 * **Request Body Parameters (application/json):**
-  * `data` *(List[Int/Float], Required)*: The list of values used to calculate the mode.
+  * `data` *(List[StrictInt/StrictFloat], Required)*: The list of values used to calculate the mode.
 * **Custom Rate Limit:** None
 * **Possible Local Exceptions:** None
 * **Example Request URL:** `https://api.anikethchavare.com/v1/math/statistics/mode`
@@ -522,7 +522,7 @@ For faster navigation, select one of the following mathematical sub-utility name
 * **Query Parameters:** None
 * **Headers Required:** None
 * **Request Body Parameters (application/json):**
-  * `coefficients` *(List[Int/Float], Required)*: Explicit sequence array of length 3 (quadratic) or length 4 (cubic).
+  * `coefficients` *(List[StrictInt/StrictFloat], Required)*: Explicit sequence array of length 3 (quadratic) or length 4 (cubic).
 * **Custom Rate Limit:** None
 * **Possible Local Exceptions:**
   * `422 Unprocessable Entity`: Triggered locally if the leading array term (`a`) equals 0. 
@@ -560,7 +560,7 @@ For faster navigation, select one of the following mathematical sub-utility name
 * **Query Parameters:** None
 * **Headers Required:** None
 * **Request Body Parameters (application/json):**
-  * `coefficients` *(List[Int/Float], Required)*: Explicit sequence array of length 3 (quadratic) or length 4 (cubic).
+  * `coefficients` *(List[StrictInt/StrictFloat], Required)*: Explicit sequence array of length 3 (quadratic) or length 4 (cubic).
 * **Custom Rate Limit:** None
 * **Possible Local Exceptions:**
   * `422 Unprocessable Entity`: Triggered locally if the leading array term (`a`) equals 0. 
@@ -627,7 +627,7 @@ For faster navigation, select one of the following mathematical sub-utility name
 * **Response Type & Schema:** `application/json` (JSONResponse)
   * `factorial` *(Integer)*: The evaluated factorial value.
 * **Query Parameters:**
-  * `n` *(StrictInt, Required)*: The non-negative integer used to compute the factorial.
+  * `n` *(Integer, Required)*: The non-negative integer used to compute the factorial.
 * **Headers Required:** None
 * **Request Body Parameters (application/json):** None
 * **Custom Rate Limit:** None
@@ -660,7 +660,7 @@ For faster navigation, select one of the following mathematical sub-utility name
 * **Response Type & Schema:** `application/json` (JSONResponse)
   * `is_prime` *(Boolean)*: Evaluated truth value indicating primality.
 * **Query Parameters:**
-  * `n` *(StrictInt, Required)*: The target integer to evaluate for primality. The value must be greater than or equal to 2.
+  * `n` *(Integer, Required)*: The target integer to evaluate for primality. The value must be greater than or equal to 2.
 * **Headers Required:** None
 * **Request Body Parameters (application/json):** None
 * **Custom Rate Limit:** None
@@ -693,7 +693,7 @@ For faster navigation, select one of the following mathematical sub-utility name
 * **Response Type & Schema:** `application/json` (JSONResponse)
   * `is_even` *(Boolean)*: Returns `true` if the value is even, otherwise `false`.
 * **Query Parameters:**
-  * `n` *(StrictInt, Required)*: The target integer to evaluate for even parity.
+  * `n` *(Integer, Required)*: The target integer to evaluate for even parity.
 * **Headers Required:** None
 * **Request Body Parameters (application/json):** None
 * **Custom Rate Limit:** None
@@ -726,7 +726,7 @@ For faster navigation, select one of the following mathematical sub-utility name
 * **Response Type & Schema:** `application/json` (JSONResponse)
   * `is_odd` *(Boolean)*: Returns `true` if the value is odd, otherwise `false`.
 * **Query Parameters:**
-  * `n` *(StrictInt, Required)*: The target integer to evaluate for odd parity.
+  * `n` *(Integer, Required)*: The target integer to evaluate for odd parity.
 * **Headers Required:** None
 * **Request Body Parameters (application/json):** None
 * **Custom Rate Limit:** None
@@ -761,7 +761,7 @@ For faster navigation, select one of the following mathematical sub-utility name
 * **Query Parameters:** None
 * **Headers Required:** None
 * **Request Body Parameters (application/json):**
-  * `data` *(List[Integer], Required)*: The list of numbers to compute the highest common factor for. The array must contain at least 1 element.
+  * `data` *(List[StrictInt], Required)*: The list of numbers to compute the highest common factor for. The array must contain at least 1 element.
 * **Custom Rate Limit:** None
 * **Possible Local Exceptions:**
   * `422 Unprocessable Entity` (`ValidationError`): Dispatched if the array payload is missing or empty (`min_length=1`).
@@ -799,7 +799,7 @@ For faster navigation, select one of the following mathematical sub-utility name
 * **Query Parameters:** None
 * **Headers Required:** None
 * **Request Body Parameters (application/json):**
-  * `data` *(List[Integer], Required)*: The list of numbers to compute the lowest common multiple for. The array must contain at least 1 element.
+  * `data` *(List[StrictInt], Required)*: The list of numbers to compute the lowest common multiple for. The array must contain at least 1 element.
 * **Custom Rate Limit:** None
 * **Possible Local Exceptions:**
   * `422 Unprocessable Entity` (`ValidationError`): Dispatched if the array payload is missing or empty (`min_length=1`).
@@ -835,7 +835,7 @@ For faster navigation, select one of the following mathematical sub-utility name
 * **Response Type & Schema:** `application/json` (JSONResponse)
   * `fibonacci_series` *(List[Integer])*: Array containing the generated sequence.
 * **Query Parameters:**
-  * `n` *(StrictInt, Required)*: The total number of terms to generate in the sequence. The value must be greater than or equal to 1.
+  * `n` *(Integer, Required)*: The total number of terms to generate in the sequence. The value must be greater than or equal to 1.
 * **Headers Required:** None
 * **Request Body Parameters (application/json):** None
 * **Custom Rate Limit:** None
