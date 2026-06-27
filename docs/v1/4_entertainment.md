@@ -123,7 +123,7 @@ These endpoints are bound directly to the `app_v1_entertainment` router and oper
 * **Response Type & Schema:** `application/json` (JSONResponse)
   * `activities` *(Array[String])*: A structured list containing the string descriptions of activities matching the queried filters.
 * **Query Parameters:**
-  * `random` *(Boolean, Optional)*: Toggles whether to pull a single random activity choice out of the pool or list all configurations. Defaults to `true`.
+  * `random` *(StrictBool, Optional)*: Toggles whether to pull a single random activity choice out of the pool or list all configurations. Defaults to `true`.
   * `type` *(Literal, Optional)*: Restricts tasks to a precise behavioral category. Strictly required if `random=false`. Allowed entries: `education`, `recreational`, `social`, `charity`, `cooking`, `relaxation`, `busywork`.
   * `participants` *(Integer, Optional)*: Limits results to tasks built for an explicit count of people. Allowed entries: `1`, `2`, `3`, `4`, `5`, `6`, `8`.
 * **Headers Required:** None

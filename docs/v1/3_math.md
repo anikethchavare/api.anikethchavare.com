@@ -413,7 +413,7 @@ For faster navigation, select one of the following mathematical sub-utility name
 * **Description:** Calculates the median of the given values.
 * **HTTP Method:** `POST`
 * **Response Type & Schema:** `application/json` (JSONResponse)
-  * `median` *(Nummber)*: The calculated median.
+  * `median` *(Number)*: The calculated median.
 * **Query Parameters:** None
 * **Headers Required:** None
 * **Request Body Parameters (application/json):**
