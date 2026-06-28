@@ -761,3 +761,32 @@ async def app_v1_math_geometry_arc_length(
             "arc_length": 2*math.pi*radius*(angle/360) if unit == "degrees" else radius*angle,
         }
     )
+
+# Route 35: Geometry - Distance (app_v1_math)
+@app_v1_math.post("/geometry/distance")
+@rate_limiter.limiter.limit("60/minute")
+async def app_v1_math_geometry_distance(
+        request: Request,
+        background_tasks: BackgroundTasks,
+        point_1: List[Union[int, float]] = Body(..., embed=True, min_length=2, max_length=3, description="The coordinates of the first point (2D or 3D)."),
+        point_2: List[Union[int, float]] = Body(..., embed=True, min_length=2, max_length=3, description="The coordinates of the second point (2D or 3D)."),
+):
+    if len(point_1) != len(point_2):
+        return utils.send_response(
+            request=request,
+            status_code=422,
+            success=False,
+            message="ValidationError: Both points must have the same number of dimensions.",
+            background_tasks=background_tasks
+        )
+
+    return utils.send_response(
+        request=request,
+        status_code=200,
+        success=True,
+        message="Successfully calculated the distance between the two points.",
+        background_tasks=background_tasks,
+        data={
+            "distance": math.dist(point_1, point_2)
+        }
+    )
