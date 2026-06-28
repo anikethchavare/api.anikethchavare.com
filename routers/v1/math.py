@@ -768,8 +768,8 @@ async def app_v1_math_geometry_arc_length(
 async def app_v1_math_geometry_distance(
         request: Request,
         background_tasks: BackgroundTasks,
-        point_1: List[Union[int, float]] = Body(..., embed=True, min_length=2, max_length=3, description="The coordinates of the first point (2D or 3D)."),
-        point_2: List[Union[int, float]] = Body(..., embed=True, min_length=2, max_length=3, description="The coordinates of the second point (2D or 3D)."),
+        point_1: List[Union[StrictInt, StrictFloat]] = Body(..., embed=True, min_length=2, max_length=3, description="The coordinates of the first point (2D or 3D)."),
+        point_2: List[Union[StrictInt, StrictFloat]] = Body(..., embed=True, min_length=2, max_length=3, description="The coordinates of the second point (2D or 3D)."),
 ):
     if len(point_1) != len(point_2):
         return utils.send_response(
@@ -788,5 +788,144 @@ async def app_v1_math_geometry_distance(
         background_tasks=background_tasks,
         data={
             "distance": math.dist(point_1, point_2)
+        }
+    )
+
+# Route 36: Geometry - Area (app_v1_math)
+@app_v1_math.get("/geometry/area")
+@rate_limiter.limiter.limit("60/minute")
+async def app_v1_math_geometry_area(
+        request: Request,
+        background_tasks: BackgroundTasks,
+        shape: Literal["square", "rectangle", "circle", "triangle", "parallelogram"] = Query(..., description="The type of 2D shape."),
+        side: Union[int, float] | None = Query(None, ge=0, description="Required for square"),
+        length: Union[int, float] | None = Query(None, ge=0, description="Required for rectangle."),
+        width: Union[int, float] | None = Query(None, ge=0, description="Required for rectangle."),
+        radius: Union[int, float] | None = Query(None, ge=0, description="Required for circle."),
+        base: Union[int, float] | None = Query(None, ge=0, description="Required for triangle."),
+        height: Union[int, float] | None = Query(None, ge=0, description="Required for triangle.")
+):
+    area = 0
+
+    if shape == "square":
+        if side is None:
+            return utils.send_response(request=request, status_code=422, success=False, message="ValidationError: 'side' is required for square.", background_tasks=background_tasks)
+        area = side ** 2
+    elif shape == "rectangle":
+        if length is None or width is None:
+            return utils.send_response(request=request, status_code=422, success=False, message="ValidationError: Both 'length' and 'width' are required for rectangle.", background_tasks=background_tasks)
+        area = length * width
+    elif shape == "circle":
+        if radius is None:
+            return utils.send_response(request=request, status_code=422, success=False, message="ValidationError: 'radius' is required for circle.", background_tasks=background_tasks)
+        area = math.pi * (radius**2)
+    elif shape == "triangle":
+        if base is None or height is None:
+            return utils.send_response(request=request, status_code=422, success=False, message="ValidationError: Both 'base' and 'height' are required for triangle.", background_tasks=background_tasks)
+        area = 0.5 * base * height
+    elif shape == "parallelogram":
+        if base is None or height is None:
+            return utils.send_response(request=request, status_code=422, success=False, message="ValidationError: Both 'base' and 'height' are required for parallelogram.", background_tasks=background_tasks)
+        area = base * height
+
+    return utils.send_response(
+        request=request,
+        status_code=200,
+        success=True,
+        message="Successfully calculated the area of the 2D shape.",
+        background_tasks=background_tasks,
+        data={
+            "area": area
+        }
+    )
+
+# Route 37: Geometry - Volume (app_v1_math)
+@app_v1_math.get("/geometry/volume")
+@rate_limiter.limiter.limit("60/minute")
+async def app_v1_math_geometry_volume(
+        request: Request,
+        background_tasks: BackgroundTasks,
+        shape: Literal["cube", "cuboid", "sphere", "hemisphere", "cylinder", "cone", "square_pyramid"] = Query(..., description="The type of 3D shape."),
+        side: Union[int, float] | None = Query(None, ge=0, description="Required for cube."),
+        length: Union[int, float] | None = Query(None, ge=0, description="Required for cuboid."),
+        width: Union[int, float] | None = Query(None, ge=0, description="Required for cuboid."),
+        height: Union[int, float] | None = Query(None, ge=0, description="Required for cuboid, cylinder, and square_pyramid."),
+        radius: Union[int, float] | None = Query(None, ge=0, description="Required for sphere, hemisphere, and cone."),
+        base: Union[int, float] | None = Query(None, ge=0, description="Required for square_pyramid.")
+):
+    volume = 0
+
+    if shape == "cube":
+        if side is None:
+            return utils.send_response(request=request, status_code=422, success=False, message="ValidationError: 'side' is required for cube.", background_tasks=background_tasks)
+        volume = side ** 3
+    elif shape == "cuboid":
+        if length is None or width is None or height is None:
+            return utils.send_response(request=request, status_code=422, success=False, message="ValidationError: 'length', 'width', and 'height' are required for cuboid.", background_tasks=background_tasks)
+        volume = length * width * height
+    elif shape == "sphere" or shape == "hemisphere":
+        if radius is None:
+            return utils.send_response(request=request, status_code=422, success=False, message="ValidationError: 'radius' is required for sphere and hemisphere.", background_tasks=background_tasks)
+        volume = (4/3) * math.pi * (radius**3) if shape == "sphere" else (2/3) * math.pi * (radius**3)
+    elif shape == "cylinder" or shape == "cone":
+        if radius is None or height is None:
+            return utils.send_response(request=request, status_code=422, success=False, message="ValidationError: Both 'radius' and 'height' are required for cylinder and cone.", background_tasks=background_tasks)
+        volume = math.pi * (radius**2) * height if shape == "cylinder" else (1/3) * math.pi * (radius**2) * height
+    elif shape == "square_pyramid":
+        if base is None or height is None:
+            return utils.send_response(request=request, status_code=422, success=False, message="ValidationError: Both 'base' and 'height' are required for square_pyramid.", background_tasks=background_tasks)
+        volume = (1/3) * (base**2) * height
+
+    return utils.send_response(
+        request=request,
+        status_code=200,
+        success=True,
+        message="Successfully calculated the volume of the 3D shape.",
+        background_tasks=background_tasks,
+        data={
+            "volume": volume
+        }
+    )
+
+# Route 38: Geometry - Surface Area (app_v1_math)
+@app_v1_math.get("/geometry/surface-area")
+@rate_limiter.limiter.limit("60/minute")
+async def app_v1_math_geometry_surface_area(
+        request: Request,
+        background_tasks: BackgroundTasks,
+        shape: Literal["cube", "cuboid", "sphere", "hemisphere", "cylinder", "cone"] = Query(..., description="The type of 3D shape."),
+        side: Union[int, float] | None = Query(None, ge=0, description="Required for cube."),
+        length: Union[int, float] | None = Query(None, ge=0, description="Required for cuboid."),
+        width: Union[int, float] | None = Query(None, ge=0, description="Required for cuboid."),
+        height: Union[int, float] | None = Query(None, ge=0, description="Required for cuboid and cylinder."),
+        radius: Union[int, float] | None = Query(None, ge=0, description="Required for sphere, hemisphere, and cone.")
+):
+    surface_area = 0
+
+    if shape == "cube":
+        if side is None:
+            return utils.send_response(request=request, status_code=422, success=False, message="ValidationError: 'side' is required for cube.", background_tasks=background_tasks)
+        surface_area = 6 * (side**2)
+    elif shape == "cuboid":
+        if length is None or width is None or height is None:
+            return utils.send_response(request=request, status_code=422, success=False, message="ValidationError: 'length', 'width', and 'height' are required for cuboid.", background_tasks=background_tasks)
+        surface_area = 2 * (length*width + width*height + height*length)
+    elif shape == "sphere" or shape == "hemisphere":
+        if radius is None:
+            return utils.send_response(request=request, status_code=422, success=False, message="ValidationError: 'radius' is required for sphere and hemisphere.", background_tasks=background_tasks)
+        surface_area = 4 * math.pi * (radius**2) if shape == "sphere" else 3 * math.pi * (radius**2)
+    elif shape == "cylinder" or shape == "cone":
+        if radius is None or height is None:
+            return utils.send_response(request=request, status_code=422, success=False, message="ValidationError: Both 'radius' and 'height' are required for cylinder and cone.", background_tasks=background_tasks)
+        surface_area = 2 * math.pi * radius * (radius + height) if shape == "cylinder" else math.pi * radius * (radius + ((radius**2 + height**2)**0.5))
+
+    return utils.send_response(
+        request=request,
+        status_code=200,
+        success=True,
+        message="Successfully calculated the surface area of the 3D shape.",
+        background_tasks=background_tasks,
+        data={
+            "surface_area": surface_area
         }
     )
