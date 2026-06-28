@@ -414,3 +414,146 @@ def test_app_v1_math_complex_polar_success():
     assert isinstance(response.json()["data"]["polar_coordinates"], list)
     assert response.json()["data"]["polar_coordinates"][0] == 1.0
     assert response.json()["data"]["polar_coordinates"][1] == 0.0
+
+# Test Route 29: Geometry (app_v1_math)
+def test_app_v1_math_geometry_main():
+    """ Tests the base entry point landing structure for the geometry namespace. """
+
+    response = client.get("/v1/math/geometry")
+    assert response.status_code == 200
+    assert response.json()["success"] is True
+    assert "Welcome to the 'geometry' sub-utility namespace" in response.json()["message"]
+    assert response.json()["data"] == {}
+
+# Test Routes 30: Geometry - Circumference (app_v1_math)
+def test_app_v1_math_geometry_circumference_success():
+    """ Tests calculating the circumference of a circle with a valid radius. """
+
+    response = client.get("/v1/math/geometry/circumference?radius=5")
+    assert response.status_code == 200
+    assert response.json()["success"] is True
+    assert pytest.approx(response.json()["data"]["circumference"]) == 2 * math.pi * 5
+
+def test_app_v1_math_geometry_circumference_validation():
+    """ Tests that negative radius inputs fail the ge=0 validation guardrail. """
+
+    response = client.get("/v1/math/geometry/circumference?radius=-5")
+    assert response.status_code == 422
+
+# Test Routes 31: Geometry - Area of Sector (app_v1_math)
+def test_app_v1_math_geometry_area_of_sector_success():
+    """ Tests calculating the area of a sector with degrees and radians. """
+
+    response_deg = client.get("/v1/math/geometry/area-of-sector?radius=5&angle=90&unit=degrees")
+    assert response_deg.status_code == 200
+    assert pytest.approx(response_deg.json()["data"]["area_of_sector"]) == (90 / 360) * math.pi * (5 ** 2)
+
+    response_rad = client.get("/v1/math/geometry/area-of-sector?radius=5&angle=1.570796&unit=radians")
+    assert response_rad.status_code == 200
+    assert pytest.approx(response_rad.json()["data"]["area_of_sector"], rel=1e-4) == 0.5 * (5 ** 2) * 1.570796
+
+def test_app_v1_math_geometry_area_of_sector_boundary_exception():
+    """ Tests that degree inputs exceeding 360 return a custom 422 Validation Error. """
+
+    response = client.get("/v1/math/geometry/area-of-sector?radius=5&angle=370&unit=degrees")
+    assert response.status_code == 422
+    assert "Angle in degrees cannot exceed 360" in response.json()["message"]
+
+# Test Routes 32: Geometry - Arc Length (app_v1_math)
+def test_app_v1_math_geometry_arc_length_success():
+    """ Tests calculating the arc length with degrees and radians. """
+
+    response_deg = client.get("/v1/math/geometry/arc-length?radius=5&angle=180&unit=degrees")
+    assert response_deg.status_code == 200
+    assert pytest.approx(response_deg.json()["data"]["arc_length"]) == 2 * math.pi * 5 * (180 / 360)
+
+    response_rad = client.get("/v1/math/geometry/arc-length?radius=5&angle=3.141592&unit=radians")
+    assert response_rad.status_code == 200
+    assert pytest.approx(response_rad.json()["data"]["arc_length"], rel=1e-4) == 5 * 3.141592
+
+def test_app_v1_math_geometry_arc_length_boundary_exception():
+    """ Tests that degree inputs exceeding 360 return a custom 422 Validation Error. """
+
+    response = client.get("/v1/math/geometry/arc-length?radius=5&angle=361&unit=degrees")
+    assert response.status_code == 422
+    assert "Angle in degrees cannot exceed 360" in response.json()["message"]
+
+# Test Routes 33: Geometry - Distance (app_v1_math)
+def test_app_v1_math_geometry_distance_success():
+    """ Tests calculating the distance between points in 2D and 3D space. """
+
+    payload_2d = {"point_1": [0, 0], "point_2": [3, 4]}
+    response_2d = client.post("/v1/math/geometry/distance", json=payload_2d)
+    assert response_2d.status_code == 200
+    assert response_2d.json()["data"]["distance"] == 5.0
+
+    payload_3d = {"point_1": [1, 2, 3], "point_2": [4, 5, 6]}
+    response_3d = client.post("/v1/math/geometry/distance", json=payload_3d)
+    assert response_3d.status_code == 200
+    assert pytest.approx(response_3d.json()["data"]["distance"]) == math.dist([1, 2, 3], [4, 5, 6])
+
+def test_app_v1_math_geometry_distance_mismatched_dimensions():
+    """ Tests that mixed dimensions (e.g., 2D point matched with a 3D point) trigger a ValidationError. """
+
+    payload_mismatch = {"point_1": [0, 0], "point_2": [1, 2, 3]}
+    response = client.post("/v1/math/geometry/distance", json=payload_mismatch)
+    assert response.status_code == 422
+    assert "Both points must have the same number of dimensions" in response.json()["message"]
+
+# Test Route 34: Geometry - Area (app_v1_math)
+@pytest.mark.parametrize("shape, params, expected", [
+    ("square", "side=4", 16.0),
+    ("rectangle", "length=5&width=4", 20.0),
+    ("circle", "radius=3", math.pi * 9),
+    ("triangle", "base=6&height=3", 9.0),
+    ("parallelogram", "base=5&height=4", 20.0),
+])
+def test_app_v1_math_geometry_area_success(shape, params, expected):
+    """ Verifies area equations work correctly across all supported 2D shapes. """
+
+    response = client.get(f"/v1/math/geometry/area?shape={shape}&{params}")
+    assert response.status_code == 200
+    assert response.json()["success"] is True
+    assert pytest.approx(response.json()["data"]["area"]) == expected
+
+def test_app_v1_math_geometry_area_missing_parameters():
+    """ Tests that omitting mandatory parameters returns a 422 ValidationError. """
+
+    response = client.get("/v1/math/geometry/area?shape=rectangle&length=5")
+    assert response.status_code == 422
+    assert "ValidationError" in response.json()["message"]
+
+# Test Route 35: Geometry - Volume (app_v1_math)
+@pytest.mark.parametrize("shape, params, expected", [
+    ("cube", "side=3", 27.0),
+    ("cuboid", "length=2&width=3&height=4", 24.0),
+    ("sphere", "radius=3", (4 / 3) * math.pi * 27),
+    ("hemisphere", "radius=3", (2 / 3) * math.pi * 27),
+    ("cylinder", "radius=3&height=5", math.pi * 9 * 5),
+    ("cone", "radius=3&height=5", (1 / 3) * math.pi * 9 * 5),
+    ("square_pyramid", "base=3&height=4", (1 / 3) * 9 * 4),
+])
+def test_app_v1_math_geometry_volume_success(shape, params, expected):
+    """ Verifies volume calculations evaluate properly across all supported 3D shapes. """
+
+    response = client.get(f"/v1/math/geometry/volume?shape={shape}&{params}")
+    assert response.status_code == 200
+    assert response.json()["success"] is True
+    assert pytest.approx(response.json()["data"]["volume"]) == expected
+
+# Test Route 36: Geometry - Surface Area (app_v1_math)
+@pytest.mark.parametrize("shape, params, expected", [
+    ("cube", "side=3", 6 * 9),
+    ("cuboid", "length=2&width=3&height=4", 2 * (6 + 12 + 8)),
+    ("sphere", "radius=3", 4 * math.pi * 9),
+    ("hemisphere", "radius=3", 3 * math.pi * 9),
+    ("cylinder", "radius=3&height=5", 2 * math.pi * 3 * 8),
+    ("cone", "radius=3&height=4", math.pi * 3 * (3 + 5)),  # slant height = 5
+])
+def test_app_v1_math_geometry_surface_area_success(shape, params, expected):
+    """ Verifies surface area formulas process properly across all supported 3D configurations. """
+
+    response = client.get(f"/v1/math/geometry/surface-area?shape={shape}&{params}")
+    assert response.status_code == 200
+    assert response.json()["success"] is True
+    assert pytest.approx(response.json()["data"]["surface_area"]) == expected

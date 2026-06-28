@@ -96,7 +96,7 @@ def test_app_v1_entertainment_jokes_invalid_category():
     response = client.get("/v1/entertainment/jokes?category=InvalidCategory")
     assert response.status_code == 422
     assert response.json()["success"] is False
-    assert "Validation Error" in response.json()["message"]
+    assert "ValidationError" in response.json()["message"]
 
 def test_app_v1_entertainment_jokes_invalid_blacklist():
     """ Tests the internal validation guard when an invalid blacklist flag is provided. """
@@ -104,7 +104,7 @@ def test_app_v1_entertainment_jokes_invalid_blacklist():
     response = client.get("/v1/entertainment/jokes?blacklist=clean")
     assert response.status_code == 422
     assert response.json()["success"] is False
-    assert "Validation Error" in response.json()["message"]
+    assert "ValidationError" in response.json()["message"]
 
 @respx.mock
 def test_app_v1_entertainment_jokes_upstream_failure():
@@ -135,7 +135,7 @@ def test_app_v1_entertainment_jokes_api_level_error():
     response = client.get("/v1/entertainment/jokes?amount=10")
     assert response.status_code == 400
     assert response.json()["success"] is False
-    assert "JokeAPI Error" in response.json()["message"]
+    assert "JokeAPIError" in response.json()["message"]
 
 # Test Routes 3: Fact (app_v1_entertainment)
 @respx.mock
@@ -232,7 +232,7 @@ def test_app_v1_entertainment_bored_missing_type_validation():
     response = client.get("/v1/entertainment/bored?random=false")
     assert response.status_code == 422
     assert response.json()["success"] is False
-    assert "Validation Error" in response.json()["message"]
+    assert "ValidationError" in response.json()["message"]
 
 @respx.mock
 def test_app_v1_entertainment_bored_not_found():
