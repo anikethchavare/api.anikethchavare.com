@@ -69,7 +69,7 @@ async def app_v1_entertainment_jokes(
                 request=request,
                 status_code=422,
                 success=False,
-                message=f"Validation Error: '{cat}' is not a valid category. Choose from {list(allowed_categories)}.",
+                message=f"ValidationError: '{cat}' is not a valid category. Choose from {list(allowed_categories)}.",
                 background_tasks=background_tasks
             )
 
@@ -82,7 +82,7 @@ async def app_v1_entertainment_jokes(
                     request=request,
                     status_code=422,
                     success=False,
-                    message=f"Validation Error: '{flag}' is not a valid flag. Choose from {list(allowed_blacklists)}.",
+                    message=f"ValidationError: '{flag}' is not a valid flag. Choose from {list(allowed_blacklists)}.",
                     background_tasks=background_tasks
                 )
 
@@ -108,7 +108,7 @@ async def app_v1_entertainment_jokes(
             request=request,
             status_code=502,
             success=False,
-            message="An unexpected error occurred while fetching the jokes. Please try again later.",
+            message="UpstreamServiceError: An unexpected error occurred while fetching the jokes. Please try again later.",
             background_tasks=background_tasks
         )
 
@@ -119,7 +119,7 @@ async def app_v1_entertainment_jokes(
             request=request,
             status_code=400,
             success=False,
-            message=f"JokeAPI Error: {response_data.get('additionalInfo', 'Invalid request parameters.')}",
+            message=f"JokeAPIError: {response_data.get('additionalInfo', 'Invalid request parameters.')}",
             background_tasks=background_tasks
         )
 
@@ -160,7 +160,7 @@ async def app_v1_entertainment_fact(
             request=request,
             status_code=502,
             success=False,
-            message="An unexpected error occurred while fetching the fact. Please try again later.",
+            message="UpstreamServiceError: An unexpected error occurred while fetching the fact. Please try again later.",
             background_tasks=background_tasks
         )
 
@@ -194,7 +194,7 @@ async def app_v1_entertainment_bored(
             request=request,
             status_code=422,
             success=False,
-            message=f"Validation Error: '{participants}' is not a valid number of participants. Choose from {list(allowed_participants)}.",
+            message=f"ValidationError: '{participants}' is not a valid number of participants. Choose from {list(allowed_participants)}.",
             background_tasks=background_tasks
         )
 
@@ -209,7 +209,7 @@ async def app_v1_entertainment_bored(
                 request=request,
                 status_code=422,
                 success=False,
-                message="Validation Error: Choose a valid type from ['education', 'recreational', 'social', 'charity', 'cooking', 'relaxation', 'busywork'].",
+                message="ValidationError: Choose a valid type from ['education', 'recreational', 'social', 'charity', 'cooking', 'relaxation', 'busywork'].",
                 background_tasks=background_tasks
             )
 
@@ -228,7 +228,7 @@ async def app_v1_entertainment_bored(
             request=request,
             status_code=404,
             success=False,
-            message="No activities found matching the specified parameters.",
+            message="ActivityNotFound: No activities found matching the specified parameters.",
             background_tasks=background_tasks
         )
 
@@ -237,7 +237,7 @@ async def app_v1_entertainment_bored(
             request=request,
             status_code=502,
             success=False,
-            message="An unexpected error occurred while fetching the activity. Please try again later.",
+            message="UpstreamServiceError: An unexpected error occurred while fetching the activity. Please try again later.",
             background_tasks=background_tasks
         )
 
@@ -280,7 +280,7 @@ async def app_v1_entertainment_guess_gender(
             request=request,
             status_code=502,
             success=False,
-            message="An unexpected error occurred while predicting the gender. Please try again later.",
+            message="UpstreamServiceError: An unexpected error occurred while predicting the gender. Please try again later.",
             background_tasks=background_tasks
         )
 
@@ -333,7 +333,7 @@ async def app_v1_entertainment_guess_age(
             request=request,
             status_code=502,
             success=False,
-            message="An unexpected error occurred while predicting the age. Please try again later.",
+            message="UpstreamServiceError: An unexpected error occurred while predicting the age. Please try again later.",
             background_tasks=background_tasks
         )
 
@@ -381,7 +381,7 @@ async def app_v1_entertainment_guess_nation(
             request=request,
             status_code=502,
             success=False,
-            message="An unexpected error occurred while predicting the nation. Please try again later.",
+            message="UpstreamServiceError: An unexpected error occurred while predicting the nation. Please try again later.",
             background_tasks=background_tasks
         )
 

@@ -187,7 +187,7 @@ async def app_v1_math_trigonometry_cosec(
             request=request,
             status_code=422,
             success=False,
-            message="Math Error: The resulting value is undefined (division by zero).",
+            message="MathError: The resulting value is undefined (division by zero).",
             background_tasks=background_tasks
         )
 
@@ -236,7 +236,7 @@ async def app_v1_math_trigonometry_cot(
             request=request,
             status_code=422,
             success=False,
-            message="Math Error: The resulting value is undefined (division by zero).",
+            message="MathError: The resulting value is undefined (division by zero).",
             background_tasks=background_tasks
         )
 
@@ -342,7 +342,7 @@ async def app_v1_math_algebra_discriminant(
             request=request,
             status_code=422,
             success=False,
-            message="The first coefficient (a) of an equation must not be zero.",
+            message="MathError: The first coefficient (a) of an equation must not be zero.",
             background_tasks=background_tasks
         )
 
@@ -377,7 +377,7 @@ async def app_v1_math_algebra_roots(
             request=request,
             status_code=422,
             success=False,
-            message="The first coefficient (a) of an equation must not be zero.",
+            message="MathError: The first coefficient (a) of an equation must not be zero.",
             background_tasks=background_tasks
         )
 
@@ -632,7 +632,7 @@ async def app_v1_math_complex_multiplicative_inverse(
             request=request,
             status_code=422,
             success=False,
-            message="Validation Error (Math): Multiplicative inverse of zero is undefined.",
+            message="MathError: Multiplicative inverse of zero is undefined.",
             background_tasks=background_tasks
         )
 

@@ -170,7 +170,6 @@ These endpoints are bound directly to the `app_v1_entertainment` router and oper
 * **Request Body Parameters (application/json):** None
 * **Custom Rate Limit:** None
 * **Possible Local Exceptions:**
-  * `422 Unprocessable Entity` (`ValidationError`): Dispatched if the `country` parameter is provided but is not exactly 2 characters in length.
   * `502 Bad Gateway` (`UpstreamServiceError`): Dispatched when the underlying microservice proxy connection (`api.genderize.io`) is offline, unreachable, or exits with a non-200 state.
 * **Example Request URL:** `https://api.anikethchavare.com/v1/entertainment/guess-gender?name=alex&country=US`
 * **Example Request Headers:** None
@@ -207,7 +206,6 @@ These endpoints are bound directly to the `app_v1_entertainment` router and oper
 * **Request Body Parameters (application/json):** None
 * **Custom Rate Limit:** None
 * **Possible Local Exceptions:**
-  * `422 Unprocessable Entity` (`ValidationError`): Dispatched if the `country` parameter is provided but is not exactly 2 characters in length.
   * `502 Bad Gateway` (`UpstreamServiceError`): Dispatched when the underlying microservice proxy connection (`api.agify.io`) is offline, unreachable, or exits with a non-200 state.
 * **Example Request URL:** `https://api.anikethchavare.com/v1/entertainment/guess-age?name=michael`
 * **Example Request Headers:** None

@@ -177,7 +177,7 @@ async def app_health(request: Request, background_tasks: BackgroundTasks):
         request=request,
         status_code=200 if healthy else 503,
         success=healthy,
-        message="API is healthy and running." if healthy else "API is unhealthy and non-responsive. One or more internal services are currently unavailable.",
+        message="API is healthy and running." if healthy else "ServiceStatusFailure: API is unhealthy and non-responsive. One or more internal services are currently unavailable.",
         background_tasks=background_tasks,
         data={"health_checks": health_data}
     )
@@ -190,7 +190,7 @@ async def app_clear_request_logs(request: Request, background_tasks: BackgroundT
             request=request,
             status_code=401,
             success=False,
-            message="Unauthorized: Invalid or missing cron token.",
+            message="Invalid or missing cron token.",
             background_tasks=background_tasks
         )
 

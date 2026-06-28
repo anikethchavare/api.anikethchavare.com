@@ -252,7 +252,7 @@ For faster navigation, select one of the following mathematical sub-utility name
 * **Request Body Parameters (application/json):** None
 * **Custom Rate Limit:** None
 * **Possible Local Exceptions:**
-  * `422 Unprocessable Entity`: Triggered if the computed inputs evaluate to a mathematical division by zero asymptote.
+  * `422 Unprocessable Entity` (`MathError`): Triggered if the computed inputs evaluate to a mathematical division by zero asymptote.
 * **Example Request URL:** `https://api.anikethchavare.com/v1/math/trigonometry/cosec?value=90&unit=degrees`
 * **Example Request Headers:** None
 * **Example Request Body:** None
@@ -319,7 +319,7 @@ For faster navigation, select one of the following mathematical sub-utility name
 * **Request Body Parameters (application/json):** None
 * **Custom Rate Limit:** None
 * **Possible Local Exceptions:**
-  * `422 Unprocessable Entity`: Triggered if the computed inputs evaluate to a mathematical division by zero asymptote.
+  * `422 Unprocessable Entity` (`MathError`): Triggered if the computed inputs evaluate to a mathematical division by zero asymptote.
 * **Example Request URL:** `https://api.anikethchavare.com/v1/math/trigonometry/cot?value=90&unit=degrees`
 * **Example Request Headers:** None
 * **Example Request Body:** None
@@ -525,7 +525,7 @@ For faster navigation, select one of the following mathematical sub-utility name
   * `coefficients` *(List[StrictInt/StrictFloat], Required)*: Explicit sequence array of length 3 (quadratic) or length 4 (cubic).
 * **Custom Rate Limit:** None
 * **Possible Local Exceptions:**
-  * `422 Unprocessable Entity`: Triggered locally if the leading array term (`a`) equals 0. 
+  * `422 Unprocessable Entity` (`MathError`): Triggered locally if the leading array term (`a`) equals 0. 
 * **Example Request URL:** `https://api.anikethchavare.com/v1/math/algebra/discriminant`
 * **Example Request Headers:** None
 * **Example Request Body:**
@@ -563,7 +563,7 @@ For faster navigation, select one of the following mathematical sub-utility name
   * `coefficients` *(List[StrictInt/StrictFloat], Required)*: Explicit sequence array of length 3 (quadratic) or length 4 (cubic).
 * **Custom Rate Limit:** None
 * **Possible Local Exceptions:**
-  * `422 Unprocessable Entity`: Triggered locally if the leading array term (`a`) equals 0. 
+  * `422 Unprocessable Entity` (`MathError`): Triggered locally if the leading array term (`a`) equals 0. 
 * **Example Request URL:** `https://api.anikethchavare.com/v1/math/algebra/roots`
 * **Example Request Headers:** None
 * **Example Request Body:**
@@ -631,8 +631,7 @@ For faster navigation, select one of the following mathematical sub-utility name
 * **Headers Required:** None
 * **Request Body Parameters (application/json):** None
 * **Custom Rate Limit:** None
-* **Possible Local Exceptions:**
-  * `422 Unprocessable Entity` (`ValidationError`): Dispatched if `n` is omitted, not a strict integer, or evaluates to less than 0.
+* **Possible Local Exceptions:** None
 * **Example Request URL:** `https://api.anikethchavare.com/v1/math/arithmetic/factorial?n=5`
 * **Example Request Headers:** None
 * **Example Request Body:** None
@@ -664,8 +663,7 @@ For faster navigation, select one of the following mathematical sub-utility name
 * **Headers Required:** None
 * **Request Body Parameters (application/json):** None
 * **Custom Rate Limit:** None
-* **Possible Local Exceptions:**
-  * `422 Unprocessable Entity` (`ValidationError`): Dispatched if `n` is less than 2.
+* **Possible Local Exceptions:** None
 * **Example Request URL:** `https://api.anikethchavare.com/v1/math/arithmetic/is-prime?n=11`
 * **Example Request Headers:** None
 * **Example Request Body:** None
@@ -697,8 +695,7 @@ For faster navigation, select one of the following mathematical sub-utility name
 * **Headers Required:** None
 * **Request Body Parameters (application/json):** None
 * **Custom Rate Limit:** None
-* **Possible Local Exceptions:**
-  * `422 Unprocessable Entity` (`ValidationError`): Dispatched if `n` is omitted or is an invalid integer type.
+* **Possible Local Exceptions:** None
 * **Example Request URL:** `https://api.anikethchavare.com/v1/math/arithmetic/is-even?n=42`
 * **Example Request Headers:** None
 * **Example Request Body:** None
@@ -730,8 +727,7 @@ For faster navigation, select one of the following mathematical sub-utility name
 * **Headers Required:** None
 * **Request Body Parameters (application/json):** None
 * **Custom Rate Limit:** None
-* **Possible Local Exceptions:**
-  * `422 Unprocessable Entity` (`ValidationError`): Dispatched if `n` is omitted or is an invalid integer type.
+* **Possible Local Exceptions:** None
 * **Example Request URL:** `https://api.anikethchavare.com/v1/math/arithmetic/is-odd?n=13`
 * **Example Request Headers:** None
 * **Example Request Body:** None
@@ -763,8 +759,7 @@ For faster navigation, select one of the following mathematical sub-utility name
 * **Request Body Parameters (application/json):**
   * `data` *(List[StrictInt], Required)*: The list of numbers to compute the highest common factor for. The array must contain at least 1 element.
 * **Custom Rate Limit:** None
-* **Possible Local Exceptions:**
-  * `422 Unprocessable Entity` (`ValidationError`): Dispatched if the array payload is missing or empty (`min_length=1`).
+* **Possible Local Exceptions:** None
 * **Example Request URL:** `https://api.anikethchavare.com/v1/math/arithmetic/hcf`
 * **Example Request Headers:** None
 * **Example Request Body:**
@@ -801,8 +796,7 @@ For faster navigation, select one of the following mathematical sub-utility name
 * **Request Body Parameters (application/json):**
   * `data` *(List[StrictInt], Required)*: The list of numbers to compute the lowest common multiple for. The array must contain at least 1 element.
 * **Custom Rate Limit:** None
-* **Possible Local Exceptions:**
-  * `422 Unprocessable Entity` (`ValidationError`): Dispatched if the array payload is missing or empty (`min_length=1`).
+* **Possible Local Exceptions:** None
 * **Example Request URL:** `https://api.anikethchavare.com/v1/math/arithmetic/lcm`
 * **Example Request Headers:** None
 * **Example Request Body:**
@@ -839,8 +833,7 @@ For faster navigation, select one of the following mathematical sub-utility name
 * **Headers Required:** None
 * **Request Body Parameters (application/json):** None
 * **Custom Rate Limit:** None
-* **Possible Local Exceptions:**
-  * `422 Unprocessable Entity` (`ValidationError`): Dispatched if `n` evaluates to less than 1.
+* **Possible Local Exceptions:** None
 * **Example Request URL:** `https://api.anikethchavare.com/v1/math/arithmetic/fibonacci?n=5`
 * **Example Request Headers:** None
 * **Example Request Body:** None
@@ -969,7 +962,7 @@ For faster navigation, select one of the following mathematical sub-utility name
 * **Request Body Parameters (application/json):** None
 * **Custom Rate Limit:** None
 * **Possible Local Exceptions:**
-  * `422 Unprocessable Entity`: Triggered if both the real and imaginary components are provided as 0, as the multiplicative inverse of zero is mathematically undefined.
+  * `422 Unprocessable Entity` (`MathError`): Triggered if both the real and imaginary components are provided as 0, as the multiplicative inverse of zero is mathematically undefined.
 * **Example Request URL:** `https://api.anikethchavare.com/v1/math/complex/multiplicative-inverse?real=1&imaginary=0`
 * **Example Request Headers:** None
 * **Example Request Body:** None

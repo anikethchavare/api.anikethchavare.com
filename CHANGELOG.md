@@ -53,6 +53,7 @@ The format will be:
 - Updated the `README.md` file to include a section asking people to sponsor the project.
 - Updated documentation to reflect the endpoint signature type mismatches across routers.
 - Updated documentation to reflect the true response data types.
+- Enhanced clarity among possible local exceptions clients might encounter across most endpoints.
 - **math:** Added documentation for all endpoints of the following sub-utility namespaces: `/trigonometry`, `/statistics`, `/algebra`, `/arithmetic`, and `/complex`.
 - **entertainment:** Added documentation for all endpoints.
 

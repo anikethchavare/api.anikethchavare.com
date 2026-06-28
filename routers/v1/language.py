@@ -67,7 +67,7 @@ async def app_v1_language_dictionary(
             request=request,
             status_code=404,
             success=False,
-            message=f"No data was found for the word '{word}'.",
+            message=f"WordNotFound: No data was found for the word '{word}'.",
             background_tasks=background_tasks
         )
     elif response.status_code != 200:
@@ -75,7 +75,7 @@ async def app_v1_language_dictionary(
             request=request,
             status_code=502,
             success=False,
-            message="An unexpected error occurred while querying the dictionary. Please try again later.",
+            message="UpstreamServiceError: An unexpected error occurred while querying the dictionary. Please try again later.",
             background_tasks=background_tasks
         )
 
@@ -155,7 +155,7 @@ async def app_v1_language_speech(
             request=request,
             status_code=502,
             success=False,
-            message="An unexpected error occurred while converting text into spoken audio. Please try again later.",
+            message="UpstreamServiceError: An unexpected error occurred while converting text into spoken audio. Please try again later.",
             background_tasks=background_tasks,
             meta={"rate_limit": "10 requests per minute."}
         )
