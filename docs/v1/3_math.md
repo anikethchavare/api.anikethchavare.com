@@ -14,6 +14,7 @@ For faster navigation, select one of the following mathematical sub-utility name
 * **[/algebra](#algebra)** — Calculates discriminants and isolates complex roots for equations.
 * **[/arithmetic](#arithmetic)** — Handles prime checks, factorials, HCF, LCM, and sequential series generation.
 * **[/complex](#complex)** — Extracts properties like modulus, conjugates, inverses, and polar forms.
+* **[/geometry](#geometry)** — Calculates geometric metrics such as circumference, arc parameters, distances, and shape areas/volumes.
 
 ### 1. `/v1/math`
 * **Description:** Serves as the introductory entry point to the utility namespace.
@@ -1016,6 +1017,293 @@ For faster navigation, select one of the following mathematical sub-utility name
     "api_version": "1.2.2",
     "timestamp": "2026-06-26T12:01:00.000000+00:00",
     "request_id": "req_p1o2l3a4-r5c6-7o8o-9r0d-e1f2a3b4c5d6",
+    "status_code": 200
+}
+```
+
+### 31. <span id="geometry">`/v1/math/geometry`</span>
+* **Description:** Serves as the introductory entry point to the sub-utility namespace.
+* **HTTP Method:** `GET`
+* **Response Type & Schema:** `application/json` (JSONResponse)
+  * *Returns an empty dictionary `{}` inside the core `data` block.*
+* **Query Parameters:** None
+* **Headers Required:** None
+* **Request Body Parameters (application/json):** None
+* **Custom Rate Limit:** None
+* **Possible Local Exceptions:** None
+* **Example Request URL:** `https://api.anikethchavare.com/v1/math/geometry`
+* **Example Request Headers:** None
+* **Example Request Body:** None
+* **Example Response:**
+```json
+{
+    "success": true,
+    "message": "Welcome to the 'geometry' sub-utility namespace under 'math'. Check the documentation for available endpoints.",
+    "data": {},
+    "meta": {
+        "rate_limit": "60 requests per minute."
+    },
+    "api_version": "1.2.2",
+    "timestamp": "2026-06-26T12:01:00.000000+00:00",
+    "request_id": "req_g1e2o3m4-e5t6-7r8y-9n0a-m1e2s3p4a5c6",
+    "status_code": 200
+}
+```
+
+### 32. `/v1/math/geometry/circumference`
+* **Description:** Calculates the circumference of a circle given its radius.
+* **HTTP Method:** `GET`
+* **Response Type & Schema:** `application/json` (JSONResponse)
+  * `circumference` *(Float)*: The calculated circumference value.
+* **Query Parameters:**
+  * `radius` *(Integer/Float, Required)*: The radius of the circle. Must be greater than or equal to 0.
+* **Headers Required:** None
+* **Request Body Parameters (application/json):** None
+* **Custom Rate Limit:** None
+* **Possible Local Exceptions:** None
+* **Example Request URL:** `https://api.anikethchavare.com/v1/math/geometry/circumference?radius=5`
+* **Example Request Headers:** None
+* **Example Request Body:** None
+* **Example Response:**
+```json
+{
+    "success": true,
+    "message": "Successfully calculated the circumference of the circle.",
+    "data": {
+        "circumference": 31.41592653589793
+    },
+    "meta": {
+        "rate_limit": "60 requests per minute."
+    },
+    "api_version": "1.2.2",
+    "timestamp": "2026-06-26T12:01:00.000000+00:00",
+    "request_id": "req_c1i2r3c4-u5m6-7f8e-9r0e-n1c2e3a4b5c6",
+    "status_code": 200
+}
+```
+
+### 33. `/v1/math/geometry/area-of-sector`
+* **Description:** Calculates the area of a circle's sector using either degrees or radians.
+* **HTTP Method:** `GET`
+* **Response Type & Schema:** `application/json` (JSONResponse)
+  * `area_of_sector` *(Float)*: The evaluated geometric sector area.
+* **Query Parameters:**
+  * `radius` *(Integer/Float, Required)*: The radius of the circle. Must be greater than or equal to 0.
+  * `angle` *(Integer/Float, Required)*: The central angle of the sector. Must be greater than or equal to 0.
+  * `unit` *(Literal, Required)*: The unit specification for the angle. Allowed entries: `degrees`, `radians`.
+* **Headers Required:** None
+* **Request Body Parameters (application/json):** None
+* **Custom Rate Limit:** None
+* **Possible Local Exceptions:**
+  * `422 Unprocessable Entity` (`ValidationError`): Dispatched if parameters are negative, the unit is invalid, or if `unit=degrees` and the angle exceeds 360.
+* **Example Request URL:** `https://api.anikethchavare.com/v1/math/geometry/area-of-sector?radius=5&angle=90&unit=degrees`
+* **Example Request Headers:** None
+* **Example Request Body:** None
+* **Example Response:**
+```json
+{
+    "success": true,
+    "message": "Successfully calculated the area of the sector of the circle.",
+    "data": {
+        "area_of_sector": 19.634954084936208
+    },
+    "meta": {
+        "rate_limit": "60 requests per minute."
+    },
+    "api_version": "1.2.2",
+    "timestamp": "2026-06-26T12:01:00.000000+00:00",
+    "request_id": "req_s1e2c3t4-o5r6-7a8r-9e0a-m1a2t3h4b5c6",
+    "status_code": 200
+}
+```
+
+### 34. `/v1/math/geometry/arc-length`
+* **Description:** Calculates the arc length along a circle's perimeter using either degrees or radians.
+* **HTTP Method:** `GET`
+* **Response Type & Schema:** `application/json` (JSONResponse)
+  * `arc_length` *(Float)*: The evaluated perimeter arc length distance.
+* **Query Parameters:**
+  * `radius` *(Integer/Float, Required)*: The radius of the circle. Must be greater than or equal to 0.
+  * `angle` *(Integer/Float, Required)*: The central angle of the arc. Must be greater than or equal to 0.
+  * `unit` *(Literal, Required)*: The unit specification for the angle. Allowed entries: `degrees`, `radians`.
+* **Headers Required:** None
+* **Request Body Parameters (application/json):** None
+* **Custom Rate Limit:** None
+* **Possible Local Exceptions:**
+  * `422 Unprocessable Entity` (`ValidationError`): Dispatched if parameters are negative, the unit is invalid, or if `unit=degrees` and the angle exceeds 360.
+* **Example Request URL:** `https://api.anikethchavare.com/v1/math/geometry/arc-length?radius=5&angle=180&unit=degrees`
+* **Example Request Headers:** None
+* **Example Request Body:** None
+* **Example Response:**
+```json
+{
+    "success": true,
+    "message": "Successfully calculated the arc length of the circle.",
+    "data": {
+        "arc_length": 15.707963267948966
+    },
+    "meta": {
+        "rate_limit": "60 requests per minute."
+    },
+    "api_version": "1.2.2",
+    "timestamp": "2026-06-26T12:01:00.000000+00:00",
+    "request_id": "req_a1r2c3l4-e5n6-7g8t-9h0l-e1n2g3t4b5c6",
+    "status_code": 200
+}
+```
+
+### 35. `/v1/math/geometry/distance`
+* **Description:** Computes the Euclidean distance between two matching points in either 2D or 3D coordinate spaces.
+* **HTTP Method:** `POST`
+* **Response Type & Schema:** `application/json` (JSONResponse)
+  * `distance` *(Float)*: The absolute linear space distance scalar between the target coordinates.
+* **Query Parameters:** None
+* **Headers Required:** None
+* **Request Body Parameters (application/json):**
+  * `point_1` *(List[StrictInt, StrictFloat], Required)*: Numeric coordinate array slice representing the initial coordinate position (length must be 2 or 3).
+  * `point_2` *(List[StrictInt, StrictFloat], Required)*: Numeric coordinate array slice representing the terminal coordinate position (length must be 2 or 3).
+* **Custom Rate Limit:** None
+* **Possible Local Exceptions:**
+  * `422 Unprocessable Entity` (`ValidationError`): Dispatched if array structures fail size restrictions, parameters are missing, or the dimensions of both points mismatch.
+* **Example Request URL:** `https://api.anikethchavare.com/v1/math/geometry/distance`
+* **Example Request Headers:** None
+* **Example Request Body:**
+```json
+{
+    "point_1": [0, 0],
+    "point_2": [3, 4]
+}
+```
+* **Example Response:**
+```json
+{
+    "success": true,
+    "message": "Successfully calculated the distance between the two points.",
+    "data": {
+        "distance": 5.0
+    },
+    "meta": {
+        "rate_limit": "60 requests per minute."
+    },
+    "api_version": "1.2.2",
+    "timestamp": "2026-06-26T12:01:00.000000+00:00",
+    "request_id": "req_d1i2s3t4-a5n6-7c8e-9p0o-i1n2t3s4b5c6",
+    "status_code": 200
+}
+```
+
+### 36. `/v1/math/geometry/area`
+* **Description:** Computes the standard surface area calculation wrapper for common 2D shapes based on custom parameters.
+* **HTTP Method:** `GET`
+* **Response Type & Schema:** `application/json` (JSONResponse)
+  * `area` *(Float)*: The evaluated total 2D planar area boundary metric.
+* **Query Parameters:**
+  * `shape` *(Literal, Required)*: Target structural framework profile to process. Allowed entries: `square`, `rectangle`, `circle`, `triangle`, `parallelogram`.
+  * `side` *(Integer/Float, Required)*: Explicit side length context. Required if `shape=square`.
+  * `length` *(Integer/Float, Required)*: Explicit primary base reach span. Required if `shape=rectangle`.
+  * `width` *(Integer/Float, Required)*: Explicit profile offset thickness. Required if `shape=rectangle`.
+  * `radius` *(Integer/Float, Required)*: Circular bounds center offset distance. Required if `shape=circle`.
+  * `base` *(Integer/Float, Required)*: Planar lower side span context. Required if `shape=triangle` or `shape=parallelogram`.
+  * `height` *(Integer/Float, Required)*: Linear vertical altitude magnitude. Required if `shape=triangle` or `shape=parallelogram`.
+* **Headers Required:** None
+* **Request Body Parameters (application/json):** None
+* **Custom Rate Limit:** None
+* **Possible Local Exceptions:**
+  * `422 Unprocessable Entity` (`ValidationError`): Dispatched if any provided dimension is negative, or if a mandatory property required for the specified shape is omitted.
+* **Example Request URL:** `https://api.anikethchavare.com/v1/math/geometry/area?shape=rectangle&length=5&width=4`
+* **Example Request Headers:** None
+* **Example Request Body:** None
+* **Example Response:**
+```json
+{
+    "success": true,
+    "message": "Successfully calculated the area of the 2D shape.",
+    "data": {
+        "area": 20.0
+    },
+    "meta": {
+        "rate_limit": "60 requests per minute."
+    },
+    "api_version": "1.2.2",
+    "timestamp": "2026-06-26T12:01:00.000000+00:00",
+    "request_id": "req_a1r2e3a4-2d00-7s8h-9a0p-e1m2a3t4b5c6",
+    "status_code": 200
+}
+```
+
+### 37. `/v1/math/geometry/volume`
+* **Description:** Computes the total cubic boundary volumetric context contained inside 3D spatial systems.
+* **HTTP Method:** `GET`
+* **Response Type & Schema:** `application/json` (JSONResponse)
+  * `volume` *(Float)*: The evaluated spatial capacity volume metric.
+* **Query Parameters:**
+  * `shape` *(Literal, Required)*: Target spatial architecture model. Allowed entries: `cube`, `cuboid`, `sphere`, `hemisphere`, `cylinder`, `cone`, `square_pyramid`.
+  * `side` *(Integer/Float, Required)*: Linear edge context length. Required if `shape=cube`.
+  * `length` *(Integer/Float, Required)*: Spatial core length extension coordinate. Required if `shape=cuboid`.
+  * `width` *(Integer/Float, Required)*: Planar base bounding cross width. Required if `shape=cuboid`.
+  * `height` *(Integer/Float, Required)*: Bounding structural peak vertical elevation height. Required if `shape=cuboid`, `shape=cylinder`, `shape=cone`, or `shape=square_pyramid`.
+  * `radius` *(Integer/Float, Required)*: Interior focal structural origin distance. Required if `shape=sphere`, `shape=hemisphere`, `shape=cylinder`, or `shape=cone`.
+  * `base` *(Integer/Float, Required)*: Base profile side reach context. Required if `shape=square_pyramid`.
+* **Headers Required:** None
+* **Request Body Parameters (application/json):** None
+* **Custom Rate Limit:** None
+* **Possible Local Exceptions:**
+  * `422 Unprocessable Entity` (`ValidationError`): Dispatched if structural vectors evaluate to negative bounds or if necessary inputs required for the target model are omitted.
+* **Example Request URL:** `https://api.anikethchavare.com/v1/math/geometry/volume?shape=sphere&radius=3`
+* **Example Request Headers:** None
+* **Example Request Body:** None
+* **Example Response:**
+```json
+{
+    "success": true,
+    "message": "Successfully calculated the volume of the 3D shape.",
+    "data": {
+        "volume": 113.09733552923254
+    },
+    "meta": {
+        "rate_limit": "60 requests per minute."
+    },
+    "api_version": "1.2.2",
+    "timestamp": "2026-06-26T12:01:00.000000+00:00",
+    "request_id": "req_v1o2l3u4-m5e6-7s8h-9a0p-e1m2a3t4b5c6",
+    "status_code": 200
+}
+```
+
+### 38. `/v1/math/geometry/surface-area`
+* **Description:** Computes the total combined exterior surface area matching specific 3D solid structures.
+* **HTTP Method:** `GET`
+* **Response Type & Schema:** `application/json` (JSONResponse)
+  * `surface_area` *(Float)*: The evaluated total exterior absolute surface area measurement context.
+* **Query Parameters:**
+  * `shape` *(Literal, Required)*: Target spatial model setup framework. Allowed entries: `cube`, `cuboid`, `sphere`, `hemisphere`, `cylinder`, `cone`.
+  * `side` *(Integer/Float, Required)*: Bounding regular side face dimension length. Required if `shape=cube`.
+  * `length` *(Integer/Float, Required)*: Bounding length reach coordinate. Required if `shape=cuboid`.
+  * `width` *(Integer/Float, Required)*: Horizontal offset perimeter depth space. Required if `shape=cuboid`.
+  * `height` *(Integer/Float, Required)*: Vertical layout maximum altitude extension length. Required if `shape=cuboid` or `shape=cylinder`.
+  * `radius` *(Integer/Float, Required)*: Curved system base origin coordinate offset distance. Required if `shape=sphere`, `shape=hemisphere`, `shape=cylinder`, or `shape=cone`.
+* **Headers Required:** None
+* **Request Body Parameters (application/json):** None
+* **Custom Rate Limit:** None
+* **Possible Local Exceptions:**
+  * `422 Unprocessable Entity` (`ValidationError`): Dispatched if dimensions receive negative inputs or if required attributes for the specific spatial model are missing.
+* **Example Request URL:** `https://api.anikethchavare.com/v1/math/geometry/surface-area?shape=cube&side=3`
+* **Example Request Headers:** None
+* **Example Request Body:** None
+* **Example Response:**
+```json
+{
+    "success": true,
+    "message": "Successfully calculated the surface area of the 3D shape.",
+    "data": {
+        "surface_area": 54.0
+    },
+    "meta": {
+        "rate_limit": "60 requests per minute."
+    },
+    "api_version": "1.2.2",
+    "timestamp": "2026-06-26T12:01:00.000000+00:00",
+    "request_id": "req_s1u2r3f4-a5c6-7e8a-9r0e-a1b2c3d4e5f6",
     "status_code": 200
 }
 ```

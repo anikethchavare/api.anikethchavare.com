@@ -54,7 +54,7 @@ The format will be:
 - Updated documentation to reflect the endpoint signature type mismatches across routers.
 - Updated documentation to reflect the true response data types.
 - Enhanced clarity among possible local exceptions clients might encounter across most endpoints.
-- **math:** Added documentation for all endpoints of the following sub-utility namespaces: `/trigonometry`, `/statistics`, `/algebra`, `/arithmetic`, and `/complex`.
+- **math:** Added documentation for all endpoints of the following sub-utility namespaces: `/trigonometry`, `/statistics`, `/algebra`, `/arithmetic`, `/complex`, and `/geometry`.
 - **entertainment:** Added documentation for all endpoints.
 
 ## [1.2.2] - 2026-06-23

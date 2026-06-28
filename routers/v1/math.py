@@ -717,7 +717,7 @@ async def app_v1_math_geometry_area_of_sector(
             request=request,
             status_code=422,
             success=False,
-            message="Validation Error (Math): Angle in degrees cannot exceed 360. ",
+            message="ValidationError: Angle in degrees cannot exceed 360. ",
             background_tasks=background_tasks
         )
 
