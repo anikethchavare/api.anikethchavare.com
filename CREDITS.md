@@ -23,7 +23,7 @@ organizations behind these projects.
 6. [orjson](https://github.com/ijl/orjson) v3.11.9 - License: [MIT](https://github.com/ijl/orjson/blob/master/LICENSE-MIT)
 7. [SlowAPI](https://github.com/laurents/slowapi) v0.1.10 - License: [MIT](https://github.com/laurentS/slowapi/blob/master/LICENSE)
 8. [edge-tts](https://github.com/rany2/edge-tts) v7.2.8 - License: [MIT](https://github.com/rany2/edge-tts/blob/master/LICENSE)
-9. [FastAPI](https://github.com/tiangolo/fastapi) v0.138.0 - License: [MIT](https://github.com/fastapi/fastapi/blob/master/LICENSE)
+9. [FastAPI](https://github.com/tiangolo/fastapi) v0.138.1 - License: [MIT](https://github.com/fastapi/fastapi/blob/master/LICENSE)
 10. [Pydantic](https://github.com/pydantic/pydantic) v2.13.4 - License: [MIT](https://github.com/pydantic/pydantic/blob/main/LICENSE)
 11. [psycopg-pool](https://github.com/psycopg/psycopg) v3.3.1 - License: [LGPL-3.0](https://github.com/psycopg/psycopg/blob/master/LICENSE.txt)
 12. [psycopg-binary](https://github.com/psycopg/psycopg) v3.3.4 - License: [LGPL-3.0](https://github.com/psycopg/psycopg/blob/master/LICENSE.txt)
