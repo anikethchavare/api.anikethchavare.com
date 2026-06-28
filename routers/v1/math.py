@@ -666,3 +666,98 @@ async def app_v1_math_complex_polar(
             "polar_coordinates": list(cmath.polar(complex(real, imaginary)))
         }
     )
+
+# Route 31: Geometry (app_v1_math)
+@app_v1_math.get("/geometry")
+@rate_limiter.limiter.limit("60/minute")
+async def app_v1_math_geometry(request: Request, background_tasks: BackgroundTasks):
+    return utils.send_response(
+        request=request,
+        status_code=200,
+        success=True,
+        message="Welcome to the 'geometry' sub-utility namespace under 'math'. Check the documentation for available endpoints.",
+        background_tasks=background_tasks,
+        meta={
+            "help": "Check the API v1 documentation (/math) for available endpoints.",
+            "docs": "https://github.com/anikethchavare/api.anikethchavare.com/tree/main/docs/v1/3_math.md"
+        }
+    )
+
+# Route 32: Geometry - Circumference (app_v1_math)
+@app_v1_math.get("/geometry/circumference")
+@rate_limiter.limiter.limit("60/minute")
+async def app_v1_math_geometry_circumference(
+        request: Request,
+        background_tasks: BackgroundTasks,
+        radius: Union[int, float] = Query(..., ge=0, description="The radius of the circle.")
+):
+    return utils.send_response(
+        request=request,
+        status_code=200,
+        success=True,
+        message="Successfully calculated the circumference of the circle.",
+        background_tasks=background_tasks,
+        data={
+            "circumference": 2*math.pi*radius
+        }
+    )
+
+# Route 33: Geometry - Area of Sector (app_v1_math)
+@app_v1_math.get("/geometry/area-of-sector")
+@rate_limiter.limiter.limit("60/minute")
+async def app_v1_math_geometry_area_of_sector(
+        request: Request,
+        background_tasks: BackgroundTasks,
+        radius: Union[int, float] = Query(..., ge=0, description="The radius of the circle."),
+        angle: Union[int, float] = Query(..., ge=0, description="The central angle of the circle."),
+        unit: Literal["degrees", "radians"] = Query(..., description="The unit of the value provided.")
+):
+    if unit == "degrees" and angle > 360:
+        return utils.send_response(
+            request=request,
+            status_code=422,
+            success=False,
+            message="Validation Error (Math): Angle in degrees cannot exceed 360. ",
+            background_tasks=background_tasks
+        )
+
+    return utils.send_response(
+        request=request,
+        status_code=200,
+        success=True,
+        message="Successfully calculated the area of the sector of the circle.",
+        background_tasks=background_tasks,
+        data={
+            "area_of_sector": (angle/360) * math.pi*(radius**2) if unit == "degrees" else 0.5*(radius**2)*angle,
+        }
+    )
+
+# Route 34: Geometry - Arc Length (app_v1_math)
+@app_v1_math.get("/geometry/arc-length")
+@rate_limiter.limiter.limit("60/minute")
+async def app_v1_math_geometry_arc_length(
+        request: Request,
+        background_tasks: BackgroundTasks,
+        radius: Union[int, float] = Query(..., ge=0, description="The radius of the circle."),
+        angle: Union[int, float] = Query(..., ge=0, description="The central angle of the circle."),
+        unit: Literal["degrees", "radians"] = Query(..., description="The unit of the value provided.")
+):
+    if unit == "degrees" and angle > 360:
+        return utils.send_response(
+            request=request,
+            status_code=422,
+            success=False,
+            message="Validation Error (Math): Angle in degrees cannot exceed 360. ",
+            background_tasks=background_tasks
+        )
+
+    return utils.send_response(
+        request=request,
+        status_code=200,
+        success=True,
+        message="Successfully calculated the arc length of the circle.",
+        background_tasks=background_tasks,
+        data={
+            "arc_length": 2*math.pi*radius*(angle/360) if unit == "degrees" else radius*angle,
+        }
+    )

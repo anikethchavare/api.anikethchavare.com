@@ -26,6 +26,7 @@ The format will be:
 - **math:** Added 2 endpoints (`/discriminant`, `/roots`) under the `/algebra` sub-utility namespace.
 - **math:** Added 7 endpoints (`/factorial`, `/is-prime`, `/is-even`, `/is-odd`, `/hcf`, `/lcm`, `fibonacci`) under the `/arithmetic` sub-utility namespace.
 - **math:** Added 4 endpoints (`/modulus`, `/conjugate`, `/multiplicative-inverse`, `/polar`) under the `/complex` sub-utility namespace.
+- **math:** Added 3 endpoints (`/circumference`, `/area-of-sector`, `/arc-length`) under the `/geometry` sub-utility namespace.
 - **entertainment:** Added 6 endpoints (`/jokes`, `/fact`, `/bored`, `/guess-gender`, `/guess-age`, `/guess-nation`).
 - **math:** Created tests for the following sub-utility namespace endpoints: `/trigonometry`, `/statistics`, `/algebra`, `/arithmetic`, and `/complex`.
 - **entertainment:** Created tests for the endpoints under this utility namespace.
