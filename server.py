@@ -69,16 +69,18 @@ async def async_context_manager_lifespan(app_local: FastAPI):
     await rate_limiter.close_limiter()
 
 # Initializing the "app" FastAPI Server
-app = FastAPI(title="api.anikethchavare.com",
-              description="A high-performance, general-purpose public REST API powered by FastAPI and Python.",
-              version=schemas.API_VERSION,
-              license_info={
-                  "name": "Apache 2.0",
-                  "url": "https://www.apache.org/licenses/LICENSE-2.0"
-              },
-              docs_url=None,
-              redoc_url=None,
-              lifespan=async_context_manager_lifespan)
+app = FastAPI(
+    title="api.anikethchavare.com",
+    description="A high-performance, general-purpose public REST API powered by FastAPI and Python.",
+    version=schemas.API_VERSION,
+    license_info={
+        "name": "Apache 2.0",
+        "url": "https://www.apache.org/licenses/LICENSE-2.0"
+    },
+    docs_url=None,
+    redoc_url=None,
+    lifespan=async_context_manager_lifespan
+)
 
 app.state.limiter = rate_limiter.limiter
 
@@ -205,7 +207,7 @@ async def app_clear_request_logs(request: Request, background_tasks: BackgroundT
 
 # Exception Handler 1: 429 (app)
 @app.exception_handler(RateLimitExceeded)
-async def exception_handler_429(request: Request, exc: RateLimitExceeded):
+async def app_exception_handler_429(request: Request, exc: RateLimitExceeded):
     return utils.send_response(
         request=request,
         status_code=429,
@@ -216,7 +218,7 @@ async def exception_handler_429(request: Request, exc: RateLimitExceeded):
 
 # Exception Handler 2: 404 (app)
 @app.exception_handler(404)
-async def exception_handler_404(request: Request, exc: HTTPException):
+async def app_exception_handler_404(request: Request, exc: HTTPException):
     return utils.send_response(
         request=request,
         status_code=404,
@@ -232,7 +234,7 @@ async def exception_handler_404(request: Request, exc: HTTPException):
 
 # Exception Handler 3: 422 (app)
 @app.exception_handler(RequestValidationError)
-async def exception_handler_422(request: Request, exc: RequestValidationError):
+async def app_exception_handler_422(request: Request, exc: RequestValidationError):
     errors_list = []
 
     for error in exc.errors():
@@ -268,7 +270,7 @@ async def exception_handler_422(request: Request, exc: RequestValidationError):
 
 # Exception Handler 4: 405 (app)
 @app.exception_handler(405)
-async def exception_handler_405(request: Request, exc: HTTPException):
+async def app_exception_handler_405(request: Request, exc: HTTPException):
     return utils.send_response(
         request=request,
         status_code=405,
@@ -285,7 +287,7 @@ async def exception_handler_405(request: Request, exc: HTTPException):
 
 # Exception Handler 5: Universal (app)
 @app.exception_handler(Exception)
-async def exception_handler_universal(request: Request, exc: Exception):
+async def app_exception_handler_universal(request: Request, exc: Exception):
     error_details = "".join(traceback.format_exception(exc))
     logger.error(f"\nINTERNAL SERVER ERROR on {request.url.path}:\n{error_details}")
 
