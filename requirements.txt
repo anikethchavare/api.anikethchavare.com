@@ -1,4 +1,4 @@
-numpy==2.5.0
+numpy==2.5.1
 redis==8.0.1
 respx==0.23.1
 pytest==9.1.1
@@ -6,7 +6,7 @@ httpx==0.28.1
 orjson==3.11.9
 slowapi==0.1.10
 edge-tts==7.2.8
-fastapi==0.138.1
+fastapi==0.139.2
 pydantic==2.13.4
 psycopg-pool==3.3.1
 psycopg[binary]==3.3.4

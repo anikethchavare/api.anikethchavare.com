@@ -19,6 +19,7 @@ The format will be:
 ## Unreleased
 
 ### Changed
+- **Dependency Changes:** Updated `numpy` and `FastAPI`.
 - Updated the universal error handling code according to latest coding standards.
 - Removed the obsolete `X-XSS-Protection` security header.
 - Enhanced indentation of code in the `server.py` file.
