@@ -23,6 +23,9 @@ The format will be:
 - Removed the obsolete `X-XSS-Protection` security header.
 - Enhanced indentation of code in the `server.py` file.
 
+### Security
+- Added the `HTTPSRedirectMiddleware` middleware for to securely upgrade requests to HTTPS.
+
 ## [1.3.0] - 2026-06-28
 
 ### Added

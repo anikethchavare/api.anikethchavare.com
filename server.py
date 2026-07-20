@@ -36,6 +36,7 @@ from contextlib import asynccontextmanager
 from fastapi.responses import FileResponse
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.exceptions import RequestValidationError
+from fastapi.middleware.httpsredirect import HTTPSRedirectMiddleware
 from fastapi import FastAPI, Request, HTTPException, BackgroundTasks, Header
 
 from slowapi.errors import RateLimitExceeded
@@ -88,7 +89,10 @@ app.state.limiter = rate_limiter.limiter
 logging.basicConfig(level=logging.WARNING)
 logger = logging.getLogger(__name__)
 
-# Configuring CORS for Secure Public Access
+# Configuring Middleware for Secure Public Access
+if os.getenv("VERCEL") == 1:
+    app.add_middleware(HTTPSRedirectMiddleware)
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
