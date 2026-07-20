@@ -287,7 +287,7 @@ async def exception_handler_405(request: Request, exc: HTTPException):
 # Exception Handler 5: Universal (app)
 @app.exception_handler(Exception)
 async def exception_handler_universal(request: Request, exc: Exception):
-    error_details = "".join(traceback.format_exception(type(exc), exc, exc.__traceback__))
+    error_details = "".join(traceback.format_exception(exc))
     logger.error(f"\nINTERNAL SERVER ERROR on {request.url.path}:\n{error_details}")
 
     return utils.send_response(

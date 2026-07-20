@@ -16,6 +16,11 @@ The format will be:
 - Performance
 - Documentation
 
+## Unreleased
+
+### Changed
+- Updated the universal error handling code according to latest coding standards.
+
 ## [1.3.0] - 2026-06-28
 
 ### Added
