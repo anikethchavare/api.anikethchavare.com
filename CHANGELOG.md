@@ -16,7 +16,7 @@ The format will be:
 - Performance
 - Documentation
 
-## Unreleased
+## [1.3.1] - 2026-07-20
 
 ### Changed
 - **Dependency Changes:** Updated `numpy` and `FastAPI`.
@@ -273,6 +273,7 @@ ensure frontend stability.
 - Established `requirements.txt` with core dependencies (FastAPI, Pydantic).
 
 ---
+[1.3.1]: https://github.com/anikethchavare/api.anikethchavare.com/releases/tag/v1.3.1
 [1.3.0]: https://github.com/anikethchavare/api.anikethchavare.com/releases/tag/v1.3.0
 [1.2.2]: https://github.com/anikethchavare/api.anikethchavare.com/releases/tag/v1.2.2
 [1.2.1]: https://github.com/anikethchavare/api.anikethchavare.com/releases/tag/v1.2.1
