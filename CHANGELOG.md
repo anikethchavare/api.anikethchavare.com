@@ -23,6 +23,10 @@ The format will be:
 - Updated the universal error handling code according to latest coding standards.
 - Removed the obsolete `X-XSS-Protection` security header.
 - Enhanced indentation of code in the `server.py` file.
+- Updated the GitHub repository's social preview image.
+
+### Removed
+- Removed the favicon.
 
 ### Security
 - Added the `HTTPSRedirectMiddleware` middleware for to securely upgrade requests to HTTPS.

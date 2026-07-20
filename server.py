@@ -157,14 +157,7 @@ async def app_main(request: Request, background_tasks: BackgroundTasks):
         }
     )
 
-# Route 2: favicon.ico (app)
-@app.get("/favicon.ico")
-@app.get("/favicon.png")
-@rate_limiter.limiter.limit("60/minute")
-async def app_favicon(request: Request):
-    return FileResponse(FAVICON_PATH, media_type="image/png", status_code=200)
-
-# Route 3: Health (app)
+# Route 2: Health (app)
 @app.get("/health")
 async def app_health(request: Request, background_tasks: BackgroundTasks):
     # Performing Health Checks
@@ -187,7 +180,7 @@ async def app_health(request: Request, background_tasks: BackgroundTasks):
         data={"health_checks": health_data}
     )
 
-# Route 4: Clear Request Logs (app)
+# Route 3: Clear Request Logs (app)
 @app.get("/clear-request-logs")
 async def app_clear_request_logs(request: Request, background_tasks: BackgroundTasks, authorization: str = Header(None)):
     if not authorization or not secrets.compare_digest(authorization, f"Bearer {settings.cron_secret}"):
