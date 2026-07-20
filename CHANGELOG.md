@@ -20,6 +20,7 @@ The format will be:
 
 ### Changed
 - Updated the universal error handling code according to latest coding standards.
+- Removed the obsolete `X-XSS-Protection` security header.
 
 ## [1.3.0] - 2026-06-28
 

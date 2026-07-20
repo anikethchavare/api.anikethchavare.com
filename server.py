@@ -97,7 +97,6 @@ app.add_middleware(
 
 # Global Security Headers
 SECURITY_HEADERS = {
-    "X-XSS-Protection": "0",
     "X-Frame-Options": "DENY",
     "Referrer-Policy": "no-referrer",
     "X-Content-Type-Options": "nosniff",
