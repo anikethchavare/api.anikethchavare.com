@@ -46,8 +46,8 @@ Designed as a general-purpose utility engine, this **API** offers a versatile su
 
 This project leverages a modern, asynchronous Python stack to provide a high-performance and reliable foundation for the API.
 
-* **Framework: [FastAPI](https://fastapi.tiangolo.com/) (v0.138.1)** – Asynchronous framework for low-latency request handling.
-* **Validation: [Pydantic](https://docs.pydantic.dev/) (v2.13.4)** – Data validation and settings management using Python type hints.
+* **Framework: [FastAPI](https://fastapi.tiangolo.com/) (v0.141.1)** – Asynchronous framework for low-latency request handling.
+* **Validation: [Pydantic](https://docs.pydantic.dev/) (v2.13.5)** – Data validation and settings management using Python type hints.
 * **Rate Limiting: [SlowAPI](https://github.com/laurents/slowapi) (v0.1.10)** – Enforces per-endpoint rate limits to ensure service stability.
 * **Database: [PostgreSQL](https://vercel.com/marketplace/neon)** – Asynchronous telemetry and logging storage handled via `psycopg` pooling.
 * **Deployment: [Vercel](https://vercel.com/)** –  Serverless hosting and edge-optimized global delivery.
