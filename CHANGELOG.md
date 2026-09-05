@@ -19,7 +19,12 @@ The format will be:
 ## [Unreleased]
 
 ### Changed
-- **Dependency Changes:** Updated `numpy`, `redis`, `orjson`, `FastAPI`, `pydantic`, `psycopg[binary]`, and `pydantic-settings`. 
+- **Dependency Changes:** Updated `numpy`, `redis`, `orjson`, `FastAPI`, `pydantic`, `psycopg[binary]`, and `pydantic-settings`.
+- Enhanced code for better performance and stability.
+
+### Documentation
+- Updated `README.md` to reflect the new dependency versions.
+- Updated `CREDITS.md` to reflect the new dependency versions.
 
 ## [1.3.1] - 2026-07-20
 

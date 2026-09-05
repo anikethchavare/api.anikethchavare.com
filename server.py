@@ -33,7 +33,6 @@ import traceback
 from datetime import datetime, timezone
 from contextlib import asynccontextmanager
 
-from fastapi.responses import FileResponse
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.httpsredirect import HTTPSRedirectMiddleware
@@ -114,7 +113,7 @@ SECURITY_HEADERS = {
 
 # Middleware 1: Security Headers (app)
 @app.middleware("http")
-async def middleware_security_headers(request: Request, call_next):
+async def app_middleware_security_headers(request: Request, call_next):
     response = await call_next(request)
 
     response.headers.update(SECURITY_HEADERS)
@@ -123,7 +122,7 @@ async def middleware_security_headers(request: Request, call_next):
 
 # Middleware 2: Telemetry Pre-Calculation (app)
 @app.middleware("http")
-async def middleware_telemetry_pre_calculation(request: Request, call_next):
+async def app_middleware_telemetry_pre_calculation(request: Request, call_next):
     request.state.request_id = f"req_{uuid.uuid4()}"
     request.state.timestamp = datetime.now(timezone.utc).isoformat()
 
