@@ -16,6 +16,11 @@ The format will be:
 - Performance
 - Documentation
 
+## [Unreleased]
+
+### Changed
+- **Dependency Changes:** Updated `numpy`, `redis`, `orjson`, `FastAPI`, `pydantic`, `psycopg[binary]`, and `pydantic-settings`. 
+
 ## [1.3.1] - 2026-07-20
 
 ### Changed
