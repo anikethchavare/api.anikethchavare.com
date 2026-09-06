@@ -37,8 +37,8 @@ Designed as a general-purpose utility engine, this **API** offers a versatile su
 2. **Developer-First Design:** Intuitive endpoint structures and comprehensive documentation designed to get you integrated in minutes.
 3. **Production-Ready Security:** Enterprise-grade security standards, including encrypted data handling and robust access controls.
 4. **Scalable Infrastructure:** A resilient backend engineered to handle increasing request volumes and complex workloads seamlessly.
-5. **Standardized Responses:** Every endpoint follows a strict, predictable format to simplify error handling and data parsing.
-6. **Real-Time Health Diagnosis:** Built-in automated endpoint to monitor core application status and real-time database connection pool viability.
+5. **Real-Time Health Diagnosis:** Built-in automated endpoint to monitor core application status and real-time database connection pool viability.
+6. **Unified Response Architecture:** Enforces predictable response structures and global exception handling across all endpoints.
 
 <hr>
 
@@ -49,6 +49,7 @@ This project leverages a modern, asynchronous Python stack to provide a high-per
 * **Framework: [FastAPI](https://fastapi.tiangolo.com/) (v0.141.1)** – Asynchronous framework for low-latency request handling.
 * **Validation: [Pydantic](https://docs.pydantic.dev/) (v2.13.5)** – Data validation and settings management using Python type hints.
 * **Rate Limiting: [SlowAPI](https://github.com/laurents/slowapi) (v0.1.10)** – Enforces per-endpoint rate limits to ensure service stability.
+* **Real-Time Messaging: [Ably Python SDK](https://github.com/ably/ably-python) (v3.1.2)** – Manages scoped capability tokens and real-time pub/sub infrastructure.
 * **Database: [PostgreSQL](https://vercel.com/marketplace/neon)** – Asynchronous telemetry and logging storage handled via `psycopg` pooling.
 * **Deployment: [Vercel](https://vercel.com/)** –  Serverless hosting and edge-optimized global delivery.
 
@@ -57,7 +58,7 @@ This project leverages a modern, asynchronous Python stack to provide a high-per
 ## 3. 🚦 Getting Started
 
 > [!NOTE]
-> This is a quick start guide. For full setup instructions and detailed usage, please visit the **[API Documentation](https://github.com/anikethchavare/api.anikethchavare.com/tree/main/docs)**.
+> This is a quick start guide. For full setup instructions, detailed usage, schemas, and endpoint references, please visit the **[API Documentation](https://github.com/anikethchavare/api.anikethchavare.com/tree/main/docs)**.
 
 ### ⚡ Method 1: Using the API
 Point your HTTP client to `https://api.anikethchavare.com/v1` to begin. No authentication is required for public endpoints, but please adhere to the rate limit of 60 requests per minute.
@@ -73,11 +74,17 @@ Ensure you have **Python 3.10+** and a **PostgreSQL** database ready.
     pip install -r requirements.txt uvicorn
     ```
 
-2.  **Environment Setup:** Add your `DATABASE_URL` and `CRON_SECRET` to a `.env` file in the root directory. The `UPSTASH_REDIS_URL` is the URL of the Redis (Upstash) instance in Vercel. The `CRON_SECRET` can be anything you like, but must be kept a secret to ensure only Vercel Cron Jobs can purge the request logs.
+2.  **Environment Setup:** Add these environment variables to a `.env` file in the root directory.
+    
+    * `DATABASE_URL`: Connection string to your Neon PostgreSQL database to store request logs and telemetry.
+    * `UPSTASH_REDIS_URL`: The URL of the Redis (Upstash) instance in Vercel, or `"memory://"` for local RAM caching.
+    * `ABLY_API_KEY`: Required for real-time messaging and token generation endpoints.
+    * `CRON_SECRET`: Can be anything you like, but must be kept a secret to ensure only Vercel Cron Jobs can purge the request logs.
 
     ```env
     DATABASE_URL=<YOUR_POSTGRESQL_DATABASE_URL>
     UPSTASH_REDIS_URL=<YOUR_UPSTASH_REDIS_CONNECTION_STRING>
+    ABLY_API_KEY=<YOUR_ABLY_API_KEY>
     CRON_SECRET=<YOUR_VERCEL_CRON_SECRET>
     ```
 
@@ -85,8 +92,6 @@ Ensure you have **Python 3.10+** and a **PostgreSQL** database ready.
     ```bash
     uvicorn server:app --reload
     ```
-
-**Note:** For local development, setting `UPSTASH_REDIS_URL="memory://"` forces the application to track rate limits directly inside your local computer's volatile RAM.
 
 <hr>
 

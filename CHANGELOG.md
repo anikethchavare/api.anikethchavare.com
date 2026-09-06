@@ -27,6 +27,7 @@ The format will be:
 
 ### Documentation
 - Updated `CREDITS.md` to reflect the new dependency versions.
+- Updated `README.md` with better formatting and clarity.
 
 ## [1.3.2] - 2026-09-05
 
