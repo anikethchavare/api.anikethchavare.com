@@ -26,6 +26,7 @@ class Settings(BaseSettings):
 
     upstash_redis_url: str = Field(..., alias="UPSTASH_REDIS_URL")
     cron_secret: str = Field(..., alias="CRON_SECRET")
+    ably_api_key: str = Field(..., alias="ABLY_API_KEY")
     database_url: str = Field(..., alias="DATABASE_URL")
 
     model_config = SettingsConfigDict(

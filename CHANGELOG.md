@@ -18,6 +18,10 @@ The format will be:
 
 ## [Unreleased]
 
+### Added
+- Introduced the following utility namespaces under the `/v1` prefix: `/ghost-protocol`.
+- **ghost-protocol:** Added 1 endpoint (`/generate-token`).
+
 ### Changed
 - **Dependency Changes:** Added `ably`.
 

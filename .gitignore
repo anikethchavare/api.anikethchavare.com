@@ -1,4 +1,4 @@
-# Python and IDE Environment
+# Python & IDE Environment
 *.pyc
 .idea/
 __pycache__/

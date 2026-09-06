@@ -53,9 +53,6 @@ Response Structure: All API responses must follow this order:
 8. status_code - HTTP status code for the response.
 """
 
-# Constants
-FAVICON_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), "media/favicon.png"))
-
 # Async Context Manager: Lifespan
 @asynccontextmanager
 async def async_context_manager_lifespan(app_local: FastAPI):
@@ -115,7 +112,6 @@ SECURITY_HEADERS = {
 @app.middleware("http")
 async def app_middleware_security_headers(request: Request, call_next):
     response = await call_next(request)
-
     response.headers.update(SECURITY_HEADERS)
 
     return response
