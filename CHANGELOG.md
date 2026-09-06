@@ -21,6 +21,9 @@ The format will be:
 ### Changed
 - **Dependency Changes:** Added `ably`.
 
+### Documentation
+- Updated `CREDITS.md` to reflect the new dependency versions.
+
 ## [1.3.2] - 2026-09-05
 
 ### Changed
