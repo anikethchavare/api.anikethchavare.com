@@ -16,6 +16,11 @@ The format will be:
 - Performance
 - Documentation
 
+## [Unreleased]
+
+### Changed
+- **Dependency Changes:** Added `ably`.
+
 ## [1.3.2] - 2026-09-05
 
 ### Changed

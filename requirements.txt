@@ -1,3 +1,4 @@
+ably==3.1.2
 numpy==2.5.2
 redis==8.1.0
 respx==0.23.1
