@@ -20,8 +20,8 @@ The format will be:
 
 ### Added
 - Introduced the following utility namespaces under the `/v1` prefix: `/ghost-protocol`.
+- Created tests for the endpoints under these utility namespaces: `ghost-protocol`.
 - **ghost-protocol:** Added 1 endpoint (`/generate-token`).
-- **ghost-protocol:** Created tests for the endpoint under this utility namespace.
 
 ### Changed
 - **Dependency Changes:** Added `ably`.
@@ -29,6 +29,7 @@ The format will be:
 ### Documentation
 - Updated `CREDITS.md` to reflect the new dependency versions.
 - Updated `README.md` with better formatting and clarity.
+- Added documentation for the endpoints under these utility namespaces: `ghost-protocol`.
 
 ## [1.3.2] - 2026-09-05
 

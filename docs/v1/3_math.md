@@ -1313,5 +1313,3 @@ For faster navigation, select one of the following mathematical sub-utility name
 ## 2. 🧭 Next Guide
 
 * **[4_entertainment.md](./4_entertainment.md) $\rightarrow$** Explore the `entertainment` utility namespace.
-
-Additional feature sets, utility endpoints, and expanded business logic are currently in development and will be documented here as they release.

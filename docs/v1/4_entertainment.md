@@ -275,4 +275,4 @@ These endpoints are bound directly to the `app_v1_entertainment` router and oper
 
 ## 2. 🧭 Next Guide
 
-Additional feature sets, utility endpoints, and expanded business logic are currently in development and will be documented here as they release.
+* **[5_ghost_protocol.md](./5_ghost_protocol.md) $\rightarrow$** Explore the `ghost_protocol` utility namespace.
