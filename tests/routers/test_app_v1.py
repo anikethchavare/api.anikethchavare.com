@@ -18,6 +18,7 @@ limitations under the License.
 
 # Imports
 from server import app
+
 from fastapi.testclient import TestClient
 
 # Initializing the TestClient

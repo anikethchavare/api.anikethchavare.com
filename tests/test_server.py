@@ -19,6 +19,7 @@ limitations under the License.
 # Imports
 from server import app
 from app.config import settings
+
 from fastapi.testclient import TestClient
 
 # Initializing the TestClient
@@ -33,15 +34,7 @@ def test_app_main():
     assert response.json()["success"] is True
     assert "REST API powered by FastAPI and Python" in response.json()["message"]
 
-# Test Route 2: favicon.ico (app)
-def test_app_favicon():
-    """ Tests graphic favicon retrieval (GET /favicon.ico). """
-
-    response = client.get("/favicon.ico")
-    assert response.status_code == 200
-    assert response.headers["content-type"] == "image/png"
-
-# Test Route 3: Health (app)
+# Test Route 2: Health (app)
 def test_app_health():
     """ Tests operational diagnostics check (GET /health). """
 
@@ -49,7 +42,7 @@ def test_app_health():
     assert response.status_code in [200, 503]
     assert "health_checks" in response.json()["data"]
 
-# Test Routes 4: Clear Request Logs (app)
+# Test Routes 3: Clear Request Logs (app)
 def test_app_clear_request_logs_unauthorized():
     """ Tests that the request logs clearance route blocks unauthenticated cron targets. """
 

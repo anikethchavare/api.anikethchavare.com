@@ -21,6 +21,7 @@ The format will be:
 ### Added
 - Introduced the following utility namespaces under the `/v1` prefix: `/ghost-protocol`.
 - **ghost-protocol:** Added 1 endpoint (`/generate-token`).
+- **ghost-protocol:** Created tests for the endpoint under this utility namespace.
 
 ### Changed
 - **Dependency Changes:** Added `ably`.

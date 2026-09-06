@@ -17,9 +17,10 @@ limitations under the License.
 """
 
 # Imports
+from server import app
+
 import math
 import pytest
-from server import app
 from fastapi.testclient import TestClient
 
 # Initializing the TestClient
