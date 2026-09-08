@@ -1,14 +1,13 @@
 ably==3.1.2
-numpy==2.5.2
+numpy==2.5.3
 redis==8.1.0
 respx==0.23.1
 pytest==9.1.1
 httpx==0.28.1
 orjson==3.12.0
 slowapi==0.1.10
+pymongo==4.18.0
 edge-tts==7.2.8
 fastapi==0.141.1
 pydantic==2.13.5
-psycopg-pool==3.3.1
-psycopg[binary]==3.3.5
 pydantic-settings==2.15.0
