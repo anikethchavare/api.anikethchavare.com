@@ -82,11 +82,12 @@ def send_response(
         **request.state.telemetry_data
     }
 
-    # Creating the APIResponse Model
-    response = schemas.APIResponse(**response_args)
-
     # Logging the Request
     background_tasks.add_task(database.log_request, **response_args)
+
+    # Creating the APIResponse Model
+    response_args["timestamp"] = request.state.timestamp.isoformat()
+    response = schemas.APIResponse(**response_args)
 
     json_response = JSONResponse(content=response.model_dump(), status_code=status_code)
     json_response.background = background_tasks

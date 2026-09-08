@@ -25,6 +25,11 @@ The format will be:
 
 ### Changed
 - **Dependency Changes:** Added `ably`.
+- Enhanced code for better performance and stability.
+- Migrated request logging from PostgreSQL to MongoDB Atlas with an automated 30-day TTL log retention.
+
+### Removed
+- Removed the cron job that was responsible for clearing request logs every 30 days.
 
 ### Documentation
 - Updated `CREDITS.md` to reflect the new dependency versions.

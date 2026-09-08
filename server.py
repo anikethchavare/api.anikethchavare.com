@@ -21,14 +21,12 @@ from app import utils
 from app import schemas
 from app import database
 from app import rate_limiter
-from app.config import settings
 
 from routers.app_v1 import app_v1
 
 import os
 import uuid
 import logging
-import secrets
 import traceback
 from datetime import datetime, timezone
 from contextlib import asynccontextmanager
@@ -36,7 +34,7 @@ from contextlib import asynccontextmanager
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.httpsredirect import HTTPSRedirectMiddleware
-from fastapi import FastAPI, Request, HTTPException, BackgroundTasks, Header
+from fastapi import FastAPI, Request, HTTPException, BackgroundTasks
 
 from slowapi.errors import RateLimitExceeded
 
@@ -56,13 +54,10 @@ Response Structure: All API responses must follow this order:
 # Async Context Manager: Lifespan
 @asynccontextmanager
 async def async_context_manager_lifespan(app_local: FastAPI):
-    # Startup: Initialize the Async Connection Pool and Database
-    await database.init_pool()
-    await database.init_db()
+    # Startup
     yield
 
-    # Shutdown: Close the Async connection pool.
-    await database.close_pool()
+    # Shutdown: Close the Rate Limiter
     await rate_limiter.close_limiter()
 
 # Initializing the "app" FastAPI Server
@@ -120,7 +115,7 @@ async def app_middleware_security_headers(request: Request, call_next):
 @app.middleware("http")
 async def app_middleware_telemetry_pre_calculation(request: Request, call_next):
     request.state.request_id = f"req_{uuid.uuid4()}"
-    request.state.timestamp = datetime.now(timezone.utc).isoformat()
+    request.state.timestamp = datetime.now(timezone.utc)
 
     request.state.telemetry_data = {
         "ip_address": request.client.host if request.client else "unknown",
@@ -173,28 +168,6 @@ async def app_health(request: Request, background_tasks: BackgroundTasks):
         message="API is healthy and running." if healthy else "ServiceStatusFailure: API is unhealthy and non-responsive. One or more internal services are currently unavailable.",
         background_tasks=background_tasks,
         data={"health_checks": health_data}
-    )
-
-# Route 3: Clear Request Logs (app)
-@app.get("/clear-request-logs")
-async def app_clear_request_logs(request: Request, background_tasks: BackgroundTasks, authorization: str = Header(None)):
-    if not authorization or not secrets.compare_digest(authorization, f"Bearer {settings.cron_secret}"):
-        return utils.send_response(
-            request=request,
-            status_code=401,
-            success=False,
-            message="Invalid or missing cron token.",
-            background_tasks=background_tasks
-        )
-
-    await database.clear_request_logs()
-
-    return utils.send_response(
-        request=request,
-        status_code=200,
-        success=True,
-        message="Vercel Cron: Request logs successfully deleted.",
-        background_tasks=background_tasks
     )
 
 # Exception Handler 1: 429 (app)
