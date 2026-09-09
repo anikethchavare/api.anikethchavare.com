@@ -24,7 +24,7 @@ The format will be:
 - **ghost-protocol:** Added 1 endpoint (`/generate-token`).
 
 ### Changed
-- **Dependency Changes:** Added `ably` and `pymongo`. Removed `psycopg-pool` and `psycopg[binary]`. Updated `numpy`.
+- **Dependency Changes:** Added `ably` and `pymongo`. Removed `psycopg-pool` and `psycopg[binary]`. Updated `numpy` and `ably`.
 - Enhanced code for better performance and stability.
 - Migrated request logging from PostgreSQL to MongoDB Atlas with an automated 30-day TTL log retention.
 - Updated type annotations, method signatures, and docstrings across helper modules.

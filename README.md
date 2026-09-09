@@ -49,7 +49,7 @@ This project leverages a modern, asynchronous Python stack to provide a high-per
 * **Framework: [FastAPI](https://fastapi.tiangolo.com/) (v0.141.1)** – Asynchronous framework for low-latency request handling.
 * **Validation: [Pydantic](https://docs.pydantic.dev/) (v2.13.5)** – Data validation and settings management using Python type hints.
 * **Rate Limiting: [SlowAPI](https://github.com/laurents/slowapi) (v0.1.10)** – Enforces per-endpoint rate limits to ensure service stability.
-* **Real-Time Messaging: [Ably Python SDK](https://github.com/ably/ably-python) (v3.1.2)** – Manages scoped capability tokens and real-time pub/sub infrastructure.
+* **Real-Time Messaging: [Ably Python SDK](https://github.com/ably/ably-python) (v3.1.3)** – Manages scoped capability tokens and real-time pub/sub infrastructure.
 * **Database: [PostgreSQL](https://vercel.com/marketplace/neon)** – Asynchronous telemetry and logging storage handled via `psycopg` pooling.
 * **Deployment: [Vercel](https://vercel.com/)** –  Serverless hosting and edge-optimized global delivery.
 

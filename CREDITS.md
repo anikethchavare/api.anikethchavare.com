@@ -15,7 +15,7 @@ organizations behind these projects.
 7. [nationalize.io](https://nationalize.io)
 
 ## <i>Python Packages/Libraries</i>
-1. [ably](https://github.com/ably/ably-python) v3.1.2 - License: [Apache 2.0](https://github.com/ably/ably-python/blob/main/LICENSE)
+1. [ably](https://github.com/ably/ably-python) v3.1.3 - License: [Apache 2.0](https://github.com/ably/ably-python/blob/main/LICENSE)
 2. [numpy](https://github.com/numpy/numpy) v2.5.3 - License: [Custom](https://github.com/numpy/numpy/blob/main/LICENSE.txt)
 3. [redis](https://github.com/redis/redis-py) v8.1.0 - License: [MIT](https://github.com/redis/redis-py/blob/master/LICENSE)
 4. [respx](https://github.com/lundberg/respx) v0.23.1 - License: [BSD-3-Clause](https://github.com/lundberg/respx/blob/master/LICENSE.md)
