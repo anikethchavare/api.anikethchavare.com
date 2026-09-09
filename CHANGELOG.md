@@ -27,6 +27,7 @@ The format will be:
 - **Dependency Changes:** Added `ably` and `pymongo`. Removed `psycopg-pool` and `psycopg[binary]`. Updated `numpy`.
 - Enhanced code for better performance and stability.
 - Migrated request logging from PostgreSQL to MongoDB Atlas with an automated 30-day TTL log retention.
+- Updated type annotations, method signatures, and docstrings across helper modules.
 
 ### Removed
 - Removed the cron job that was responsible for clearing request logs every 30 days.

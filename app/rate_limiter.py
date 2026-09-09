@@ -29,8 +29,8 @@ limiter = Limiter(
     default_limits=["60/minute"]
 )
 
-# Function 1: Close Limiter
-async def close_limiter():
+# Async Function 1: Close Limiter
+async def close_limiter() -> None:
     """ Gracefully disconnects SlowAPI's underlying storage connection pool. """
 
     if hasattr(limiter.limiter, "storage") and limiter.limiter.storage:

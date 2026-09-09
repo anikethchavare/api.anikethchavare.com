@@ -62,7 +62,7 @@ async def check_connection() -> bool:
         logger.error(f"\nDATABASE ERROR:\nConnection failed: {exception}")
         return False
 
-# Async Function 1: Log Request
+# Async Function 2: Log Request
 async def log_request(
         request_id: str,
         success: bool,
@@ -78,11 +78,10 @@ async def log_request(
         path: str,
         vercel_execution_id: str,
         http_version: str,
-        error_details: str,
-        retry_count: int = 0
+        error_details: str
 ) -> None:
     """
-    Logs an API request to the "request_logs" database table in MongoDB (Vercel).
+    Logs an API request to the "request_logs" database collection in MongoDB (Vercel).
 
     Args:
         request_id: Unique identifier for the request.
@@ -100,7 +99,6 @@ async def log_request(
         vercel_execution_id: The unique execution trace ID injected by Vercel.
         http_version: The HTTP protocol version used for the request.
         error_details: Traceback details in case of an error.
-        retry_count: The number of times to retry the request.
     """
     
     document = {

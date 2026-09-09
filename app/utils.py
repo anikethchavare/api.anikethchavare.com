@@ -38,7 +38,7 @@ def send_response(
 ) -> JSONResponse:
     """
     Constructs and returns a standardized API response. Also, logs the request
-    to the Neon (Vercel) database.
+    to the MongoDB (Vercel) database.
 
     This helper function ensures all API endpoints follow the unified response
     contract defined in the APIResponse schema. It automatically injects
