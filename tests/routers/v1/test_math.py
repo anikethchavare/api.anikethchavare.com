@@ -246,14 +246,14 @@ def test_app_v1_math_arithmetic_factorial_success():
     response = client.get("/v1/math/arithmetic/factorial?n=5")
     assert response.status_code == 200
     assert response.json()["success"] is True
-    assert response.json()["data"]["factorial"] == 120
+    assert response.json()["data"]["factorial"] == "120"
 
 def test_app_v1_math_arithmetic_factorial_zero_boundary():
     """ Tests computing the factorial of 0 (boundary case where 0! = 1). """
 
     response = client.get("/v1/math/arithmetic/factorial?n=0")
     assert response.status_code == 200
-    assert response.json()["data"]["factorial"] == 1
+    assert response.json()["data"]["factorial"] == "1"
 
 def test_app_v1_math_arithmetic_factorial_negative_invalid():
     """ Tests that the system rejects negative integer bounds via Pydantic validator guards. """
