@@ -109,7 +109,7 @@ These endpoints are bound directly to the `app_v1_language` router and operate u
   * `voice` *(StrictStr, Optional)*: The short-name identifier of the target neural voice model. Defaults to `en-US-ChristopherNeural`. A complete, interactive directory of available voice models can be found [here](https://tts.travisvn.com).
   * `rate` *(StrictStr, Optional)*: The relative speaking tempo/speed modification percentage string. Defaults to `+0%`.
   * `pitch` *(StrictStr, Optional)*: The relative structural vocal frequency pitch adjustment string. Defaults to `+0Hz`.
-* **Custom Rate Limit:** 10 requests per minute per IP Address
+* **Custom Rate Limit:** 10 requests per minute per IP address.
 * **Possible Local Exceptions:**
   * `502 Bad Gateway` (`UpstreamServiceError`): Dispatched when the underlying Microsoft Edge TTS communication loop fails, drops, or encounters an upstream connection exception.
 * **Example Request URL:** `https://api.anikethchavare.com/v1/language/speech`

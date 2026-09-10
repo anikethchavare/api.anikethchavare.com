@@ -428,7 +428,7 @@ async def app_v1_math_arithmetic_factorial(
         message="Successfully calculated the factorial.",
         background_tasks=background_tasks,
         data={
-            "factorial": factorial
+            "factorial": str(factorial)
         }
     )
 

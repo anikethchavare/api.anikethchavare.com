@@ -29,6 +29,9 @@ The format will be:
 - Migrated request logging from PostgreSQL to MongoDB Atlas with an automated 30-day TTL log retention.
 - Updated type annotations, method signatures, and docstrings across helper modules.
 
+### Fixed
+- Fixed an issue where calculating large factorials resulted in an `inf` (Infinity) response in `/v1/math/arithmetic/factorial` by serializing the result as a string.
+
 ### Removed
 - Removed the cron job that was responsible for clearing request logs every 30 days.
 
