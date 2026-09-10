@@ -626,7 +626,7 @@ For faster navigation, select one of the following mathematical sub-utility name
 * **Description:** Computes the mathematical factorial sequence calculation wrapper for any non-negative integer.
 * **HTTP Method:** `GET`
 * **Response Type & Schema:** `application/json` (JSONResponse)
-  * `factorial` *(Integer)*: The evaluated factorial value.
+  * `factorial` *(String)*: The evaluated factorial value (returned as a string to prevent precision loss and serialization limits on large numbers).
 * **Query Parameters:**
   * `n` *(Integer, Required)*: The non-negative integer used to compute the factorial.
 * **Headers Required:** None
@@ -642,7 +642,7 @@ For faster navigation, select one of the following mathematical sub-utility name
     "success": true,
     "message": "Successfully calculated the factorial.",
     "data": {
-        "factorial": 120
+        "factorial": "120"
     },
     "meta": {
         "rate_limit": "60 requests per minute."
